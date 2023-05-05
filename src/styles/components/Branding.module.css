@@ -1,0 +1,17 @@
+.container {
+  cursor: pointer;
+  background-color: yellow;
+  /* border: 1px solid green; */
+  display: flex;
+  width: 8vw;
+  height: 8vh;
+  margin: auto 2vw;
+}
+
+.container > p {
+  margin: auto;
+}
+/* .container > img {
+  margin: auto;
+  height: 80%;
+} */

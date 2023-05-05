@@ -1,0 +1,19 @@
+.container {
+  /* border: 1px solid pink; */
+  height: 8vh;
+  width: 7vw;
+  margin: auto 2vw;
+  color: white;
+  cursor: pointer;
+  display: flex;
+}
+
+.container > p {
+  margin: auto;
+  font-size: 18px;
+  font-weight: 500;
+}
+.selected {
+  color: red;
+  background-color: white;
+}
