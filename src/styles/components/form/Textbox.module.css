@@ -1,0 +1,34 @@
+.floating-label-input-box-container {
+  position: relative;
+  margin: 0 auto 1rem auto;
+  width: 90%;
+  /* border: 1px solid red; */
+}
+
+.floating-label-input-box {
+  font-size: 1rem;
+  padding: 0.5rem 0;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  width: 95%;
+  background-color: transparent;
+}
+
+.floating-label {
+  position: relative;
+  top: 1.5rem;
+  font-size: 1rem;
+  pointer-events: none;
+  transition: 0.2s ease all;
+}
+
+.label-focused {
+  top: 0.3rem;
+  font-size: 0.8rem;
+  color: #333;
+}
+
+.input-focused {
+  outline: none;
+  border-color: #333;
+}

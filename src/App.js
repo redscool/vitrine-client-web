@@ -4,6 +4,7 @@ import store from "./redux/store";
 import LandingPage from "./pages/LandingPage";
 import Dashboard from "./pages/Dashboard";
 import ClassSpace from "./pages/ClassSpace";
+import Signup from "./pages/Signup";
 
 export default function App() {
   return (
@@ -11,6 +12,7 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<LandingPage />} />
+          <Route path="/signup" element={<Signup />} />
           <Route path="/dashboard/*" element={<Dashboard />} />
           <Route path="/classspace/*" element={<ClassSpace />} />
         </Routes>

@@ -1,0 +1,36 @@
+.container {
+  margin: 1vh auto;
+  width: 3.5vw;
+  height: 3vh;
+}
+.switch {
+  margin: auto;
+  display: inline-block;
+  position: relative;
+  width: 3.5vw;
+  height: 3vh;
+  border-radius: 1.5vh;
+  background-color: gray;
+  cursor: pointer;
+}
+
+.switch.on {
+  background-color: black;
+}
+
+.switch.off {
+  background-color: red;
+}
+
+.slider {
+  position: absolute;
+  width: 3vh;
+  height: 3vh;
+  border-radius: 50%;
+  background-color: white;
+  transition: transform 0.3s ease-in-out;
+}
+
+.switch.on .slider {
+  transform: translateX(2vw);
+}
