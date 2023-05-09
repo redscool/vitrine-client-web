@@ -1,0 +1,12 @@
+.theme-switcher {
+  padding: 20px;
+  transition: background-color 0.3s ease-in-out;
+}
+.theme-switcher.light {
+  background-color: #fff;
+  color: #333;
+}
+.theme-switcher.dark {
+  background-color: #333;
+  color: #fff;
+}/*# sourceMappingURL=Signup.css.map */

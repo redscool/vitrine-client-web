@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import styles from "./../../styles/components/form/Switch.module.css";
 
-function Switch() {
+function Switch({ currentTheme, setCurrentTheme }) {
   const [isChecked, setIsChecked] = useState(false);
-
   const toggleSwitch = () => {
     setIsChecked(!isChecked);
+    setCurrentTheme(currentTheme === 'light' ? 'dark' : 'light');
   };
 
   return (
