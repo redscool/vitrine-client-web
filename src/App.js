@@ -5,6 +5,7 @@ import LandingPage from "./pages/LandingPage";
 import Dashboard from "./pages/Dashboard";
 import ClassSpace from "./pages/ClassSpace";
 import Signup from "./pages/Signup";
+import './App.css'
 
 export default function App() {
   return (

@@ -3,7 +3,7 @@ import Switch from "../form/Switch";
 import Textbox from "../../components/form/Textbox";
 import styles from "./../../styles/components/form/AuthForm.module.css";
 
-export default function AuthForm({currentTheme, setCurrentTheme}) {
+export default function AuthForm() {
   return (
     <div className={styles.container}>
       <Textbox label="First name" />
@@ -11,7 +11,7 @@ export default function AuthForm({currentTheme, setCurrentTheme}) {
       <Textbox label="Email" type="email" />
       <Textbox label="Password" type="password" />
       <Button label="Sign Up"></Button>
-      <Switch currentTheme={currentTheme} setCurrentTheme={setCurrentTheme}></Switch>
+      <Switch></Switch>
     </div>
   );
 }

@@ -1,11 +1,16 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styles from "./../../styles/components/form/Switch.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleDarkMode } from "../../redux/reducers";
 
-function Switch({ currentTheme, setCurrentTheme }) {
+function Switch() {
+  const { darkMode } = useSelector((state) => state.darkMode)
+  const dispatch = useDispatch(toggleDarkMode)
   const [isChecked, setIsChecked] = useState(false);
   const toggleSwitch = () => {
     setIsChecked(!isChecked);
-    setCurrentTheme(currentTheme === 'light' ? 'dark' : 'light');
+    dispatch(toggleDarkMode)
+    document.body.classList.toggle(darkMode ? 'light-theme' : 'dark-theme')
   };
 
   return (
