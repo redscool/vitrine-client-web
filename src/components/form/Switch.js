@@ -1,23 +1,28 @@
 import { useState } from "react";
 import styles from "./../../styles/components/form/Switch.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleDarkMode } from "../../redux/reducers";
 
-function Switch() {
-  const { darkMode } = useSelector((state) => state.darkMode)
-  const dispatch = useDispatch(toggleDarkMode)
+function Switch({ onToggle, overrideState }) {
   const [isChecked, setIsChecked] = useState(false);
+
+  console.log(overrideState);
+
+  const getCurrentState = () => {
+    if (overrideState !== undefined) return overrideState;
+    return isChecked;
+  };
+
   const toggleSwitch = () => {
-    setIsChecked(!isChecked);
-    dispatch(toggleDarkMode)
-    document.body.classList.toggle(darkMode ? 'light-theme' : 'dark-theme')
+    onToggle(!isChecked);
+    setIsChecked((value) => !value);
   };
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} onClick={toggleSwitch}>
       <div
-        className={`${styles.switch} ${isChecked ? styles.on : styles.off}`}
-        onClick={toggleSwitch}
+        className={`${styles.switch} ${
+          getCurrentState() ? styles.on : styles.off
+        }`}
       >
         <div className={styles.slider}></div>
       </div>

@@ -31,3 +31,8 @@
   width: 100vw;
   height: 92vh;
 }
+
+.testContainer {
+  background-color: var(--PRIMARY_BG);
+  color: var(--PRIMARY_TEXT);
+}

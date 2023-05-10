@@ -1,8 +1,8 @@
-import { configureStore } from '@reduxjs/toolkit'
-import darkModeReducer from './reducers'
+import { configureStore } from "@reduxjs/toolkit";
+import settingReducer from "./settingReducer";
 
 export default configureStore({
-    reducer: {
-        darkMode: darkModeReducer
-    }
-})
+  reducer: {
+    setting: settingReducer,
+  },
+});

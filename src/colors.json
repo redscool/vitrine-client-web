@@ -1,0 +1,10 @@
+{
+    "PRIMARY_BG": {
+        "LIGHT": "#FFF",
+        "DARK": "BLACK"
+    },
+    "PRIMARY_TEXT": {
+        "LIGHT": "#000",
+        "DARK": "#FFF"
+    }
+}
