@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import Branding from "../components/Branding";
 import { Route, Routes, useNavigate, useParams } from "react-router-dom";
-import Tabs from "../components/dashboard/Tabs";
-import Home from "../components/dashboard/Home";
-import Spaces from "../components/dashboard/Spaces";
-import Profile from "../components/dashboard/Profile";
-import Calender from "../components/dashboard/Calender";
-import styles from "../styles/pages/Dashboard.module.css";
-import DropDown from "../components/dashboard/DropDown";
-export default function Dashboard() {
+import DropDown from "../../components/dashboard/DropDown";
+import Branding from "../../components/Branding";
+import Tabs from "../../components/dashboard/Tabs";
+import styles from "../../styles/pages/Dashboard.module.css";
+import Home from "../../components/dashboard/Home";
+import Spaces from "../../components/dashboard/Spaces";
+import Calender from "../../components/dashboard/Calender";
+import Profile from "../../components/dashboard/Profile";
+export default function Dashboard({ userType }) {
   const navigate = useNavigate();
   const params = useParams();
   const [isDropDown, setIsDropDown] = useState(false);
@@ -19,28 +19,28 @@ export default function Dashboard() {
         <Branding />
         <Tabs
           name="Home"
-          link={`/home`}
-          selected={params["*"] === "home"}
+          link={`/${userType}/dashboard/`}
+          selected={params["*"] === "home" || params["*"] === ""}
           navigate={navigate}
         />
 
         <Tabs
           name="Spaces"
-          link={`/spaces`}
+          link={`/${userType}/dashboard/spaces`}
           selected={params["*"] === "spaces"}
           navigate={navigate}
         />
 
         <Tabs
           name="Calender"
-          link={`/calender`}
+          link={`/${userType}/dashboard/calender`}
           selected={params["*"] === "calender"}
           navigate={navigate}
         />
 
         <Tabs
           name="Profile"
-          link={`/profile`}
+          link={`/${userType}/dashboard/profile`}
           selected={params["*"] === "profile"}
           navigate={navigate}
         />

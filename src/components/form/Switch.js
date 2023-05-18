@@ -5,8 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 function Switch({ onToggle, overrideState }) {
   const [isChecked, setIsChecked] = useState(false);
 
-  console.log(overrideState);
-
   const getCurrentState = () => {
     if (overrideState !== undefined) return overrideState;
     return isChecked;

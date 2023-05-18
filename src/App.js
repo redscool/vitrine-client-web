@@ -1,8 +1,12 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
-import Dashboard from "./pages/Dashboard";
-import ClassSpace from "./pages/ClassSpace";
 import Signup from "./pages/Signup";
+import Login from "./pages/Login";
+import VerifyEmail from "./pages/VerifyEmail";
+import ResetPassword from "./pages/ResetPassword";
+import ForgetPassword from "./pages/ForgetPassword";
+import AppWrapper from "./pages/AppWrapper";
+
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { themeSelector } from "./redux/settingReducer";
 import { useLayoutEffect } from "react";
@@ -10,7 +14,6 @@ import "./App.css";
 
 export default function App() {
   const THEME = useSelector(themeSelector);
-
   useLayoutEffect(() => {
     document.body.className = THEME;
   }, []);
@@ -20,8 +23,11 @@ export default function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/dashboard/*" element={<Dashboard />} />
-        <Route path="/classspace/*" element={<ClassSpace />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/forgetpassword" element={<ForgetPassword />} />
+        <Route path="/resetpassword/:token" element={<ResetPassword />} />
+        <Route path="/verifyemail/:token" element={<VerifyEmail />} />
+        <Route path="/*" element={<AppWrapper />} />
       </Routes>
     </BrowserRouter>
   );

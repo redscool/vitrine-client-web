@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import styles from "./../../styles/components/form/Textbox.module.css";
 
-function FloatingLabelInputBox({ label, type }) {
+function FloatingLabelInputBox({ label, type, state, setState }) {
   const [isInputFocused, setIsInputFocused] = useState(false);
-  const [inputValue, setInputValue] = useState("");
 
   const handleInputFocus = () => {
     setIsInputFocused(true);
@@ -17,18 +16,18 @@ function FloatingLabelInputBox({ label, type }) {
     <div className={styles["floating-label-input-box-container"]}>
       <label
         className={`${styles["floating-label"]} ${
-          isInputFocused || inputValue ? styles["label-focused"] : ""
+          isInputFocused || state ? styles["label-focused"] : ""
         }`}
       >
         {label}
       </label>
       <input
-        value={inputValue}
+        value={state}
         onChange={(e) => {
-          setInputValue(e.target.value);
+          setState(e.target.value);
         }}
         className={`${styles["floating-label-input-box"]} ${
-          isInputFocused || inputValue ? styles["input-focused"] : ""
+          isInputFocused || state ? styles["input-focused"] : ""
         }`}
         type={type || "text"}
         onFocus={handleInputFocus}
