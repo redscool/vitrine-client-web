@@ -4,9 +4,12 @@ import { useNavigate } from "react-router-dom";
 import { auth_request } from "../utils/Service";
 import TextBox from "../components/form/Textbox";
 import Button from "../components/form/Button";
+import { useDispatch, useSelector } from "react-redux";
+import { authKeySelector, setAuthKey } from "../redux/authReducer";
 
 export default function Login() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
@@ -17,16 +20,11 @@ export default function Login() {
       "/api/auth/user/login",
       { email, password },
       ({ data }) => {
-        const { accessToken, type } = data;
-        localStorage.setItem("accessToken", accessToken);
-        localStorage.setItem("email", email);
-        localStorage.setItem("type", type);
-        navigate(`/${type.toLowerCase()}/dashboard/`);
-        // if (data.regComplete) {
-        //   navigate("/profiles");
-        // } else {
-        //   navigate("/updateProfile");
-        // }
+        for (const key in data) {
+          const value = data[key];
+          dispatch(setAuthKey([key, value]));
+        }
+        navigate(`/${data.type.toLowerCase()}/dashboard/`);
       },
       console.log
     );

@@ -5,16 +5,20 @@ import VerifyEmail from "./pages/VerifyEmail";
 import ResetPassword from "./pages/ResetPassword";
 import ForgetPassword from "./pages/ForgetPassword";
 import AppWrapper from "./pages/AppWrapper";
+import { emit, emitForcefully, initConnection } from "./socketIO";
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { themeSelector } from "./redux/settingReducer";
-import { useLayoutEffect } from "react";
+import { useEffect } from "react";
 import "./App.css";
+
+initConnection();
 
 export default function App() {
   const THEME = useSelector(themeSelector);
-  useLayoutEffect(() => {
+  useEffect(() => {
+    emitForcefully("ping");
     document.body.className = THEME;
   }, []);
 

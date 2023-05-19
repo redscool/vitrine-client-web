@@ -24,7 +24,10 @@ export default function Signup() {
       alert("Please Select a type");
       return;
     }
-    const body = { email, password, type };
+    let temp_type = "TEACHER";
+    if (type == 2) temp_type = "STUDENT";
+    console.log(type);
+    const body = { email, password, type: temp_type };
     auth_request(
       "post",
       "/api/auth/user/signup",
