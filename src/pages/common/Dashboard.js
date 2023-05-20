@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Route, Routes, useNavigate, useParams } from "react-router-dom";
 import DropDown from "../../components/dashboard/DropDown";
 import Branding from "../../components/Branding";
@@ -8,8 +8,31 @@ import Home from "../../components/dashboard/Home";
 import Spaces from "../../components/dashboard/Spaces";
 import Calender from "../../components/dashboard/Calender";
 import Profile from "../../components/dashboard/Profile";
+import { useDispatch, useSelector } from "react-redux";
+import { authKeySelector } from "../../redux/authReducer";
+import { auth_request } from "../../utils/Service";
+import { setProfileKey } from "../../redux/profileReducer";
+
 export default function Dashboard({ userType }) {
+  const type = useSelector(authKeySelector("type"))?.toLowerCase();
+  const profileId = useSelector(authKeySelector("profileId"));
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (userType !== type) {
+      navigate(`/${type}/dashboard/`);
+    }
+    const body = { profileId };
+    auth_request(
+      "get",
+      `/api/${type}/profile/view`,
+      body,
+      ({ data: { name, address } }) => {
+        dispatch(setProfileKey(["name", name]));
+      },
+      console.log
+    );
+  }, []);
   const params = useParams();
   const [isDropDown, setIsDropDown] = useState(false);
   return (

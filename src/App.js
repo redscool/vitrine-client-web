@@ -5,7 +5,7 @@ import VerifyEmail from "./pages/VerifyEmail";
 import ResetPassword from "./pages/ResetPassword";
 import ForgetPassword from "./pages/ForgetPassword";
 import AppWrapper from "./pages/AppWrapper";
-import { emit, emitForcefully, initConnection } from "./socketIO";
+import { emit, emitForcefully, initConnection } from "./utils/socketIO";
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -18,7 +18,6 @@ initConnection();
 export default function App() {
   const THEME = useSelector(themeSelector);
   useEffect(() => {
-    emitForcefully("ping");
     document.body.className = THEME;
   }, []);
 

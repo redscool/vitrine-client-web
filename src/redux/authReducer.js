@@ -6,6 +6,7 @@ const initialState = {
   userId: localStorage.getItem("userId"),
   profileId: localStorage.getItem("profileId"),
   type: localStorage.getItem("type"),
+  email: localStorage.getItem("email"),
 };
 
 export const authSlice = createSlice({
@@ -18,10 +19,16 @@ export const authSlice = createSlice({
       state[key] = value;
       localStorage.setItem(key, value);
     },
+    resetAuth: (state) => {
+      for (const key in state) {
+        localStorage.removeItem(key);
+        state[key] = undefined;
+      }
+    },
   },
 });
 
-export const { setAuthKey } = authSlice.actions;
+export const { setAuthKey, resetAuth } = authSlice.actions;
 
 export const authKeySelector = (key) => (state) => state.auth[key];
 

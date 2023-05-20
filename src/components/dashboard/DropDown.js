@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setTheme, themeSelector } from "../../redux/settingReducer";
 import { useNavigate } from "react-router-dom";
 import { auth_request } from "../../utils/Service";
-import { authKeySelector } from "../../redux/authReducer";
+import { authKeySelector, resetAuth } from "../../redux/authReducer";
 
 export default function DropDown() {
   const navigate = useNavigate();
@@ -30,6 +30,7 @@ export default function DropDown() {
             body,
             (res) => {
               console.log(res.data);
+              dispatch(resetAuth());
               navigate("/login");
             },
             console.log

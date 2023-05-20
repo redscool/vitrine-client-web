@@ -57,9 +57,9 @@ export default function ClassSpace() {
 
       <div className={styles.mainContainer}>
         <Routes>
-          <Route exact path="/class" element={<Home />} />
-          <Route exact path="/shelf" element={<Spaces />} />
-          <Route exact path="/excercise" element={<Calender />} />
+          <Route exact path="/class" element={<h1>home</h1>} />
+          <Route exact path="/shelf" element={<h1>shelf</h1>} />
+          <Route exact path="/excercise" element={<h1>Calender</h1>} />
           <Route path="/*" element={<> Not found </>} />
         </Routes>
       </div>
