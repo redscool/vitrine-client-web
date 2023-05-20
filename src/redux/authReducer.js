@@ -7,6 +7,7 @@ const initialState = {
   profileId: localStorage.getItem("profileId"),
   type: localStorage.getItem("type"),
   email: localStorage.getItem("email"),
+  googleAuth: null,
 };
 
 export const authSlice = createSlice({
@@ -25,10 +26,13 @@ export const authSlice = createSlice({
         state[key] = undefined;
       }
     },
+    setGoogleAuth: (state, action) => {
+      state.googleAuth = action.payload;
+    },
   },
 });
 
-export const { setAuthKey, resetAuth } = authSlice.actions;
+export const { setAuthKey, resetAuth, setGoogleAuth } = authSlice.actions;
 
 export const authKeySelector = (key) => (state) => state.auth[key];
 

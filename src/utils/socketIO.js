@@ -5,6 +5,7 @@ let socket;
 
 const listen = () => {
   socket.on("reply", console.log);
+  socket.on("eventNotification", console.log);
 };
 
 export const initConnection = () => {

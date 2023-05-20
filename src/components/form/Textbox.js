@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./../../styles/components/form/Textbox.module.css";
 
-function FloatingLabelInputBox({ label, type, state, setState }) {
+function Textbox({ label, type, state, setState }) {
   const [isInputFocused, setIsInputFocused] = useState(false);
 
   const handleInputFocus = () => {
@@ -37,4 +37,4 @@ function FloatingLabelInputBox({ label, type, state, setState }) {
   );
 }
 
-export default FloatingLabelInputBox;
+export default Textbox;

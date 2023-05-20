@@ -19,9 +19,6 @@ export default function Dashboard({ userType }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() => {
-    if (userType !== type) {
-      navigate(`/${type}/dashboard/`);
-    }
     const body = { profileId };
     auth_request(
       "get",
@@ -41,32 +38,36 @@ export default function Dashboard({ userType }) {
       <div className={styles.navbar}>
         <Branding />
         <Tabs
-          name="Home"
-          link={`/${userType}/dashboard/`}
+          link={`/dashboard/`}
           selected={params["*"] === "home" || params["*"] === ""}
           navigate={navigate}
-        />
+        >
+          <p>Home</p>
+        </Tabs>
 
         <Tabs
-          name="Spaces"
-          link={`/${userType}/dashboard/spaces`}
+          link={`/dashboard/spaces`}
           selected={params["*"] === "spaces"}
           navigate={navigate}
-        />
+        >
+          <p>spaces</p>
+        </Tabs>
 
         <Tabs
-          name="Calender"
-          link={`/${userType}/dashboard/calender`}
+          link={`/dashboard/calender`}
           selected={params["*"] === "calender"}
           navigate={navigate}
-        />
+        >
+          <p>Calender</p>
+        </Tabs>
 
         <Tabs
-          name="Profile"
-          link={`/${userType}/dashboard/profile`}
+          link={`/dashboard/profile`}
           selected={params["*"] === "profile"}
           navigate={navigate}
-        />
+        >
+          <p>Profile</p>
+        </Tabs>
         <div
           className={styles.dragDownButton}
           onClick={() => {
@@ -80,10 +81,11 @@ export default function Dashboard({ userType }) {
       <div className={styles.mainContainer}>
         <Routes>
           <Route exact path="/home" element={<Home />} />
+          <Route exact path="/" element={<Home />} />
           <Route exact path="/spaces" element={<Spaces />} />
           <Route exact path="/calender" element={<Calender />} />
           <Route exact path="/profile" element={<Profile />} />
-          <Route path="/*" element={<Home />} />
+          <Route path="/*" element={<span> Not found </span>} />
         </Routes>
       </div>
     </div>

@@ -4,7 +4,6 @@ import Login from "./pages/Login";
 import VerifyEmail from "./pages/VerifyEmail";
 import ResetPassword from "./pages/ResetPassword";
 import ForgetPassword from "./pages/ForgetPassword";
-import AppWrapper from "./pages/AppWrapper";
 import { emit, emitForcefully, initConnection } from "./utils/socketIO";
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -12,6 +11,9 @@ import { useSelector } from "react-redux";
 import { themeSelector } from "./redux/settingReducer";
 import { useEffect } from "react";
 import "./App.css";
+import ClassSpace from "./pages/ClassSpace";
+import Dashboard from "./pages/common/Dashboard";
+import Auth from "./pages/Auth";
 
 initConnection();
 
@@ -30,7 +32,10 @@ export default function App() {
         <Route path="/forgetpassword" element={<ForgetPassword />} />
         <Route path="/resetpassword/:token" element={<ResetPassword />} />
         <Route path="/verifyemail/:token" element={<VerifyEmail />} />
-        <Route path="/*" element={<AppWrapper />} />
+        <Route exact path="/dashboard/*" element={<Dashboard />} />
+        <Route exact path="/class/:classId/*" element={<ClassSpace />} />
+        <Route exact path="/auth/*" element={<Auth />} />
+        <Route exact path="/*" element={<h1> not found app</h1>} />
       </Routes>
     </BrowserRouter>
   );

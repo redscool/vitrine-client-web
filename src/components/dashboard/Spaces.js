@@ -13,11 +13,12 @@ export default function Spaces() {
   const [popup, setPopup] = useState();
   const [classList, setClassList] = useState([]);
   const profileId = useSelector(authKeySelector("profileId"));
+  const type = useSelector(authKeySelector("type"));
   useEffect(() => {
     const body = { profileId };
     resource_request_with_access_token(
       "get",
-      "/api/teacher/getAllClasses",
+      `/api/${type}/getAllClasses`,
       body,
       ({ data: { classes } }) => {
         setClassList(classes);
@@ -33,12 +34,21 @@ export default function Spaces() {
       </div>
       {popup ? <AddSpace view={setPopup} /> : null}
       <div className={styles.content}>
-        <Button
-          label={"Add Space"}
-          handleClick={() => {
-            setPopup(!popup);
-          }}
-        />
+        {type === "TEACHER" ? (
+          <Button
+            label={"Add Space"}
+            handleClick={() => {
+              setPopup(!popup);
+            }}
+          />
+        ) : (
+          <Button
+            label={"Join Space"}
+            handleClick={() => {
+              setPopup(!popup);
+            }}
+          />
+        )}
         <div className={styles.classList}>
           {classList.map((classObj) => (
             <ClassTile classObj={classObj} />
