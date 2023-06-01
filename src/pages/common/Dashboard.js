@@ -6,14 +6,17 @@ import Tabs from "../../components/dashboard/Tabs";
 import styles from "../../styles/pages/Dashboard.module.css";
 import Home from "../../components/dashboard/Home";
 import Spaces from "../../components/dashboard/Spaces";
-import Calender from "../../components/dashboard/Calender";
 import Profile from "../../components/dashboard/Profile";
 import { useDispatch, useSelector } from "react-redux";
 import { authKeySelector } from "../../redux/authReducer";
 import { auth_request } from "../../utils/Service";
 import { setProfileKey } from "../../redux/profileReducer";
+import Calendar from "../../components/dashboard/Calendar";
 
 export default function Dashboard({ userType }) {
+  const year = new Date().getFullYear();
+  const month = new Date().getMonth() + 1;
+  console.log(new Date());
   const type = useSelector(authKeySelector("type"))?.toLowerCase();
   const profileId = useSelector(authKeySelector("profileId"));
   const navigate = useNavigate();
@@ -54,8 +57,8 @@ export default function Dashboard({ userType }) {
         </Tabs>
 
         <Tabs
-          link={`/dashboard/calender`}
-          selected={params["*"] === "calender"}
+          link={`/dashboard/calender/${year}/${month}`}
+          selected={params["*"].includes("calender")}
           navigate={navigate}
         >
           <p>Calender</p>
@@ -83,7 +86,7 @@ export default function Dashboard({ userType }) {
           <Route exact path="/home" element={<Home />} />
           <Route exact path="/" element={<Home />} />
           <Route exact path="/spaces" element={<Spaces />} />
-          <Route exact path="/calender" element={<Calender />} />
+          <Route exact path="/calender/:year/:month" element={<Calendar />} />
           <Route exact path="/profile" element={<Profile />} />
           <Route path="/*" element={<span> Not found </span>} />
         </Routes>

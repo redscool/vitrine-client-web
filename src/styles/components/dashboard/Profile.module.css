@@ -1,0 +1,18 @@
+.container {
+  width: 100vw;
+  height: 92vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  width: 100vw;
+  height: 8vh;
+  display: flex;
+}
+
+.title > p {
+  font-size: 25px;
+  font-weight: 900;
+  margin-left: 5vw;
+}
