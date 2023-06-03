@@ -65,7 +65,7 @@ export default function Calendar() {
                   year = year - 1;
                   month = 12;
                 }
-                navigate(`/dashboard/calender/${year}/${month}`);
+                navigate(`/dashboard/calendar/${year}/${month}`);
               }}
             />
           </div>
@@ -78,7 +78,7 @@ export default function Calendar() {
                   year = year - 0 + 1;
                   month = 1;
                 }
-                navigate(`/dashboard/calender/${year}/${month}`);
+                navigate(`/dashboard/calendar/${year}/${month}`);
               }}
             />
           </div>

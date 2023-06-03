@@ -16,3 +16,54 @@
   font-weight: 900;
   margin-left: 5vw;
 }
+
+.content {
+  height: 70vh;
+  margin: auto;
+  width: 60vw;
+  box-sizing: border-box;
+  backdrop-filter: blur(200px);
+  filter: blur();
+  box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.25);
+  background: rgb(255, 255, 255);
+  border-radius: 10px;
+}
+
+.editButtonContainer {
+  display: flex;
+  width: 4vw;
+  height: 6vh;
+  /* border: 1px solid red; */
+  cursor: pointer;
+  display: flex;
+  margin: auto 0 auto auto;
+}
+
+.editButtonContainer > img {
+  margin: auto;
+}
+
+.profile {
+  display: flex;
+  flex-direction: row;
+  width: 60vw;
+  height: 64vh;
+}
+
+.leftContainer {
+  display: flex;
+  width: 20vw;
+  height: 64vh;
+}
+
+.leftContainer > img {
+  width: 16vw;
+  border-radius: 8vw;
+  margin: auto;
+}
+
+.rightContainer {
+  width: 40vw;
+  height: 64vh;
+  border: 1px solid red;
+}

@@ -9,16 +9,19 @@ import Spaces from "../../components/dashboard/Spaces";
 import Profile from "../../components/dashboard/Profile";
 import { useDispatch, useSelector } from "react-redux";
 import { authKeySelector } from "../../redux/authReducer";
-import { auth_request } from "../../utils/Service";
+import {
+  auth_request,
+  resource_request_with_access_token,
+} from "../../utils/Service";
 import { setProfileKey } from "../../redux/profileReducer";
 import Calendar from "../../components/dashboard/Calendar";
 
 export default function Dashboard({ userType }) {
   const year = new Date().getFullYear();
   const month = new Date().getMonth() + 1;
-  console.log(new Date());
   const type = useSelector(authKeySelector("type"))?.toLowerCase();
   const profileId = useSelector(authKeySelector("profileId"));
+  const userId = useSelector(authKeySelector("userId"));
   const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() => {
@@ -30,6 +33,14 @@ export default function Dashboard({ userType }) {
       ({ data: { name, address } }) => {
         dispatch(setProfileKey(["name", name]));
       },
+      console.log
+    );
+    const eventBody = { userId };
+    resource_request_with_access_token(
+      "get",
+      "/api/event/allevents",
+      eventBody,
+      console.log,
       console.log
     );
   }, []);
@@ -57,11 +68,11 @@ export default function Dashboard({ userType }) {
         </Tabs>
 
         <Tabs
-          link={`/dashboard/calender/${year}/${month}`}
-          selected={params["*"].includes("calender")}
+          link={`/dashboard/calendar/${year}/${month}`}
+          selected={params["*"].includes("calendar")}
           navigate={navigate}
         >
-          <p>Calender</p>
+          <p>Calendar</p>
         </Tabs>
 
         <Tabs
@@ -86,7 +97,7 @@ export default function Dashboard({ userType }) {
           <Route exact path="/home" element={<Home />} />
           <Route exact path="/" element={<Home />} />
           <Route exact path="/spaces" element={<Spaces />} />
-          <Route exact path="/calender/:year/:month" element={<Calendar />} />
+          <Route exact path="/calendar/:year/:month" element={<Calendar />} />
           <Route exact path="/profile" element={<Profile />} />
           <Route path="/*" element={<span> Not found </span>} />
         </Routes>

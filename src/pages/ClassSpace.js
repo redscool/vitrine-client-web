@@ -5,7 +5,7 @@ import Tabs from "../components/dashboard/Tabs";
 import Home from "../components/dashboard/Home";
 import Spaces from "../components/dashboard/Spaces";
 import Profile from "../components/dashboard/Profile";
-import Calender from "../components/class/Calender";
+import Calendar from "../components/class/Calendar";
 import styles from "../styles/pages/Dashboard.module.css";
 import DropDown from "../components/dashboard/DropDown";
 export default function ClassSpace() {
@@ -43,15 +43,17 @@ export default function ClassSpace() {
           <p>Excercise</p>
         </Tabs>
 
-        <Tabs link={`/class/${classId}/calender`} navigate={navigate}>
+        <Tabs link={`/class/${classId}/chat`} navigate={navigate}>
           <div className={styles.chatButton}>
             <img src="/resources/chatButton.svg" alt="chat button icon" />
           </div>
         </Tabs>
+        <Tabs link={`/class/${classId}/calendar`} navigate={navigate}>
+          <div className={styles.calendarButton}>
+            <img src="/resources/calendar.svg" alt="calendar icon" />
+          </div>
+        </Tabs>
 
-        <div className={styles.calenderButton}>
-          <img src="/resources/calender.svg" alt="calender icon" />
-        </div>
         <div
           className={styles.dragDownButton}
           onClick={() => {
@@ -67,7 +69,7 @@ export default function ClassSpace() {
           <Route exact path="/" element={<span>home</span>} />
           <Route exact path="/shelf" element={<span>shelf</span>} />
           <Route exact path="/excercise" element={<span>Excercise</span>} />
-          <Route exact path="/calender" element={<Calender />} />
+          <Route exact path="/calendar" element={<Calendar />} />
           <Route path="/*" element={<> Not found </>} />
         </Routes>
       </div>
