@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { auth_request } from "../utils/Service";
 import TextBox from "../components/form/Textbox";
 import Button from "../components/form/Button";
-import { useDispatch, useSelector } from "react-redux";
-import { authKeySelector, setAuthKey } from "../redux/authReducer";
+import { useDispatch } from "react-redux";
+import { setAuthKey } from "../redux/authReducer";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -24,7 +24,7 @@ export default function Login() {
           const value = data[key];
           dispatch(setAuthKey([key, value]));
         }
-        navigate(`/${data.type.toLowerCase()}/dashboard/`);
+        navigate(`/dashboard/`);
       },
       console.log
     );

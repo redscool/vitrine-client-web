@@ -21,9 +21,12 @@ export default function Calendar() {
   ];
   const [datesArray, setDatesArray] = useState(null);
   let month = useParams().month - 1;
-  let year = useParams().year;
+  let year = useParams().year - 0;
+  if (!year) year = new Date().getFullYear();
+  if (!month) month = new Date().getMonth();
   const days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
   useEffect(() => {
+    console.log(year, month);
     const array = [];
     const firstDayOfMonth = new Date(year, month).getDay();
     const firstDateOfMonth = new Date(year, month);
@@ -48,8 +51,8 @@ export default function Calendar() {
       temp.push(tempAr);
     }
     setDatesArray(temp);
-  }, [month]);
-
+  }, [month, year]);
+  console.log(year, month);
   return (
     <div className={styles.container}>
       <div className={styles.title}>
@@ -61,7 +64,7 @@ export default function Calendar() {
             <CircularButton
               label="<"
               handleClick={() => {
-                if (month == 0) {
+                if (month === 0) {
                   year = year - 1;
                   month = 12;
                 }

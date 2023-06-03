@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { auth_request } from "../utils/Service";
 import { useDispatch } from "react-redux";
@@ -10,7 +10,6 @@ export default function VerifyEmail() {
   const dispatch = useDispatch();
 
   const { token } = params;
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     console.log(token);
@@ -24,17 +23,10 @@ export default function VerifyEmail() {
           dispatch(setAuthKey([key, value]));
         }
 
-        navigate(`/${data.type}/dashboard/`);
+        navigate(`/dashboard/`);
       },
       console.log
     );
   }, []);
-  return (
-    <div>
-      {loading ? <h1>Loading</h1> : <h1>Verified</h1>}
-      {/* <div className={styles.signupButton}> */}
-      <p>Login in again</p>
-      {/* </div> */}
-    </div>
-  );
+  return <div></div>;
 }

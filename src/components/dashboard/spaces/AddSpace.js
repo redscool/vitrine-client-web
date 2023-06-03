@@ -2,18 +2,22 @@ import Textbox from "../../form/Textbox";
 import Button from "../../form/Button";
 import styles from "../../../styles/components/dashboard/spaces/AddSpace.module.css";
 import { useState } from "react";
-import { auth_request } from "../../../utils/Service";
+import {
+  auth_request,
+  resource_request_with_access_token,
+} from "../../../utils/Service";
 import { useSelector } from "react-redux";
 import { authKeySelector } from "../../../redux/authReducer";
 export default function AddSpace(props) {
-  const { view, item } = props;
+  const { view, setClassList } = props;
   const [className, setClassName] = useState();
   const profileId = useSelector(authKeySelector("profileId"));
+  const type = useSelector(authKeySelector("type"));
   return (
     <div className={styles.containerPopup}>
       <div className={styles.popup}>
         <img src="/close.png" alt="cancel" onClick={() => view(false)} />
-        <h1>Task</h1>
+        <h1>Add Class</h1>
         <div className={styles.topCtn}>
           <Textbox
             label="Class Name"
@@ -30,7 +34,20 @@ export default function AddSpace(props) {
                   profileId,
                   title: className,
                 },
-                console.log,
+                (response) => {
+                  const body = { profileId };
+                  resource_request_with_access_token(
+                    "get",
+                    `/api/${type}/getAllClasses`,
+                    body,
+                    ({ data: { classes } }) => {
+                      setClassList(classes);
+                      console.log(classes);
+                    }
+                  );
+                  view(false);
+                  console.log(response);
+                },
                 console.log
               );
             }}

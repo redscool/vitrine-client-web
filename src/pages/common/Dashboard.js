@@ -98,6 +98,7 @@ export default function Dashboard({ userType }) {
           <Route exact path="/" element={<Home />} />
           <Route exact path="/spaces" element={<Spaces />} />
           <Route exact path="/calendar/:year/:month" element={<Calendar />} />
+          <Route exact path="/calendar" element={<Calendar />} />
           <Route exact path="/profile" element={<Profile />} />
           <Route path="/*" element={<span> Not found </span>} />
         </Routes>
