@@ -1,0 +1,54 @@
+.cardContainer {
+  margin: 0.5vh auto;
+  width: 32vw;
+  height: 15vh;
+  background-color: tomato;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+}
+
+.time {
+  margin-top: 0.5vh;
+  width: 32vw;
+  height: 3vh;
+  display: flex;
+}
+
+.time > p {
+  margin: auto;
+  font-size: 2vh;
+}
+
+.title {
+  width: 32vw;
+  height: 4vh;
+  display: flex;
+}
+
+.title > p {
+  margin: auto;
+  font-size: 3vh;
+}
+
+.description {
+  width: 30vw;
+  height: 7vh;
+  display: flex;
+  overflow-y: scroll;
+  margin: auto;
+}
+
+.description > p {
+  margin: auto;
+  font-size: 2vh;
+}
+
+.description::-webkit-scrollbar {
+  width: 0.3vw;
+}
+
+.description::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 0.5rem;
+}

@@ -2,8 +2,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import styles from "../../styles/components/dashboard/Calendar.module.css";
 import { useEffect, useState } from "react";
 import CircularButton from "../form/CircularButton";
+import EventsPopUp from "./calendar/EventsPopUp";
 
 export default function Calendar() {
+  const [eventsPopup, setEventsPopup] = useState();
   const navigate = useNavigate();
   const months = [
     "JANUARY",
@@ -24,9 +26,9 @@ export default function Calendar() {
   let year = useParams().year - 0;
   if (!year) year = new Date().getFullYear();
   if (!month) month = new Date().getMonth();
+  console.log(eventsPopup);
   const days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
   useEffect(() => {
-    console.log(year, month);
     const array = [];
     const firstDayOfMonth = new Date(year, month).getDay();
     const firstDateOfMonth = new Date(year, month);
@@ -52,12 +54,12 @@ export default function Calendar() {
     }
     setDatesArray(temp);
   }, [month, year]);
-  console.log(year, month);
   return (
     <div className={styles.container}>
       <div className={styles.title}>
         <p>Calendar</p>
       </div>
+      {eventsPopup ? <EventsPopUp view={setEventsPopup} /> : null}
       <div className={styles.calendar}>
         <div className={styles.calendarTitle}>
           <div className={styles.prevButton}>
@@ -100,7 +102,12 @@ export default function Calendar() {
           {datesArray?.map((row, i) => (
             <div className={styles.row} key={i}>
               {row.map((date, j) => (
-                <div className={styles.dateCard} key={j}>
+                <div
+                  className={styles.dateCard}
+                  onClick={() => {
+                    setEventsPopup(date);
+                  }}
+                >
                   <p>{date}</p>
                 </div>
               ))}

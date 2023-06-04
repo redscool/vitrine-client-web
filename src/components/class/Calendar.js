@@ -31,7 +31,6 @@ export default function Calendar() {
     authKeySelector("googleAuth")
   )?.access_token;
 
-  console.log(googleAccessToken);
   return (
     <div styles="width:60vw; height:90vh">
       <Button label="Add Call" handleClick={() => setPopUp(true)} />
