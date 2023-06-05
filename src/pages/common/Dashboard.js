@@ -15,6 +15,7 @@ import {
 } from "../../utils/Service";
 import { setProfileKey } from "../../redux/profileReducer";
 import Calendar from "../../components/dashboard/Calendar";
+import { setEventsKey } from "../../redux/eventsReducer";
 
 export default function Dashboard({ userType }) {
   const year = new Date().getFullYear();
@@ -32,6 +33,7 @@ export default function Dashboard({ userType }) {
       body,
       ({ data: { name, address } }) => {
         dispatch(setProfileKey(["name", name]));
+        dispatch(setProfileKey(["address", address]));
       },
       console.log
     );
@@ -40,7 +42,10 @@ export default function Dashboard({ userType }) {
       "get",
       "/api/event/allevents",
       eventBody,
-      console.log,
+      ({ data }) => {
+        console.log(data);
+        dispatch(setEventsKey(["events", data]));
+      },
       console.log
     );
   }, []);

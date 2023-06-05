@@ -7,8 +7,6 @@ import { authKeySelector } from "../../../redux/authReducer";
 import EventsCard from "./EventsCard";
 export default function EventsPopUp(props) {
   const { view, date } = props;
-  const [className, setClassName] = useState();
-  const type = useSelector(authKeySelector("type"));
   return (
     <div className={styles.containerPopup}>
       <div className={styles.popup}>

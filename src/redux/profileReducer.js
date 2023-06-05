@@ -11,7 +11,6 @@ export const profileSlice = createSlice({
   reducers: {
     setProfileKey: (state, action) => {
       const [key, value] = action.payload;
-      console.log(action.payload);
       state[key] = value;
     },
   },
