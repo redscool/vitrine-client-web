@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Branding from "../components/Branding";
 import { Route, Routes, useNavigate, useParams } from "react-router-dom";
 import Tabs from "../components/dashboard/Tabs";
-import Home from "../components/dashboard/Home";
+import Home from "../components/class/Home";
 import Spaces from "../components/dashboard/Spaces";
 import Profile from "../components/dashboard/Profile";
 import Calendar from "../components/class/Calendar";
@@ -66,7 +66,7 @@ export default function ClassSpace() {
 
       <div className={styles.mainContainer}>
         <Routes>
-          <Route exact path="/" element={<span>home</span>} />
+          <Route exact path="/" element={<Home />} />
           <Route exact path="/shelf" element={<span>shelf</span>} />
           <Route exact path="/excercise" element={<span>Excercise</span>} />
           <Route exact path="/calendar" element={<Calendar />} />

@@ -43,8 +43,7 @@ export default function Dashboard({ userType }) {
       "/api/event/allevents",
       eventBody,
       ({ data }) => {
-        console.log(data);
-        dispatch(setEventsKey(["events", data]));
+        dispatch(setEventsKey([data]));
       },
       console.log
     );

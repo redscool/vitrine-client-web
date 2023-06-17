@@ -1,19 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
-  events: {},
-};
+const initialState = {};
 
 export const eventsSlice = createSlice({
   name: "events",
   initialState,
   reducers: {
     setEventsKey: (state, action) => {
-      state["events"] = {};
-      const [key, array] = action.payload;
-      console.log(array);
+      const [array] = action.payload;
       array.forEach((element) => {
-        console.log(element);
+        const startDay = element["startTime"].substr(0, 10);
+        if (!(startDay in state)) state[startDay] = [];
+        state[startDay]?.push(element);
       });
     },
     resetEvents: (state) => {
@@ -26,6 +24,6 @@ export const eventsSlice = createSlice({
 
 export const { setEventsKey, resetEvents } = eventsSlice.actions;
 
-export const eventsKeySelector = (key) => (state) => state[key];
+export const eventsKeySelector = (key) => (state) => state.events[key];
 
 export default eventsSlice.reducer;

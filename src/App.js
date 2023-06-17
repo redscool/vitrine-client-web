@@ -21,6 +21,7 @@ export default function App() {
   const THEME = useSelector(themeSelector);
   useEffect(() => {
     document.body.className = THEME;
+    emit();
   }, []);
 
   return (

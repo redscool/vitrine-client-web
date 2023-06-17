@@ -1,11 +1,11 @@
 import io from "socket.io-client";
+import { notifyMe } from "./BrowserNotification";
 
 const URL = "http://localhost:5000";
 let socket;
 
 const listen = () => {
-  socket.on("reply", console.log);
-  socket.on("eventNotification", console.log);
+  socket.on("reply", notifyMe);
 };
 
 export const initConnection = () => {

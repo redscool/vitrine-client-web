@@ -7,7 +7,7 @@ import { setTheme, themeSelector } from "../../redux/settingReducer";
 import { useNavigate } from "react-router-dom";
 import { auth_request } from "../../utils/Service";
 import { authKeySelector, resetAuth } from "../../redux/authReducer";
-
+import { notifyMe } from "../../utils/BrowserNotification";
 export default function DropDown() {
   const navigate = useNavigate();
   const THEME = useSelector(themeSelector);
@@ -46,6 +46,13 @@ export default function DropDown() {
             onToggle={onThemeToggle}
           />
         }
+      />
+      <Option
+        label="push notification"
+        icon="/resources/Darkmode.png"
+        handleClick={() => {
+          notifyMe();
+        }}
       />
     </div>
   );
