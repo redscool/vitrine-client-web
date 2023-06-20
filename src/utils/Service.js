@@ -2,6 +2,8 @@ import axios from "axios";
 import config from "../config.json";
 
 const SERVER = config.SERVER;
+const FILE_SERVER = config.FILE_SERVER;
+
 
 const getUpdatedRoute = (route, body) => {
   let newRoute = route;
@@ -93,6 +95,36 @@ export const resource_request_with_access_token = async (
   }
 
   axios[method](`${SERVER}${route}`, body, config)
+    .then((response) => {
+      onSuccess(response);
+    })
+    .catch((err) => {
+      onError(err);
+    });
+};
+
+export const file_server_request = async (
+  method,
+  route,
+  body,
+  onSuccess,
+  onError
+) => {
+  const token = localStorage.getItem("accessToken");
+
+  const config = {
+    headers: {
+      Authorization: token,
+      'Content-Type': 'multipart/form-data'
+    },
+  };
+
+  if (method === "get") {
+    route = getUpdatedRoute(route, body);
+    body = config;
+  }
+
+  axios[method](`${FILE_SERVER}${route}`, body, config)
     .then((response) => {
       onSuccess(response);
     })
