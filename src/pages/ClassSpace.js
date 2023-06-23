@@ -3,19 +3,20 @@ import Branding from "../components/Branding";
 import { Route, Routes, useNavigate, useParams } from "react-router-dom";
 import Tabs from "../components/dashboard/Tabs";
 import Home from "../components/class/Home";
-import Spaces from "../components/dashboard/Spaces";
-import Profile from "../components/dashboard/Profile";
 import Calendar from "../components/class/Calendar";
 import styles from "../styles/pages/Dashboard.module.css";
 import DropDown from "../components/dashboard/DropDown";
+import Chatbox from "../components/class/Chatbox";
 export default function ClassSpace() {
   const navigate = useNavigate();
   const params = useParams();
   const [isDropDown, setIsDropDown] = useState(false);
+  const [isChatboxOpen, setIsChatboxOpen] = useState(false);
   const classId = params.classId;
   return (
     <div className={styles.page}>
       {isDropDown ? <DropDown /> : null}
+      {isChatboxOpen ? <Chatbox /> : null}
       <div className={styles.navbar}>
         <Branding />
         <Tabs
@@ -42,12 +43,14 @@ export default function ClassSpace() {
         >
           <p>Excercise</p>
         </Tabs>
-
-        <Tabs link={`/class/${classId}/chat`} navigate={navigate}>
-          <div className={styles.chatButton}>
-            <img src="/resources/chatButton.svg" alt="chat button icon" />
-          </div>
-        </Tabs>
+        <div
+          className={styles.dragDownButton}
+          onClick={() => {
+            setIsChatboxOpen(!isChatboxOpen);
+          }}
+        >
+          <img src="/resources/chatButton.svg" alt="chat button icon" />
+        </div>
         <Tabs link={`/class/${classId}/calendar`} navigate={navigate}>
           <div className={styles.calendarButton}>
             <img src="/resources/calendar.svg" alt="calendar icon" />
