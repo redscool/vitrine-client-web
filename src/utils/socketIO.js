@@ -1,16 +1,22 @@
 import io from "socket.io-client";
-import { notifyMe } from "./BrowserNotification";
+import listenChatEvents from "./notification/chat";
 
 const URL = "http://localhost:5000";
+const SOCKET_TOKEN = "SOCKET_TOKEN";
+
 let socket;
 
-const listen = () => {
-  socket.on("reply", notifyMe);
+const listenAllEvents = (dispatch) => {
+  listenChatEvents(dispatch);
 };
 
-export const initConnection = () => {
-  socket = io(URL);
-  listen();
+export const initConnection = (dispatch) => {
+  socket = io(URL, {
+    auth: {
+      token: SOCKET_TOKEN
+    }
+  });
+  listenAllEvents(dispatch);
 };
 
 export const disconnect = () => {
@@ -18,8 +24,13 @@ export const disconnect = () => {
 };
 
 export const emit = (event, data) => {
-  if (!socket || !socket.connected) return;
+  if (!socket || !socket.connected) return false;
   socket.emit(event, data);
+  return true;
+};
+
+export const listen = (event, action) => {
+  socket.on(event, action);
 };
 
 export const emitForcefully = (event, data) => {
