@@ -4,10 +4,9 @@ import Login from "./pages/Login";
 import VerifyEmail from "./pages/VerifyEmail";
 import ResetPassword from "./pages/ResetPassword";
 import ForgetPassword from "./pages/ForgetPassword";
-import { emit, emitForcefully, initConnection } from "./utils/socketIO";
-
+import { initConnection } from "./utils/socketIO";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { themeSelector } from "./redux/settingReducer";
 import { useEffect } from "react";
 import "./App.css";
@@ -15,13 +14,14 @@ import ClassSpace from "./pages/ClassSpace";
 import Dashboard from "./pages/common/Dashboard";
 import Auth from "./pages/Auth";
 
-initConnection();
-
 export default function App() {
+  const dispatch = useDispatch();
   const THEME = useSelector(themeSelector);
+
   useEffect(() => {
     document.body.className = THEME;
-    emit();
+    // TODO: verify connection stability on useEffect
+    initConnection(dispatch);
   }, []);
 
   return (
