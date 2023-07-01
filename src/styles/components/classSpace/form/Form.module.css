@@ -1,0 +1,6 @@
+.container {
+  width: 100vw;
+  height: 92vh;
+  background-color: rgba(226, 224, 255, 0.445);
+  overflow-y: auto;
+}

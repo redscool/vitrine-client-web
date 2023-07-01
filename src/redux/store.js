@@ -3,6 +3,7 @@ import settingReducer from "./settingReducer";
 import authReducer from "./authReducer";
 import profileReducer from "./profileReducer";
 import eventsReducer from "./eventsReducer";
+import chatReducer from "./chatReducer";
 
 export default configureStore({
   reducer: {
@@ -10,5 +11,6 @@ export default configureStore({
     auth: authReducer,
     profile: profileReducer,
     events: eventsReducer,
+    chat: chatReducer,
   },
 });
