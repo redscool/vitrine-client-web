@@ -10,12 +10,16 @@ const listenAllEvents = (dispatch) => {
   listenChatEvents(dispatch);
 };
 
-export const initConnection = (dispatch) => {
+export const initConnection = (dispatch, props) => {
+  const { profileId, type } = props;
   socket = io(URL, {
     auth: {
-      token: SOCKET_TOKEN
-    }
+      token: SOCKET_TOKEN,
+      profileId,
+      type,
+    },
   });
+
   listenAllEvents(dispatch);
 };
 

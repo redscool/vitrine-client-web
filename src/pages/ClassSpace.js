@@ -7,6 +7,7 @@ import Calendar from "../components/class/Calendar";
 import styles from "../styles/pages/Dashboard.module.css";
 import DropDown from "../components/dashboard/DropDown";
 import Chatbox from "../components/class/Chatbox";
+import Excercise from "../components/class/Excercise";
 export default function ClassSpace() {
   const navigate = useNavigate();
   const params = useParams();
@@ -71,7 +72,7 @@ export default function ClassSpace() {
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route exact path="/shelf" element={<span>shelf</span>} />
-          <Route exact path="/excercise" element={<span>Excercise</span>} />
+          <Route exact path="/excercise" element={<Excercise />} />
           <Route exact path="/calendar" element={<Calendar />} />
           <Route path="/*" element={<> Not found </>} />
         </Routes>

@@ -13,15 +13,18 @@ import "./App.css";
 import ClassSpace from "./pages/ClassSpace";
 import Dashboard from "./pages/common/Dashboard";
 import Auth from "./pages/Auth";
+import { authKeySelector } from "./redux/authReducer";
 
 export default function App() {
   const dispatch = useDispatch();
   const THEME = useSelector(themeSelector);
+  const profileId = useSelector(authKeySelector("profileId"));
+  const type = useSelector(authKeySelector("type"));
 
   useEffect(() => {
     document.body.className = THEME;
     // TODO: verify connection stability on useEffect
-    initConnection(dispatch);
+    initConnection(dispatch, { profileId, type });
   }, []);
 
   return (
