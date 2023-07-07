@@ -7,6 +7,7 @@ import Textbox from "../form/Textbox";
 import { resource_request_with_access_token } from "../../utils/Service";
 import { useSelector } from "react-redux";
 import { authKeySelector } from "../../redux/authReducer";
+import { googleAuth } from "../GoogleAuth";
 
 const stringifiedParams = queryString.stringify(config.GOOGLE_EVENT);
 const googleLoginUrl = `https://accounts.google.com/o/oauth2/v2/auth?${stringifiedParams}`;
@@ -37,13 +38,7 @@ export default function Calendar() {
       {popUp ? (
         <Button
           label="Login with google"
-          handleClick={() => {
-            localStorage.setItem(
-              "googleAuthRedirect",
-              window.location.pathname + window.location.search
-            );
-            window.location.replace(googleLoginUrl);
-          }}
+          handleClick={googleAuth}
         />
       ) : (
         <></>

@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../styles/pages/Login.module.css";
 import { useNavigate } from "react-router-dom";
 import { auth_request } from "../utils/Service";
 import TextBox from "../components/form/Textbox";
 import Button from "../components/form/Button";
-import { useDispatch } from "react-redux";
-import { setAuthKey } from "../redux/authReducer";
+import { useDispatch, useSelector } from "react-redux";
+import { authKeySelector, setAuthKey } from "../redux/authReducer";
+import GoogleAuth from "../components/GoogleAuth";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -13,6 +14,8 @@ export default function Login() {
 
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+
+  const verifyProfileToken = useSelector(authKeySelector('verifyProfileToken'));
 
   const clickLogin = () => {
     auth_request(
@@ -29,6 +32,11 @@ export default function Login() {
       console.log
     );
   };
+
+  useEffect(() => {
+    if (verifyProfileToken)
+      navigate('/signup');
+  }, [verifyProfileToken, navigate])
 
   return (
     <div className={styles.mainPage}>
@@ -47,6 +55,7 @@ export default function Login() {
             navigate("/forgetpassword");
           }}
         />
+        <GoogleAuth />
       </div>
     </div>
   );
