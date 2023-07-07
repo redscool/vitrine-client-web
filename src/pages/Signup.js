@@ -6,6 +6,7 @@ import { auth_request } from "../utils/Service";
 import Textbox from "../components/form/Textbox";
 import Button from "../components/form/Button";
 import Select from "../components/form/Select";
+import { authKeySelector } from "../redux/authReducer";
 
 export default function Signup() {
   const [email, setEmail] = useState("");
@@ -15,6 +16,29 @@ export default function Signup() {
   const [success, setSuccess] = useState(false);
 
   const THEME = useSelector(themeSelector);
+  const verifyProfileToken = useSelector(authKeySelector('verifyProfileToken'));
+  
+  const googleSignup = () => {
+    if (!type) {
+      alert("Please Select a type");
+      return;
+    }
+    let temp_type = "TEACHER";
+    if (type == 2) temp_type = "STUDENT";
+    console.log(type);
+    const body = { verifyProfileToken, type: temp_type };
+    auth_request(
+      "post",
+      "/api/auth/user/verifyProfile",
+      body,
+      (res) => {
+        setSuccess(true);
+        console.log(res.data);
+      },
+      console.log
+    );
+  };
+
   const signupHandleClick = () => {
     if (password !== cpassword) {
       alert("Password didn't match");
@@ -39,6 +63,24 @@ export default function Signup() {
       console.log
     );
   };
+
+  if (verifyProfileToken) {
+    return (
+      <div className={styles.mainPage}>
+      <div className={styles.form}>
+      <h1>Please select a role to continue</h1>
+        <Select
+          options={["TEACHER", "STUDENT"]}
+          label="Type"
+          selectedItem={type}
+          setSelectedItem={setType}
+        ></Select>
+        <Button label="Sign Up" handleClick={googleSignup}></Button>
+      </div>
+    </div>
+    )
+  }
+
   return (
     <div className={styles.mainPage}>
       <div className={styles.form}>

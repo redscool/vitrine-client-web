@@ -1,5 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const getGoogleAuthLocalStorage = () => {
+  try {
+    return JSON.parse(localStorage.getItem("googleAuth"));
+  } catch (err) {
+    return null;
+  }
+}
+
+// TODO: JSON.parse global fail safe
 const initialState = {
   accessToken: localStorage.getItem("accessToken"),
   refreshToken: localStorage.getItem("refreshToken"),
@@ -7,7 +16,7 @@ const initialState = {
   profileId: localStorage.getItem("profileId"),
   type: localStorage.getItem("type"),
   email: localStorage.getItem("email"),
-  googleAuth: null,
+  googleAuth: getGoogleAuthLocalStorage(),
 };
 
 export const authSlice = createSlice({
@@ -27,7 +36,10 @@ export const authSlice = createSlice({
       }
     },
     setGoogleAuth: (state, action) => {
-      state.googleAuth = action.payload;
+      const googleAuth = action.payload;
+
+      state.googleAuth = googleAuth;
+      localStorage.setItem('googleAuth', JSON.stringify(googleAuth));
     },
   },
 });
