@@ -6,11 +6,12 @@ const getGoogleAuthLocalStorage = () => {
   } catch (err) {
     return null;
   }
-}
+};
 
 // TODO: JSON.parse global fail safe
 const initialState = {
   accessToken: localStorage.getItem("accessToken"),
+  dataToken: localStorage.getItem("dataToken"),
   refreshToken: localStorage.getItem("refreshToken"),
   userId: localStorage.getItem("userId"),
   profileId: localStorage.getItem("profileId"),
@@ -39,7 +40,7 @@ export const authSlice = createSlice({
       const googleAuth = action.payload;
 
       state.googleAuth = googleAuth;
-      localStorage.setItem('googleAuth', JSON.stringify(googleAuth));
+      localStorage.setItem("googleAuth", JSON.stringify(googleAuth));
     },
   },
 });

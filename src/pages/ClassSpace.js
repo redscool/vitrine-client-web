@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Branding from "../components/Branding";
 import { Route, Routes, useNavigate, useParams } from "react-router-dom";
 import Tabs from "../components/dashboard/Tabs";
@@ -8,12 +8,27 @@ import styles from "../styles/pages/Dashboard.module.css";
 import DropDown from "../components/dashboard/DropDown";
 import Chatbox from "../components/class/Chatbox";
 import Excercise from "../components/class/Excercise";
+import { resource_request_with_access_token } from "../utils/Service";
+import { useDispatch } from "react-redux";
+import { initChat } from "../redux/chatReducer";
 export default function ClassSpace() {
   const navigate = useNavigate();
   const params = useParams();
   const [isDropDown, setIsDropDown] = useState(false);
   const [isChatboxOpen, setIsChatboxOpen] = useState(false);
   const classId = params.classId;
+  const dispatch = useDispatch();
+  useEffect(() => {
+    resource_request_with_access_token(
+      "get",
+      "/api/class/essential/getMessages",
+      { classId },
+      ({ data }) => {
+        dispatch(initChat({ messages: data.data, classId }));
+      },
+      console.log
+    );
+  });
   return (
     <div className={styles.page}>
       {isDropDown ? <DropDown /> : null}
