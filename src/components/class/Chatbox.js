@@ -7,12 +7,14 @@ import { emit } from "../../utils/socketIO";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { chatByClassIdSelector } from "../../redux/chatReducer";
+import { authKeySelector } from "../../redux/authReducer";
 export default function Chatbox() {
   const params = useParams();
   const classId = params.classId;
   const [isChat, setIsChat] = useState(true);
   const [message, setMessage] = useState("");
   const messageArray = useSelector(chatByClassIdSelector(classId));
+  const dataToken = useSelector(authKeySelector("dataToken"));
   const memberArray = ["ess", "ess"];
   return (
     <div className={styles.container}>
@@ -33,12 +35,14 @@ export default function Chatbox() {
       <div className={styles.content}>
         {isChat ? (
           <>
-            {messageArray?.map((e, inx) => (
-              <MessageContainer
-                message={e.message}
-                profilePic="/tempuser.jpg"
-              />
-            ))}
+            <div className={styles.messagesContainer}>
+              {messageArray?.map((e, inx) => (
+                <MessageContainer
+                  message={e.message}
+                  profilePic={e.senderProfilePicture}
+                />
+              ))}
+            </div>
             <Textbox
               label="Type your Message"
               type="text"
@@ -48,7 +52,8 @@ export default function Chatbox() {
             <Button
               label="send"
               handleClick={() => {
-                emit("chat-message-send", { message, classId });
+                setMessage("");
+                emit("chat-message-send", { message, classId, dataToken });
               }}
             />
           </>

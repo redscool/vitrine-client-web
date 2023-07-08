@@ -6,13 +6,15 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { GOOGLE_AUTH_ACTION, LOCALSTORAGE_KEYS } from "../constants";
 
-async function getAccessToken (code, dispatch, navigate) {
+async function getAccessToken(code, dispatch, navigate) {
   resource_request_with_access_token(
     "post",
     "/api/auth/access/googleAuth",
     { code },
     ({ data: { googleAuth } }) => {
-      const redirectUrl = localStorage.getItem(LOCALSTORAGE_KEYS.googleAuthRedirect);
+      const redirectUrl = localStorage.getItem(
+        LOCALSTORAGE_KEYS.googleAuthRedirect
+      );
       localStorage.removeItem(LOCALSTORAGE_KEYS.googleAuthAction);
       localStorage.removeItem(LOCALSTORAGE_KEYS.googleAuthRedirect);
       dispatch(setGoogleAuth(googleAuth));
@@ -22,37 +24,43 @@ async function getAccessToken (code, dispatch, navigate) {
   );
 }
 
-async function login (code, dispatch, navigate) {
+async function login(code, dispatch, navigate) {
   resource_request_with_access_token(
     "post",
     "/api/auth/user/googleLogin",
     { code },
-    ({ data: { 
-      googleAuth,
-      verifyProfileToken,
-      accessToken,
-      refreshToken,
-      type,
-      userId,
-      profileId,
-      email,
-     } }) => {
+    ({
+      data: {
+        googleAuth,
+        verifyProfileToken,
+        accessToken,
+        refreshToken,
+        type,
+        userId,
+        profileId,
+        email,
+        dataToken,
+      },
+    }) => {
       console.log(googleAuth);
-      const redirectUrl = localStorage.getItem(LOCALSTORAGE_KEYS.googleAuthRedirect);
+      const redirectUrl = localStorage.getItem(
+        LOCALSTORAGE_KEYS.googleAuthRedirect
+      );
       localStorage.removeItem(LOCALSTORAGE_KEYS.googleAuthAction);
       localStorage.removeItem(LOCALSTORAGE_KEYS.googleAuthRedirect);
 
       dispatch(setGoogleAuth(googleAuth));
 
       if (verifyProfileToken) {
-        dispatch(setAuthKey(['verifyProfileToken', verifyProfileToken]));
+        dispatch(setAuthKey(["verifyProfileToken", verifyProfileToken]));
       } else {
-        dispatch(setAuthKey(['accessToken', accessToken]));
-        dispatch(setAuthKey(['refreshToken', refreshToken]));
-        dispatch(setAuthKey(['type', type]));
-        dispatch(setAuthKey(['userId', userId]));
-        dispatch(setAuthKey(['profileId', profileId]));
-        dispatch(setAuthKey(['email', email]));
+        dispatch(setAuthKey(["accessToken", accessToken]));
+        dispatch(setAuthKey(["refreshToken", refreshToken]));
+        dispatch(setAuthKey(["type", type]));
+        dispatch(setAuthKey(["userId", userId]));
+        dispatch(setAuthKey(["profileId", profileId]));
+        dispatch(setAuthKey(["email", email]));
+        dispatch(setAuthKey(["dataToken", dataToken]));
       }
 
       navigate(redirectUrl);
