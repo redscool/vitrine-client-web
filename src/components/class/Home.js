@@ -4,6 +4,11 @@ import Editor from "../Editor";
 import { resource_request_with_access_token } from "../../utils/Service";
 export default function Home() {
   const [editorContent, setEditorContent] = useState();
+  const [editorContentText, setEditorContentText] = useState('');
+
+  const setEditorText = editorText => {
+    setEditorContentText(editorText)
+  }
 
   const setEditorData = editorData => {
     setEditorContent(editorData)
@@ -32,6 +37,7 @@ export default function Home() {
             <Editor
               expand
               setEditorContent={setEditorData}
+              setEditorContentText={setEditorText}
             />
             <button onClick={handleSubmit}>Submit</button>
           </div>
