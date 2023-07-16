@@ -106,9 +106,11 @@ const EditorComponent = (props) => {
 
   const {
     expand,
+    readOnly,
     setShowPopup,
     defaultContent,
     setEditorContent,
+    setEditorContentText,
     editorProps,
     placeholder = "Type text here, select for formating",
     theme = "bubble",
@@ -141,6 +143,7 @@ const EditorComponent = (props) => {
     const editorContent = editorObject.editor.delta;
 
     setEditorContent(editorContent);
+    setEditorContentText(editorObject.getText())
   };
 
   const {
@@ -153,6 +156,18 @@ const EditorComponent = (props) => {
     });
   }, []);
 
+  if (readOnly) {
+    return <ReactQuill
+      ref={reactQuill}
+      modules={{
+        formula: true,
+      }}
+      defaultValue={defaultContent}
+      theme={"bubble"}
+      readOnly={readOnly}
+    />
+  }
+
   return (
     <ReactQuill
       ref={reactQuill}
@@ -161,6 +176,7 @@ const EditorComponent = (props) => {
       onChange={handleChange}
       placeholder={placeholder}
       theme={theme}
+      readOnly={readOnly}
       {...editorProps}
     />
   );
@@ -198,7 +214,7 @@ function PopUp({ setShowPopup }) {
       "post",
       "/uploadFile",
       formData,
-      ({data: {filename}}) => {
+      ({ data: { filename } }) => {
         if (filename) {
           const url = `${FILE_SERVER}/getFile?id=${filename}`
           editor.insertEmbed(editorRange.index, 'image', url, Quill.sources.USER);
@@ -248,11 +264,13 @@ function PopUp({ setShowPopup }) {
   )
 }
 
-export default function Editor({ expand, defaultContent, setEditorContent }) {
+export default function Editor({ expand, readOnly, defaultContent, setEditorContent, setEditorContentText }) {
   const [showPopup, setShowPopup] = useState(false);
 
   const defaultProps = {
+    readOnly,
     setEditorContent,
+    setEditorContentText,
     defaultContent,
     setShowPopup
   }
