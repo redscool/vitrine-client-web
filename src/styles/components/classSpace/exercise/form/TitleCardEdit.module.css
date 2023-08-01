@@ -1,0 +1,8 @@
+.mainContainer {
+  width: 50vw;
+  height: 20vh;
+  margin: 1vh auto;
+  background-color: white;
+  border-radius: 10px;
+  border-top: 1vh solid purple;
+}

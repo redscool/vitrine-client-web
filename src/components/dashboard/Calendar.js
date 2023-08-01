@@ -130,6 +130,7 @@ export default function Calendar() {
               {Object.entries(row).map(([k, v]) => (
                 <div
                   className={styles.dateCard}
+                  id={row + v}
                   onClick={() => {
                     setEventsPopup(k);
                   }}
