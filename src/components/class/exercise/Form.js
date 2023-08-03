@@ -13,15 +13,13 @@ export default function Form() {
   const [title, setTitle] = useState("");
   const [titleEditorContent, setTitleEditorContent] = useState();
   const [selected, setSelected] = useState(0);
-  const [titleEditor, setTitleEditor] = useState();
 
   const successCallback = (response) => {
     console.log(response);
     const { formData } = response.data;
     setTitle(formData.title);
     setTitleEditorContent(formData.titleEditorContent ?? formData.title);
-    setEntities(formData.formEntities);
-    setTitleEditor(formData.titleEditor);
+    setEntities(formData.entities);
   };
 
   useEffect(() => {
@@ -34,18 +32,30 @@ export default function Form() {
     );
   }, []);
 
-  // useEffect(() => {
-  //   console.log({ titleEditorContent });
-  // }, [titleEditorContent]);
+  const changeEditorContent = (indx) => (content) => {
+    setEntities(
+      entities.map((ele, index) => {
+        if (index === indx) {
+          ele.content = content;
+        }
+        return ele;
+      })
+    );
+  };
 
-  const addFunction = () => {};
+  const addFunction = () => {
+    const tties = [...entities];
+    tties.splice(selected, 0, { content: "Hi There" });
+    setEntities(tties);
+    // console.log("entities", entities);
+    // console.log("tties", tties);
+  };
 
   const saveForm = () => {
     const body = {
       formId,
       formContent: {
         title,
-        titleEditor,
         titleEditorContent,
         entities,
       },
@@ -59,27 +69,41 @@ export default function Form() {
       console.log
     );
   };
+
   return (
     <div className={styles.container}>
       <TitleCardEdit
-        customStyles={styles.highlightSelected}
+        customStyles={selected === 0 ? styles.highlightSelected : ""}
         index={0}
+        key={0}
         setSelected={setSelected}
       >
         {titleEditorContent && (
           <Editor
-            readOnly
             setEditorContent={setTitleEditorContent}
             defaultContent={titleEditorContent}
+            key={0}
           />
         )}
       </TitleCardEdit>
-      <div className={styles.formContainer}></div>
-      <div className={styles.buttonsContainer}>
-        <div
-          className={styles.insertQuestionButton}
-          // onClick={insertClickHandler}
+      {console.log(entities)}
+      {entities.map((element, indx) => (
+        <TitleCardEdit
+          customStyles={selected === indx + 1 ? styles.highlightSelected : ""}
+          index={indx + 1}
+          setSelected={setSelected}
+          key={indx + 1}
         >
+          {console.log(element.content)}
+          <Editor
+            setEditorContent={changeEditorContent(indx)}
+            defaultContent={element.content}
+            key={indx + 1}
+          />
+        </TitleCardEdit>
+      ))}
+      <div className={styles.buttonsContainer}>
+        <div className={styles.insertQuestionButton} onClick={addFunction}>
           <img src="/add.png" />
         </div>
         <div
