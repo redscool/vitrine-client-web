@@ -129,18 +129,19 @@ const EditorComponent = (props) => {
 
   const modules = expand
     ? {
-        formula: true,
-        toolbar: toolbarOptions,
-        blotFormatter: {},
-      }
+      formula: true,
+      toolbar: toolbarOptions,
+      blotFormatter: {},
+    }
     : {
-        toolbar: true,
-      };
+      toolbar: true,
+    };
 
   const handleChangeFunc = () => {
     const editorObject = reactQuill?.current?.editor;
     if (!editorObject) return;
     const editorContent = editorObject.editor.delta;
+    console.log(editorContent);
 
     setEditorContent(editorContent);
     if (setEditorContentText) setEditorContentText(editorObject.getText());
