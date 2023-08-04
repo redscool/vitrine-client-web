@@ -83,27 +83,11 @@ Quill.register({
   "formats/image": CustomImage,
 });
 
-let reactQuill;
-let editorRange;
-
 const getEditor = () => {
   return reactQuill?.current?.editor;
 };
 
-const addImageInEditor = (setShowPopup) => () => {
-  const editor = getEditor();
-  editorRange = editor?.getSelection();
-
-  if (!editor || !editorRange) {
-    return setShowPopup(false);
-  }
-
-  setShowPopup(true);
-};
-
 const EditorComponent = (props) => {
-  reactQuill = createRef();
-
   const {
     expand,
     readOnly,
@@ -114,7 +98,23 @@ const EditorComponent = (props) => {
     editorProps,
     placeholder = "Type text here, select for formating",
     theme = "bubble",
+    reactQuill,
+    editorRange,
   } = props;
+
+  const addImageInEditor = (setShowPopup) => () => {
+    const editor = reactQuill?.current?.editor;
+    editorRange = editor.current?.getSelection();
+
+    if (!editor || !editorRange) {
+      return setShowPopup(false);
+    }
+
+    setShowPopup(true);
+  };
+
+  // const reactQuill = createRef();
+  // let editorRange;
 
   const imageHandler = useMemo(() => {
     return addImageInEditor(setShowPopup);
@@ -129,13 +129,13 @@ const EditorComponent = (props) => {
 
   const modules = expand
     ? {
-      formula: true,
-      toolbar: toolbarOptions,
-      blotFormatter: {},
-    }
+        formula: true,
+        toolbar: toolbarOptions,
+        blotFormatter: {},
+      }
     : {
-      toolbar: true,
-    };
+        toolbar: true,
+      };
 
   const handleChangeFunc = () => {
     const editorObject = reactQuill?.current?.editor;
@@ -183,7 +183,7 @@ const EditorComponent = (props) => {
   );
 };
 
-function PopUp({ setShowPopup }) {
+function PopUp({ setShowPopup, reactQuill }) {
   const [imgUrl, setImgUrl] = useState();
 
   const onFileChange = (e) => {
@@ -202,7 +202,7 @@ function PopUp({ setShowPopup }) {
   };
 
   const handleSubmit = () => {
-    const editor = getEditor();
+    const editor = reactQuill.current.editor getEditor();
 
     if (!editorRange) {
       return setShowPopup(false);
@@ -278,18 +278,23 @@ export default function Editor({
 }) {
   const [showPopup, setShowPopup] = useState(false);
 
+  const reactQuill = useRef();
+  const editorRange = useRef();
+
   const defaultProps = {
     readOnly,
     setEditorContent,
     setEditorContentText,
     defaultContent,
     setShowPopup,
+    reactQuill,
+    editorRange,
   };
 
   if (expand) {
     return (
       <>
-        {showPopup ? <PopUp setShowPopup={setShowPopup} /> : null}
+        {showPopup ? <PopUp reactQuill={reactQuill} setShowPopup={setShowPopup} /> : null}
         <EditorComponent
           {...defaultProps}
           expand={expand}

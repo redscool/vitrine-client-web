@@ -6,7 +6,7 @@ import Button from "../../form/Button";
 import { resource_request_with_access_token } from "../../../utils/Service";
 import { useParams } from "react-router-dom";
 import Editor from "../../Editor";
-import { v4 as uuid } from 'uuid'
+import { v4 as uuid } from "uuid";
 export default function Form() {
   const params = useParams();
   const formId = params.formId;
@@ -81,7 +81,7 @@ export default function Form() {
     delete tties[id];
     setEntities(tties);
     setSelected(selected - 1);
-  }
+  };
 
   const saveForm = () => {
     const body = {
@@ -119,23 +119,27 @@ export default function Form() {
         )}
       </TitleCardEdit>
       {/* {console.log(entities)} */}
-      {Object.entries(entities).sort((a, b) => a[1].index - b[1].index).map((element) => (
-        <TitleCardEdit
-          customStyles={selected === element[1].index ? styles.highlightSelected : ""}
-          index={element[1].index}
-          setSelected={setSelected}
-          key={element[0]}
-        >
-          {/* {console.log("element[0]", element[0])} */}
-          {/* {console.log("element = ", element)} */}
-          {/* {console.log("element[1] = ", element[1])} */}
-          {/* {console.log("element[1].index = ", element[1].index)} */}
-          <Editor
-            setEditorContent={changeEditorContent(element[0])}
-            defaultContent={element[1].content}
-          />
-        </TitleCardEdit>
-      ))}
+      {Object.entries(entities)
+        .sort((a, b) => a[1].index - b[1].index)
+        .map((element) => (
+          <TitleCardEdit
+            customStyles={
+              selected === element[1].index ? styles.highlightSelected : ""
+            }
+            index={element[1].index}
+            setSelected={setSelected}
+            key={element[0]}
+          >
+            {/* {console.log("element[0]", element[0])} */}
+            {/* {console.log("element = ", element)} */}
+            {/* {console.log("element[1] = ", element[1])} */}
+            {/* {console.log("element[1].index = ", element[1].index)} */}
+            <Editor
+              setEditorContent={changeEditorContent(element[0])}
+              defaultContent={element[1].content}
+            />
+          </TitleCardEdit>
+        ))}
       <div className={styles.buttonsContainer}>
         <div className={styles.insertQuestionButton} onClick={addFunction}>
           <img src="/add.png" />
