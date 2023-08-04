@@ -1,6 +1,6 @@
 import React from "react";
-import styles from "../../../styles/components/dashboard/home/ClassNotification.module.css";
-export default function ClassNotification() {
+import styles from "../../../styles/components/dashboard/home/SpaceNotification.module.css";
+export default function SpaceNotification() {
   return (
     <div className={styles.container}>
       <div className={styles.leftContainer}>
@@ -21,7 +21,7 @@ export default function ClassNotification() {
       </div>
       <div className={styles.rightContainer}>
         <div className={styles.upcomingClass}>
-          <p>Upcoming class</p>
+          <p>Upcoming Space</p>
         </div>
         <div className={styles.classTitle}>
           <p>Future Deep Tech Founders</p>
@@ -37,7 +37,7 @@ export default function ClassNotification() {
           </div>
           <div className={styles.enterClassButtonContainer}>
             <div className={styles.enterClassButton}>
-              <p>Enter Class</p>
+              <p>Enter Space</p>
             </div>
           </div>
         </div>

@@ -7,28 +7,28 @@ export const formSlice = createSlice({
   initialState,
   reducers: {
     setFormQuestionDescription: (state, action) => {
-      const { editorContent, classId, formId } = action.payload;
-      state[classId] = state[classId] ? state[classId] : [];
-      state[classId][formId] = state[classId][formId]
-        ? state[classId][formId]
+      const { editorContent, spaceId, formId } = action.payload;
+      state[spaceId] = state[spaceId] ? state[spaceId] : [];
+      state[spaceId][formId] = state[spaceId][formId]
+        ? state[spaceId][formId]
         : {};
-      // state[classId][formId].
+      // state[spaceId][formId].
     },
     addForm: (state, action) => {
-      const { classId, formId, content } = action.payload;
-      state[classId] = state[classId] ? state[classId] : [];
-      state[classId].push({ message, senderProfilePicture, senderName });
+      const { spaceId, formId, content } = action.payload;
+      state[spaceId] = state[spaceId] ? state[spaceId] : [];
+      state[spaceId].push({ message, senderProfilePicture, senderName });
     },
     initChat: (state, action) => {
-      const { messages, classId } = action.payload;
-      state[classId] = messages;
+      const { messages, spaceId } = action.payload;
+      state[spaceId] = messages;
     },
   },
 });
 
 export const { addMessage, initChat } = chatSlice.actions;
 
-export const chatByClassIdSelector = (classId) => (state) =>
-  state.chat[classId];
+export const chatByspaceIdSelector = (spaceId) => (state) =>
+  state.chat[spaceId];
 
 export default chatSlice.reducer;

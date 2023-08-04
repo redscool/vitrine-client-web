@@ -7,21 +7,21 @@ export const chatSlice = createSlice({
   initialState,
   reducers: {
     addMessage: (state, action) => {
-      const { message, classId, senderProfilePicture, senderName } =
+      const { message, spaceId, senderProfilePicture, senderName } =
         action.payload;
-      state[classId] = state[classId] ? state[classId] : [];
-      state[classId].push({ message, senderProfilePicture, senderName });
+      state[spaceId] = state[spaceId] ? state[spaceId] : [];
+      state[spaceId].push({ message, senderProfilePicture, senderName });
     },
     initChat: (state, action) => {
-      const { messages, classId } = action.payload;
-      state[classId] = messages;
+      const { messages, spaceId } = action.payload;
+      state[spaceId] = messages;
     },
   },
 });
 
 export const { addMessage, initChat } = chatSlice.actions;
 
-export const chatByClassIdSelector = (classId) => (state) =>
-  state.chat[classId];
+export const chatBySpaceIdSelector = (spaceId) => (state) =>
+  state.chat[spaceId];
 
 export default chatSlice.reducer;

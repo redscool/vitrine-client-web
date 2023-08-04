@@ -13,20 +13,20 @@ export default function AddForm(props) {
   //   const userId = useSelector(authKeySelector("userId"));
   //   const type = useSelector(authKeySelector("type"));
   const params = useParams();
-  const classId = params.classId;
+  const spaceId = params.spaceId;
   const formId = "TEMP" + crypto.randomUUID();
   const handleClick = () => {
     if (!title) {
       alert("Title Cannot be empty");
       return;
     }
-    console.log(classId);
+    console.log(spaceId);
     console.log(formId);
     resource_request_with_access_token(
       "post",
-      "/api/class/form/addform",
+      "/api/space/form/addform",
       {
-        classId,
+        spaceId,
         title,
       },
       console.log,

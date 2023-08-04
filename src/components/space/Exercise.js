@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styles from "../../styles/components/classSpace/Exercise.module.css";
+import styles from "../../styles/components/space/Exercise.module.css";
 import Button from "../form/Button";
 import { useSelector } from "react-redux";
 import { authKeySelector } from "../../redux/authReducer";
@@ -10,14 +10,14 @@ export default function Exercise() {
   const [popup, setPopup] = useState(false);
   const [formsList, setFormsList] = useState([]);
   const params = useParams();
-  const classId = params.classId;
+  const spaceId = params.spaceId;
   const type = useSelector(authKeySelector("type"));
   const navigate = useNavigate();
   useEffect(() => {
-    const body = { classId };
+    const body = { spaceId };
     resource_request_with_access_token(
       "get",
-      `/api/class/form/getforms`,
+      `/api/space/form/getforms`,
       body,
       ({ data: { forms } }) => {
         setFormsList(forms);
@@ -33,7 +33,7 @@ export default function Exercise() {
       </div>
       {popup ? <AddForm view={setPopup} setClassList={setFormsList} /> : null}
       <div className={styles.content}>
-        {type === "TEACHER" ? (
+        {type === "PROVIDER" ? (
           <Button
             label={"Add Form"}
             handleClick={() => {
@@ -44,7 +44,7 @@ export default function Exercise() {
         <div className={styles.classList}>
           {formsList?.map((form) => (
             <div
-              onClick={() => navigate(`/class/${classId}/exercise/${form._id}`)}
+              onClick={() => navigate(`/space/${spaceId}/exercise/${form._id}`)}
             >
               {" "}
               {form.title}{" "}

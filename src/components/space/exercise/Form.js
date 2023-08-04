@@ -1,4 +1,4 @@
-import styles from "../../../styles/components/classSpace/exercise/Form.module.css";
+import styles from "../../../styles/components/space/exercise/Form.module.css";
 import QuestionCardEdit from "./form/QuestionCardEdit";
 import { useEffect, useState } from "react";
 import TitleCardEdit from "./form/TitleCardEdit";
@@ -26,7 +26,7 @@ export default function Form() {
   useEffect(() => {
     resource_request_with_access_token(
       "get",
-      "/api/class/form/getformbyid",
+      "/api/space/form/getformbyid",
       { formId },
       successCallback,
       console.log
@@ -95,7 +95,7 @@ export default function Form() {
     console.log(body);
     resource_request_with_access_token(
       "post",
-      "/api/class/form/updateForm",
+      "/api/space/form/updateForm",
       body,
       console.log,
       console.log

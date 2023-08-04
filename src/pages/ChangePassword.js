@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import styles from "../styles/pages/ResetPassword.module.css";
+import styles from "../styles/pages/ChangePassword.module.css";
 import { auth_request } from "../utils/Service";
 import Textbox from "../components/form/Textbox";
 import Button from "../components/form/Button";
-export default function ResetPassword() {
+export default function ChangePassword() {
   const params = useParams();
   const { token } = params;
   const [loading, setLoading] = useState(false);

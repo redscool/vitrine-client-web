@@ -1,4 +1,4 @@
-import styles from "../../../../styles/components/classSpace/exercise/form/TitleCardEdit.module.css";
+import styles from "../../../../styles/components/space/exercise/form/TitleCardEdit.module.css";
 
 export default function TitleCardEdit({
   children,

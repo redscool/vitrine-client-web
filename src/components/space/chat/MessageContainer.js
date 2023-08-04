@@ -1,4 +1,4 @@
-import styles from "../../../styles/components/classSpace/chat/MessageContainer.module.css";
+import styles from "../../../styles/components/space/chat/MessageContainer.module.css";
 export default function MessageContainer({ message, profilePic }) {
   return (
     <div className={styles.container}>
