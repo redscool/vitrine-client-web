@@ -16,15 +16,15 @@ export default function Signup() {
   const [success, setSuccess] = useState(false);
 
   const THEME = useSelector(themeSelector);
-  const verifyProfileToken = useSelector(authKeySelector('verifyProfileToken'));
-  
+  const verifyProfileToken = useSelector(authKeySelector("verifyProfileToken"));
+
   const googleSignup = () => {
     if (!type) {
       alert("Please Select a type");
       return;
     }
-    let temp_type = "TEACHER";
-    if (type == 2) temp_type = "STUDENT";
+    let temp_type = "PROVIDER";
+    if (type == 2) temp_type = "CONSUMER";
     console.log(type);
     const body = { verifyProfileToken, type: temp_type };
     auth_request(
@@ -48,8 +48,8 @@ export default function Signup() {
       alert("Please Select a type");
       return;
     }
-    let temp_type = "TEACHER";
-    if (type == 2) temp_type = "STUDENT";
+    let temp_type = "PROVIDER";
+    if (type == 2) temp_type = "CONSUMER";
     console.log(type);
     const body = { email, password, type: temp_type };
     auth_request(
@@ -67,18 +67,18 @@ export default function Signup() {
   if (verifyProfileToken) {
     return (
       <div className={styles.mainPage}>
-      <div className={styles.form}>
-      <h1>Please select a role to continue</h1>
-        <Select
-          options={["TEACHER", "STUDENT"]}
-          label="Type"
-          selectedItem={type}
-          setSelectedItem={setType}
-        ></Select>
-        <Button label="Sign Up" handleClick={googleSignup}></Button>
+        <div className={styles.form}>
+          <h1>Please select a role to continue</h1>
+          <Select
+            options={["PROVIDER", "CONSUMER"]}
+            label="Type"
+            selectedItem={type}
+            setSelectedItem={setType}
+          ></Select>
+          <Button label="Sign Up" handleClick={googleSignup}></Button>
+        </div>
       </div>
-    </div>
-    )
+    );
   }
 
   return (
@@ -86,7 +86,7 @@ export default function Signup() {
       <div className={styles.form}>
         <Textbox label="Email" state={email} setState={setEmail} />
         <Select
-          options={["TEACHER", "STUDENT"]}
+          options={["PROVIDER", "CONSUMER"]}
           label="Type"
           selectedItem={type}
           setSelectedItem={setType}

@@ -1,31 +1,30 @@
 import React, { useState } from "react";
-import styles from "../../styles/components/classSpace/Home.module.css";
+import styles from "../../styles/components/space/Home.module.css";
 import Editor from "../Editor";
 import { resource_request_with_access_token } from "../../utils/Service";
 export default function Home() {
   const [editorContent, setEditorContent] = useState();
-  const [editorContentText, setEditorContentText] = useState('');
+  const [editorContentText, setEditorContentText] = useState("");
 
-  const setEditorText = editorText => {
-    setEditorContentText(editorText)
-  }
+  const setEditorText = (editorText) => {
+    setEditorContentText(editorText);
+  };
 
-  const setEditorData = editorData => {
-    setEditorContent(editorData)
-  }
+  const setEditorData = (editorData) => {
+    setEditorContent(editorData);
+  };
 
   const handleSubmit = () => {
     resource_request_with_access_token(
       "post",
-      '/api/class/stream/addEditor',
+      "/api/space/stream/addEditor",
       {
-        content: editorContent
+        content: editorContent,
       },
       console.log,
       console.log
-    )
-  }
-
+    );
+  };
 
   return (
     <div className={styles.mainContainer}>

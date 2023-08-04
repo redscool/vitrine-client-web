@@ -9,8 +9,8 @@ import {
 import { useSelector } from "react-redux";
 import { authKeySelector } from "../../../redux/authReducer";
 export default function AddSpace(props) {
-  const { view, setClassList } = props;
-  const [className, setClassName] = useState();
+  const { view, setSpaceList } = props;
+  const [spaceName, setSpaceName] = useState();
   const profileId = useSelector(authKeySelector("profileId"));
   const userId = useSelector(authKeySelector("userId"));
   const type = useSelector(authKeySelector("type"));
@@ -18,33 +18,33 @@ export default function AddSpace(props) {
     <div className={styles.containerPopup}>
       <div className={styles.popup}>
         <img src="/close.png" alt="cancel" onClick={() => view(false)} />
-        <h1>{type === "TEACHER" ? "Add Class" : "Join Class"}</h1>
+        <h1>{type === "PROVIDER" ? "Add Space" : "Join Space"}</h1>
         <div className={styles.topCtn}>
           <Textbox
-            label="Class Name"
-            state={className}
-            setState={setClassName}
+            label="Space Name"
+            state={spaceName}
+            setState={setSpaceName}
           />
           <Button
             label="Create"
             handleClick={() => {
-              if (type === "TEACHER") {
+              if (type === "PROVIDER") {
                 auth_request(
                   "post",
-                  "/api/teacher/createClass",
+                  "/api/provider/createSpace",
                   {
                     profileId,
-                    title: className,
+                    title: spaceName,
                   },
                   (response) => {
                     const body = { profileId };
                     resource_request_with_access_token(
                       "get",
-                      `/api/${type}/getAllClasses`,
+                      `/api/${type}/getAllSpaces`,
                       body,
-                      ({ data: { classes } }) => {
-                        setClassList(classes);
-                        console.log(classes);
+                      ({ data: { spaces } }) => {
+                        setSpaceList(spaces);
+                        console.log(spaces);
                       }
                     );
                     view(false);
@@ -55,20 +55,20 @@ export default function AddSpace(props) {
               } else {
                 auth_request(
                   "post",
-                  "/api/student/joinclass",
+                  "/api/consumer/joinspace",
                   {
                     userId,
-                    classId: className,
+                    spaceId: spaceName,
                   },
                   (response) => {
                     const body = { profileId };
                     resource_request_with_access_token(
                       "get",
-                      `/api/${type}/getAllClasses`,
+                      `/api/${type}/getAllSpaces`,
                       body,
-                      ({ data: { classes } }) => {
-                        setClassList(classes);
-                        console.log(classes);
+                      ({ data: { spaces } }) => {
+                        setSpaceList(spaces);
+                        console.log(spaces);
                       }
                     );
                     view(false);

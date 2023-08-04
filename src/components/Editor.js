@@ -16,7 +16,7 @@ import BlotFormatter from "quill-blot-formatter";
 
 import React, { createRef, useEffect, useMemo, useState } from "react";
 import { file_server_request } from "../utils/Service";
-import config from '../config.json';
+import config from "../config.json";
 
 const FILE_SERVER = config.FILE_SERVER;
 
@@ -83,27 +83,11 @@ Quill.register({
   "formats/image": CustomImage,
 });
 
-let reactQuill;
-let editorRange;
-
-const getEditor = () => {
-  return reactQuill?.current?.editor;
-}
-
-const addImageInEditor = setShowPopup => () => {
-  const editor = getEditor();
-  editorRange = editor?.getSelection();
-
-  if (!editor || !editorRange) {
-    return setShowPopup(false);
-  };
-
-  setShowPopup(true);
-}
+// const getEditor = () => {
+//   return reactQuill?.current?.editor;
+// };
 
 const EditorComponent = (props) => {
-  reactQuill = createRef();
-
   const {
     expand,
     readOnly,
@@ -114,58 +98,76 @@ const EditorComponent = (props) => {
     editorProps,
     placeholder = "Type text here, select for formating",
     theme = "bubble",
+    reactQuill,
+    editorRange,
   } = props;
 
+  const addImageInEditor = (setShowPopup) => () => {
+    const editor = reactQuill?.current?.editor;
+    editorRange.current = editor?.getSelection();
+
+    console.log("reached iie2");
+    if (!editor || !editorRange.current) {
+      return setShowPopup(false);
+    }
+    console.log("reached iie2");
+    setShowPopup(true);
+  };
+
+  // const reactQuill = createRef();
+  // let editorRange;
+
   const imageHandler = useMemo(() => {
-    return addImageInEditor(setShowPopup)
-  }, [setShowPopup])
+    return addImageInEditor(setShowPopup);
+  }, [setShowPopup]);
 
   const toolbarOptions = {
     container: toolbarContainer,
     handlers: {
-      image: imageHandler
+      image: imageHandler,
     },
-  }
+  };
 
-  const modules = expand ?
-    {
+  const modules = expand
+    ? {
       formula: true,
       toolbar: toolbarOptions,
       blotFormatter: {},
-    } :
-    {
-      toolbar: true,
     }
+    : {
+      toolbar: true,
+    };
 
   const handleChangeFunc = () => {
     const editorObject = reactQuill?.current?.editor;
     if (!editorObject) return;
     const editorContent = editorObject.editor.delta;
+    console.log(editorContent);
 
     setEditorContent(editorContent);
-    setEditorContentText(editorObject.getText())
+    if (setEditorContentText) setEditorContentText(editorObject.getText());
   };
 
-  const {
-    handleChange = handleChangeFunc
-  } = props;
+  const { handleChange = handleChangeFunc } = props;
 
   useEffect(() => {
-    mathquill4quill({ Quill, katex })(reactQuill.current.editor, {
+    mathquill4quill({ Quill, katex })(reactQuill?.current?.editor, {
       operators: CUSTOM_OPERATORS,
     });
   }, []);
 
   if (readOnly) {
-    return <ReactQuill
-      ref={reactQuill}
-      modules={{
-        formula: true,
-      }}
-      defaultValue={defaultContent}
-      theme={"bubble"}
-      readOnly={readOnly}
-    />
+    return (
+      <ReactQuill
+        ref={reactQuill}
+        modules={{
+          formula: true,
+        }}
+        defaultValue={defaultContent}
+        theme={"bubble"}
+        readOnly={readOnly}
+      />
+    );
   }
 
   return (
@@ -182,10 +184,12 @@ const EditorComponent = (props) => {
   );
 };
 
-function PopUp({ setShowPopup }) {
+function PopUp({ setShowPopup, reactQuill, editorRange }) {
   const [imgUrl, setImgUrl] = useState();
 
-  const onFileChange = e => {
+  console.log("reached popup");
+
+  const onFileChange = (e) => {
     e.preventDefault();
     let files;
     if (e.dataTransfer) {
@@ -198,17 +202,20 @@ function PopUp({ setShowPopup }) {
       setImgUrl(reader.result);
     };
     reader.readAsDataURL(files[0]);
-  }
+  };
 
   const handleSubmit = () => {
-    const editor = getEditor();
+    const editor = reactQuill?.current?.editor;
+    console.log("reached submit");
 
-    if (!editorRange) {
+    if (!editorRange.current) {
+      console.log("hello");
       return setShowPopup(false);
-    };
+    }
+    console.log("reached submit2");
 
     const formData = new FormData();
-    const inputFile = document.querySelector('#editorFileInput');
+    const inputFile = document.querySelector("#editorFileInput");
     formData.append("file", inputFile.files[0]);
     file_server_request(
       "post",
@@ -216,31 +223,42 @@ function PopUp({ setShowPopup }) {
       formData,
       ({ data: { filename } }) => {
         if (filename) {
-          const url = `${FILE_SERVER}/getFile?id=${filename}`
-          editor.insertEmbed(editorRange.index, 'image', url, Quill.sources.USER);
+          console.log("reached request");
+          const url = `${FILE_SERVER}/getFile?id=${filename}`;
+          editor?.insertEmbed(
+            editorRange.current.index,
+            "image",
+            url,
+            Quill.sources.USER
+          );
         }
       },
       console.log
-    )
-  }
+    );
+    setShowPopup(false);
+  };
 
   return (
-    <div style={{
-      position: "absolute",
-      display: "flex",
-      top: 0,
-      left: 0,
-      height: "100vh",
-      width: "100vw",
-      zIndex: 10,
-      backgroundColor: '#12121230'
-    }}>
-      <div style={{
-        margin: "auto",
-        height: "50vh",
-        width: "70vw",
-        backgroundColor: '#fff'
-      }}>
+    <div
+      style={{
+        position: "absolute",
+        display: "flex",
+        top: 0,
+        left: 0,
+        height: "100vh",
+        width: "100vw",
+        zIndex: 10,
+        backgroundColor: "#12121230",
+      }}
+    >
+      <div
+        style={{
+          margin: "auto",
+          height: "50vh",
+          width: "70vw",
+          backgroundColor: "#fff",
+        }}
+      >
         <label>
           <input
             id="editorFileInput"
@@ -251,34 +269,40 @@ function PopUp({ setShowPopup }) {
           />
           Upload Image
         </label>
-        <button onClick={() => setShowPopup(false)}>
-          Close
-        </button>
-        <button onClick={() => handleSubmit()}>
-          Submit
-        </button>
+        <button onClick={() => setShowPopup(false)}>Close</button>
+        <button onClick={() => handleSubmit()}>Submit</button>
         <img alt="demoImg" src={imgUrl} />
       </div>
-
     </div>
-  )
+  );
 }
 
-export default function Editor({ expand, readOnly, defaultContent, setEditorContent, setEditorContentText }) {
+export default function Editor({
+  expand,
+  readOnly,
+  defaultContent,
+  setEditorContent,
+  setEditorContentText,
+}) {
   const [showPopup, setShowPopup] = useState(false);
+
+  const reactQuill = createRef();
+  const editorRange = createRef();
 
   const defaultProps = {
     readOnly,
     setEditorContent,
     setEditorContentText,
     defaultContent,
-    setShowPopup
-  }
+    setShowPopup,
+    reactQuill,
+    editorRange,
+  };
 
   if (expand) {
     return (
       <>
-        {showPopup ? <PopUp setShowPopup={setShowPopup} /> : null}
+        {showPopup ? <PopUp editorRange={editorRange} reactQuill={reactQuill} setShowPopup={setShowPopup} /> : null}
         <EditorComponent
           {...defaultProps}
           expand={expand}
@@ -289,7 +313,9 @@ export default function Editor({ expand, readOnly, defaultContent, setEditorCont
     );
   }
 
-  return <>
-    <EditorComponent {...defaultProps} />;
-  </>
+  return (
+    <>
+      <EditorComponent {...defaultProps} />
+    </>
+  );
 }

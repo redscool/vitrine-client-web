@@ -5,21 +5,21 @@ import { resource_request_with_access_token } from "../../utils/Service";
 import AddSpace from "./spaces/AddSpace";
 import { useSelector } from "react-redux";
 import { authKeySelector } from "../../redux/authReducer";
-import ClassTile from "./spaces/ClassTile";
+import SpaceTile from "./spaces/SpaceTile";
 export default function Spaces() {
   const [popup, setPopup] = useState(false);
-  const [classList, setClassList] = useState([]);
+  const [spaceList, setSpaceList] = useState([]);
   const profileId = useSelector(authKeySelector("profileId"));
   const type = useSelector(authKeySelector("type"));
   useEffect(() => {
     const body = { profileId };
     resource_request_with_access_token(
       "get",
-      `/api/${type}/getAllClasses`,
+      `/api/${type}/getAllSpaces`,
       body,
-      ({ data: { classes } }) => {
-        setClassList(classes);
-        console.log(classes);
+      ({ data: { spaces } }) => {
+        setSpaceList(spaces);
+        console.log(spaces);
       },
       console.log
     );
@@ -29,9 +29,9 @@ export default function Spaces() {
       <div className={styles.title}>
         <p>Spaces</p>
       </div>
-      {popup ? <AddSpace view={setPopup} setClassList={setClassList} /> : null}
+      {popup ? <AddSpace view={setPopup} setSpaceList={setSpaceList} /> : null}
       <div className={styles.content}>
-        {type === "TEACHER" ? (
+        {type === "PROVIDER" ? (
           <Button
             label={"Add Space"}
             handleClick={() => {
@@ -47,8 +47,8 @@ export default function Spaces() {
           />
         )}
         <div className={styles.classList}>
-          {classList.map((classObj) => (
-            <ClassTile classObj={classObj} />
+          {spaceList.map((spaceObj) => (
+            <SpaceTile spaceObj={spaceObj} />
           ))}
         </div>
       </div>

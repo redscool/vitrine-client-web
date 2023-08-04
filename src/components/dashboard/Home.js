@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "../../styles/components/dashboard/Home.module.css";
-import ClassNotification from "./home/ClassNotification";
+import SpaceNotification from "./home/SpaceNotification";
 
 export default function Home() {
   return (
@@ -9,7 +9,7 @@ export default function Home() {
         <p>Home</p>
       </div>
       <div className={styles.content}>
-        <ClassNotification />
+        <SpaceNotification />
       </div>
     </div>
   );

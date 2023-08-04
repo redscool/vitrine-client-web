@@ -27,7 +27,7 @@ export default function Calendar() {
     "647b2522d2a252177f4b0d85",
   ]);
   const params = useParams();
-  const classId = params.classId;
+  const spaceId = params.spaceId;
   const googleAccessToken = useSelector(
     authKeySelector("googleAuth")
   )?.access_token;
@@ -36,10 +36,7 @@ export default function Calendar() {
     <div styles="width:60vw; height:90vh">
       <Button label="Add Call" handleClick={() => setPopUp(true)} />
       {popUp ? (
-        <Button
-          label="Login with google"
-          handleClick={googleAuth}
-        />
+        <Button label="Login with google" handleClick={googleAuth} />
       ) : (
         <></>
       )}
@@ -48,11 +45,11 @@ export default function Calendar() {
         handleClick={() => {
           resource_request_with_access_token(
             "post",
-            "/api/class/calendar/addcall",
+            "/api/space/calendar/addcall",
             {
               googleAccessToken,
               title,
-              classId,
+              spaceId,
               description: "This is description",
               startTime: new Date(startTime).toISOString(),
               endTime: new Date(endTime).toISOString(),
