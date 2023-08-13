@@ -4,13 +4,15 @@ import Editor from "../Editor";
 import { resource_request_with_access_token } from "../../utils/Service";
 export default function Home() {
   const [editorContent, setEditorContent] = useState();
-  const [editorContentText, setEditorContentText] = useState("");
+  // const [editorContentText, setEditorContentText] = useState("");
 
   const setEditorText = (editorText) => {
-    setEditorContentText(editorText);
+    // setEditorContentText(editorText);
   };
 
   const setEditorData = (editorData) => {
+    // editorContentState[0] = editorData;
+    // console.log(editorContentState[0]);
     setEditorContent(editorData);
   };
 
@@ -36,7 +38,8 @@ export default function Home() {
             <Editor
               expand
               setEditorContent={setEditorData}
-              setEditorContentText={setEditorText}
+            // readOnly
+            // setEditorContentText={setEditorText}
             />
             <button onClick={handleSubmit}>Submit</button>
           </div>
