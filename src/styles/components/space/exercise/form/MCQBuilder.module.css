@@ -1,0 +1,29 @@
+.container {
+}
+
+.option {
+  display: flex;
+  width: 40vw;
+  height: 8vh;
+  margin: 1vh 1vw;
+}
+
+.dragAndDropButton,
+.removeButton {
+  margin: 0 1vw;
+  display: flex;
+  cursor: pointer;
+}
+
+.dragAndDropButton > p,
+.removeButton > p {
+  margin: auto;
+}
+
+.inputBox {
+  outline: none;
+  border: none;
+  width: 25vw;
+  margin: 0 1vw;
+  border-bottom: 1px solid black;
+}
