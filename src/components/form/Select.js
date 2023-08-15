@@ -7,38 +7,35 @@ export default function Select({
   setSelectedItem,
   label,
 }) {
-  const data = [];
-  for (let i = 0; i < options.length; i++)
-    data.push({ id: i + 1, label: options[i] });
-
   const [isOpen, setOpen] = useState(false);
-  const [items, setItem] = useState(data);
+  const [items, setItem] = useState(options);
+  console.log(items);
 
   const toggleDropdown = () => setOpen(!isOpen);
 
-  const handleItemClick = (id) => {
-    setSelectedItem(id);
+  const handleItemClick = (item) => {
+    setSelectedItem(item);
     setOpen(false);
   };
 
   return (
     <div className={styles.dropdown}>
-      <div className={styles.head}>
-        <p>{label}</p>
-      </div>
+      {label ? (
+        <div className={styles.head}>
+          <p>{label}</p>
+        </div>
+      ) : null}
       <div className={styles.dropdownHeader} onClick={toggleDropdown}>
-        {selectedItem
-          ? items.find((item) => item.id == selectedItem).label
-          : "Select"}
+        {selectedItem ? items.find((item) => item == selectedItem) : "Select"}
       </div>
       {isOpen ? (
         <div className={styles.dropdownBody}>
           {items.map((item) => (
             <div
               className={styles.dropdownItem}
-              onClick={() => handleItemClick(item.id)}
+              onClick={() => handleItemClick(item)}
             >
-              <p>{item.label}</p>
+              <p>{item}</p>
             </div>
           ))}
         </div>
