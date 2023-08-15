@@ -1,0 +1,27 @@
+.container {
+  width: 100vw;
+  height: 92vh;
+  /* border: 1px solid green; */
+}
+
+.title {
+  width: 100vw;
+  height: 10vh;
+  /* background-color: green; */
+  display: flex;
+}
+
+.content {
+  width: 40vw;
+  height: 82vh;
+  display: flex;
+  flex-direction: column;
+  /* background-color: red; */
+}
+
+.title > p {
+  /* margin: 0; */
+  font-size: 25px;
+  font-weight: 900;
+  margin-left: 5vw;
+}

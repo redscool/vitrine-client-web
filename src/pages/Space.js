@@ -12,6 +12,8 @@ import { resource_request_with_access_token } from "../utils/Service";
 import { useDispatch } from "react-redux";
 import { initChat } from "../redux/chatReducer";
 import Form from "../components/space/exercise/Form";
+import Shelf from "../components/space/Shelf";
+import Folder from "../components/space/shelf/Folder";
 export default function Space() {
   const navigate = useNavigate();
   const params = useParams();
@@ -87,7 +89,8 @@ export default function Space() {
       <div className={styles.mainContainer}>
         <Routes>
           <Route exact path="/" element={<Home />} />
-          <Route exact path="/shelf" element={<span>shelf</span>} />
+          <Route exact path="/shelf" element={<Shelf />} />
+          <Route exact path="/shelf/:folderId" element={<Folder />} />
           <Route exact path="/exercise" element={<Exercise />} />
           <Route exact path="/exercise/:formId" element={<Form />} />
           <Route exact path="/calendar" element={<Calendar />} />
