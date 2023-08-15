@@ -1,0 +1,29 @@
+.container {
+  width: 100vw;
+  height: 92vh;
+  /* border: 1px solid green; */
+}
+
+.title {
+  width: 100vw;
+  height: 10vh;
+  /* background-color: green; */
+  display: flex;
+}
+
+.content {
+  width: 90vw;
+  height: 92vh;
+  display: flex;
+  margin: 0 auto;
+  flex-direction: column;
+  overflow-y: auto;
+  /* background-color: red; */
+}
+
+.title > p {
+  /* margin: 0; */
+  font-size: 25px;
+  font-weight: 900;
+  margin-left: 5vw;
+}
