@@ -14,6 +14,8 @@ import Space from "./pages/Space";
 import Dashboard from "./pages/common/Dashboard";
 import Auth from "./pages/Auth";
 import { authKeySelector } from "./redux/authReducer";
+import Page from "./pages/Page";
+import Community from "./pages/Community";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -39,6 +41,8 @@ export default function App() {
         <Route exact path="/dashboard/*" element={<Dashboard />} />
         <Route exact path="/space/:spaceId/*" element={<Space />} />
         <Route exact path="/auth/*" element={<Auth />} />
+        <Route exact path="/page/:spaceId" element={<Page />} />
+        <Route exact path="/community" element={<Community />} />
         <Route exact path="/*" element={<h1> not found app</h1>} />
       </Routes>
     </BrowserRouter>

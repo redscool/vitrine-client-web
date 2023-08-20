@@ -14,6 +14,7 @@ import { initChat } from "../redux/chatReducer";
 import Form from "../components/space/exercise/Form";
 import Shelf from "../components/space/Shelf";
 import Folder from "../components/space/shelf/Folder";
+import Page from "../components/space/Page";
 export default function Space() {
   const navigate = useNavigate();
   const params = useParams();
@@ -62,6 +63,13 @@ export default function Space() {
         >
           <p>Exercise</p>
         </Tabs>
+        <Tabs
+          link={`/space/${spaceId}/page`}
+          selected={params["*"] === "page"}
+          navigate={navigate}
+        >
+          <p>Page</p>
+        </Tabs>
         <div
           className={styles.dragDownButton}
           onClick={() => {
@@ -92,6 +100,7 @@ export default function Space() {
           <Route exact path="/shelf" element={<Shelf />} />
           <Route exact path="/shelf/:folderId" element={<Folder />} />
           <Route exact path="/exercise" element={<Exercise />} />
+          <Route exact path="/page" element={<Page />} />
           <Route exact path="/exercise/:formId" element={<Form />} />
           <Route exact path="/calendar" element={<Calendar />} />
           <Route path="/*" element={<> Not found </>} />
