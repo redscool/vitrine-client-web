@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./../../styles/components/form/Textbox.module.css";
 
-function Textbox({ label, type, state, setState }) {
+function Textbox({ label, type = "text", state, setState, placeholder = "" }) {
   const [isInputFocused, setIsInputFocused] = useState(false);
 
   const handleInputFocus = () => {
@@ -29,7 +29,8 @@ function Textbox({ label, type, state, setState }) {
         className={`${styles["floating-label-input-box"]} ${
           isInputFocused || state ? styles["input-focused"] : ""
         }`}
-        type={type || "text"}
+        type={type}
+        placeholder={placeholder}
         onFocus={handleInputFocus}
         onBlur={handleInputBlur}
       />

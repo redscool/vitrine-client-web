@@ -7,3 +7,7 @@ export const GOOGLE_AUTH_ACTION = {
     auth: 'auth',
     login: 'login',
 }
+
+export const PAGE_TEMPLATES = [
+    'SKY'
+]

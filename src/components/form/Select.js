@@ -9,7 +9,6 @@ export default function Select({
 }) {
   const [isOpen, setOpen] = useState(false);
   const [items, setItem] = useState(options);
-  console.log(items);
 
   const toggleDropdown = () => setOpen(!isOpen);
 
