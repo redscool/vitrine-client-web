@@ -15,6 +15,7 @@ import Form from "../components/space/exercise/Form";
 import Shelf from "../components/space/Shelf";
 import Folder from "../components/space/shelf/Folder";
 import Page from "../components/space/Page";
+import { setFolders } from "../redux/shelfReducer";
 export default function Space() {
   const navigate = useNavigate();
   const params = useParams();
@@ -29,6 +30,16 @@ export default function Space() {
       { spaceId },
       ({ data }) => {
         dispatch(initChat({ messages: data.data, spaceId }));
+      },
+      console.log
+    );
+
+    resource_request_with_access_token(
+      "get",
+      "/api/space/shelf/getFolders",
+      { spaceId },
+      ({ data }) => {
+        dispatch(setFolders(data.data));
       },
       console.log
     );

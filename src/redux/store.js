@@ -4,6 +4,7 @@ import authReducer from "./authReducer";
 import profileReducer from "./profileReducer";
 import eventsReducer from "./eventsReducer";
 import chatReducer from "./chatReducer";
+import shelfReducer from "./shelfReducer";
 
 export default configureStore({
   reducer: {
@@ -12,5 +13,6 @@ export default configureStore({
     profile: profileReducer,
     events: eventsReducer,
     chat: chatReducer,
+    shelf: shelfReducer
   },
 });
