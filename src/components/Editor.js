@@ -15,8 +15,8 @@ import "mathquill4quill/mathquill4quill.css";
 import BlotFormatter from "quill-blot-formatter";
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { file_server_request } from "../utils/Service";
 import config from "../config.json";
+import ShelfPopUp from "./ShelfPopUp";
 
 const FILE_SERVER = config.FILE_SERVER;
 
@@ -83,108 +83,10 @@ Quill.register({
   "formats/image": CustomImage,
 });
 
-// const getEditor = () => {
-//   return reactQuill?.current?.editor;
-// };
-
-function PopUp({ setShowPopup, reactQuill, editorRange }) {
-  const [imgUrl, setImgUrl] = useState();
-
-  console.log("reached popup");
-
-  const onFileChange = (e) => {
-    e.preventDefault();
-    let files;
-    if (e.dataTransfer) {
-      files = e.dataTransfer.files;
-    } else if (e.target) {
-      files = e.target.files;
-    }
-    const reader = new FileReader();
-    reader.onload = () => {
-      setImgUrl(reader.result);
-    };
-    reader.readAsDataURL(files[0]);
-  };
-
-  const handleSubmit = () => {
-    const editor = reactQuill?.current?.editor;
-    console.log("reached submit");
-
-    if (!editorRange.current) {
-      console.log("hello");
-      return setShowPopup(false);
-    }
-    console.log("reached submit2");
-
-    const formData = new FormData();
-    const inputFile = document.querySelector("#editorFileInput");
-    formData.append("file", inputFile.files[0]);
-    file_server_request(
-      "post",
-      "/uploadFile",
-      formData,
-      ({ data: { filename } }) => {
-        if (filename) {
-          console.log("reached request");
-          const url = `${FILE_SERVER}/getFile?id=${filename}`;
-          editor?.insertEmbed(
-            editorRange.current.index,
-            "image",
-            url,
-            Quill.sources.USER
-          );
-        }
-      },
-      console.log
-    );
-    setShowPopup(false);
-  };
-
-  return (
-    <div
-      style={{
-        position: "absolute",
-        display: "flex",
-        top: 0,
-        left: 0,
-        height: "100vh",
-        width: "100vw",
-        zIndex: 10,
-        backgroundColor: "#12121230",
-      }}
-    >
-      <div
-        style={{
-          margin: "auto",
-          height: "50vh",
-          width: "70vw",
-          backgroundColor: "#fff",
-        }}
-      >
-        <label>
-          <input
-            id="editorFileInput"
-            type="file"
-            style={{ display: "none" }}
-            onChange={onFileChange}
-            accept="image/png, image/jpeg"
-          />
-          Upload Image
-        </label>
-        <button onClick={() => setShowPopup(false)}>Close</button>
-        <button onClick={() => handleSubmit()}>Submit</button>
-        <img alt="demoImg" src={imgUrl} />
-      </div>
-    </div>
-  );
-}
-
 const EditorComponent = (props) => {
   const {
     expand,
     readOnly,
-    // setShowPopup,
     defaultContent,
     setEditorContent,
     setEditorContentText,
@@ -196,39 +98,16 @@ const EditorComponent = (props) => {
     handleDelta,
   } = props;
 
-  // useEffect(() => {
-  //   if (!reactQuill.current) return;
-
-  //   const quillHandler = (delta, oldDelta, source) => {
-  //     if (source !== "user") return;
-  //     console.log(delta);
-  //     // reactQuill.current.setContent()
-  //   }
-  //   reactQuill.current.editor.on("text-change", quillHandler)
-  //   return () => {
-  //     reactQuill.current?.editor?.off("text-change", quillHandler)
-  //   }
-  // }, [reactQuill.current])
-
-  // const reactQuill = createRef();
-  // const editorRange = createRef();
-
   const [showPopup, setShowPopup] = useState(false);
 
   const addImageInEditor = (setShowPopup) => () => {
     const editor = reactQuill?.current?.editor;
     editorRange.current = editor?.getSelection();
-
-    console.log("reached iie2");
     if (!editor || !editorRange.current) {
       return setShowPopup(false);
     }
-    console.log("reached iie3");
     setShowPopup(true);
   };
-
-  // const reactQuill = createRef();
-  // let editorRange;
 
   const imageHandler = useMemo(() => {
     return addImageInEditor(setShowPopup);
@@ -255,8 +134,6 @@ const EditorComponent = (props) => {
     const editorObject = reactQuill?.current?.editor;
     if (!editorObject) return;
     const editorContent = editorObject.editor.delta;
-    // console.log(editorContent);
-
     if (handleDelta) handleDelta(delta, oldDelta, source);
     setEditorContent(editorContent);
     if (setEditorContentText) setEditorContentText(editorObject.getText());
@@ -284,9 +161,27 @@ const EditorComponent = (props) => {
     );
   }
 
+  const handleSubmit = (file) => {
+    const editor = reactQuill?.current?.editor;
+
+    if (!editorRange.current) {
+      return setShowPopup(false);
+    }
+
+    const url = `${FILE_SERVER}/getFile?id=${file.url}`;
+    editor?.insertEmbed(
+      editorRange.current.index,
+      "image",
+      url,
+      Quill.sources.USER
+    );
+
+    setShowPopup(false);
+  };
+
   return (
     <>
-      {showPopup ? <PopUp editorRange={editorRange} reactQuill={reactQuill} setShowPopup={setShowPopup} /> : null}
+      {showPopup ? <ShelfPopUp addFile={handleSubmit} setPopUp={setShowPopup} /> : null}
       <ReactQuill
         ref={reactQuill}
         modules={modules}
@@ -301,99 +196,6 @@ const EditorComponent = (props) => {
   );
 };
 
-// function PopUp({ setShowPopup, reactQuill, editorRange }) {
-//   const [imgUrl, setImgUrl] = useState();
-
-//   console.log("reached popup");
-
-//   const onFileChange = (e) => {
-//     e.preventDefault();
-//     let files;
-//     if (e.dataTransfer) {
-//       files = e.dataTransfer.files;
-//     } else if (e.target) {
-//       files = e.target.files;
-//     }
-//     const reader = new FileReader();
-//     reader.onload = () => {
-//       setImgUrl(reader.result);
-//     };
-//     reader.readAsDataURL(files[0]);
-//   };
-
-//   const handleSubmit = () => {
-//     const editor = reactQuill?.current?.editor;
-//     console.log("reached submit");
-
-//     if (!editorRange.current) {
-//       console.log("hello");
-//       return setShowPopup(false);
-//     }
-//     console.log("reached submit2");
-
-//     const formData = new FormData();
-//     const inputFile = document.querySelector("#editorFileInput");
-//     formData.append("file", inputFile.files[0]);
-//     file_server_request(
-//       "post",
-//       "/uploadFile",
-//       formData,
-//       ({ data: { filename } }) => {
-//         if (filename) {
-//           console.log("reached request");
-//           const url = `${FILE_SERVER}/getFile?id=${filename}`;
-//           editor?.insertEmbed(
-//             editorRange.current.index,
-//             "image",
-//             url,
-//             Quill.sources.USER
-//           );
-//         }
-//       },
-//       console.log
-//     );
-//     setShowPopup(false);
-//   };
-
-//   return (
-//     <div
-//       style={{
-//         position: "absolute",
-//         display: "flex",
-//         top: 0,
-//         left: 0,
-//         height: "100vh",
-//         width: "100vw",
-//         zIndex: 10,
-//         backgroundColor: "#12121230",
-//       }}
-//     >
-//       <div
-//         style={{
-//           margin: "auto",
-//           height: "50vh",
-//           width: "70vw",
-//           backgroundColor: "#fff",
-//         }}
-//       >
-//         <label>
-//           <input
-//             id="editorFileInput"
-//             type="file"
-//             style={{ display: "none" }}
-//             onChange={onFileChange}
-//             accept="image/png, image/jpeg"
-//           />
-//           Upload Image
-//         </label>
-//         <button onClick={() => setShowPopup(false)}>Close</button>
-//         <button onClick={() => handleSubmit()}>Submit</button>
-//         <img alt="demoImg" src={imgUrl} />
-//       </div>
-//     </div>
-//   );
-// }
-
 export default function Editor({
   expand,
   readOnly,
@@ -402,8 +204,6 @@ export default function Editor({
   setEditorContentText,
   handleDelta
 }) {
-  // const [showPopup, setShowPopup] = useState(false);
-
   const reactQuill = useRef();
   const editorRange = useRef();
 
@@ -412,7 +212,6 @@ export default function Editor({
     setEditorContent,
     setEditorContentText,
     defaultContent,
-    // setShowPopup,
     handleDelta,
     reactQuill,
     editorRange,
@@ -421,7 +220,6 @@ export default function Editor({
   if (expand) {
     return (
       <>
-        {/* {showPopup ? <PopUp editorRange={editorRange} reactQuill={reactQuill} setShowPopup={setShowPopup} /> : null} */}
         <EditorComponent
           {...defaultProps}
           expand={expand}

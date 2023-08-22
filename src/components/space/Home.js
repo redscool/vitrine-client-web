@@ -4,20 +4,13 @@ import Editor from "../Editor";
 import { resource_request_with_access_token } from "../../utils/Service";
 import ShelfPopUp from "../ShelfPopUp";
 import Button from "../form/Button";
-import { notifyMe } from "../../utils/BrowserNotification";
 import FileTile from "./home/FileTile";
 export default function Home() {
 	const [editorContent, setEditorContent] = useState();
 	const [shelfPopUp, setShelfPopUp] = useState(false);
 	const [files, setFiles] = useState([]);
 
-	const setEditorText = (editorText) => {
-		// setEditorContentText(editorText);
-	};
-
 	const setEditorData = (editorData) => {
-		// editorContentState[0] = editorData;
-		// console.log(editorContentState[0]);
 		setEditorContent(editorData);
 	};
 
@@ -66,7 +59,6 @@ export default function Home() {
 							expand
 							setEditorContent={setEditorData}
 							// readOnly
-							// setEditorContentText={setEditorText}
 						/>
 						<div>
 							{files.map((file, indx) => (
