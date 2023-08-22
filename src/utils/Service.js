@@ -4,6 +4,9 @@ import config from "../config.json";
 const SERVER = config.SERVER;
 const FILE_SERVER = config.FILE_SERVER;
 
+const routeUpdateRequired = (method) => {
+    return method === "get" || method === "delete";
+}
 
 const getUpdatedRoute = (route, body) => {
   let newRoute = route;
@@ -43,7 +46,7 @@ export const auth_request_with_access_token = async (
     },
   };
 
-  if (method === "get") {
+  if (routeUpdateRequired(method)) {
     route = getUpdatedRoute(route, body);
     body = config;
   }
@@ -60,7 +63,7 @@ export const auth_request_with_access_token = async (
 export const auth_request = async (method, route, body, onSuccess, onError) => {
   const config = {};
 
-  if (method === "get") {
+  if (routeUpdateRequired(method)) {
     route = getUpdatedRoute(route, body);
     body = config;
   }
@@ -89,7 +92,7 @@ export const resource_request_with_access_token = async (
     },
   };
 
-  if (method === "get") {
+  if (routeUpdateRequired(method)) {
     route = getUpdatedRoute(route, body);
     body = config;
   }
@@ -119,7 +122,7 @@ export const file_server_request = async (
     },
   };
 
-  if (method === "get") {
+  if (routeUpdateRequired(method)) {
     route = getUpdatedRoute(route, body);
     body = config;
   }
