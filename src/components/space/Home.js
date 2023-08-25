@@ -6,10 +6,12 @@ import ShelfPopUp from "../ShelfPopUp";
 import Button from "../form/Button";
 import { notifyMe } from "../../utils/BrowserNotification";
 import FileTile from "./home/FileTile";
+import Stream from "./home/Stream";
 export default function Home() {
 	const [editorContent, setEditorContent] = useState();
 	const [shelfPopUp, setShelfPopUp] = useState(false);
 	const [files, setFiles] = useState([]);
+	const [posts, setPosts] = useState([]);
 
 	const setEditorText = (editorText) => {
 		// setEditorContentText(editorText);
@@ -38,15 +40,24 @@ export default function Home() {
 	};
 
 	const handleSubmit = () => {
-		resource_request_with_access_token(
-			"post",
-			"/api/space/stream/addEditor",
-			{
-				content: editorContent,
-			},
-			console.log,
-			console.log
-		);
+		const post = {
+			editor: editorContent,
+			filesAttached: files,
+			type: "Post",
+		};
+		const tempPons = [...posts];
+		tempPons.push(post);
+		setPosts(tempPons);
+		setFiles([]);
+		// resource_request_with_access_token(
+		// 	"post",
+		// 	"/api/space/stream/addEditor",
+		// 	{
+		// 		content: editorContent,
+		// 	},
+		// 	console.log,
+		// 	console.log
+		// );
 	};
 
 	return (
@@ -81,10 +92,22 @@ export default function Home() {
 								handleClick={() => setShelfPopUp(true)}
 								label="Upload File"
 							/>
-							<button onClick={handleSubmit}>Submit</button>
+							<div
+								style={{
+									cursor: "pointer",
+									backgroundColor: "blue",
+									color: "wheat",
+									width: "5vw",
+								}}
+								onClick={handleSubmit}
+							>
+								Submit
+							</div>
 						</div>
 					</div>
-					<div className={styles.stream}></div>
+					<div className={styles.stream}>
+						<Stream posts={posts} />
+					</div>
 				</div>
 			</div>
 		</div>
