@@ -1,0 +1,12 @@
+.container {
+	width: "auto";
+	height: "auto";
+	border: solid;
+	background-color: greenyellow;
+	margin-bottom: 2vh;
+}
+
+.files {
+	display: flex;
+	flex-direction: row;
+}

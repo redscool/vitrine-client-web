@@ -1,47 +1,47 @@
 .mainContainer {
-  width: 100vw;
-  height: 92vh;
-  display: flex;
-  flex-direction: column;
+	width: 100vw;
+	height: 92vh;
+	display: flex;
+	flex-direction: column;
+	overflow-x: hidden;
 }
 
 .myclass {
-  width: 95vw;
-  margin: 2vh auto;
-  height: 36vh;
-  display: flex;
-  background-color: aqua;
+	width: 95vw;
+	margin: 2vh auto;
+	height: 36vh;
+	display: flex;
+	background-color: aqua;
 }
 
 .lowerContainer {
-  width: 95vw;
-  margin: 0 auto;
-  height: 56vh;
-  display: flex;
-  display: flex;
+	width: 95vw;
+	margin: 0 auto;
+	height: 56vh;
+	display: flex;
+	display: flex;
 }
 
 .notification {
-  width: 25vw;
-  height: 56vh;
-  background-color: deeppink;
+	width: 25vw;
+	height: 56vh;
+	background-color: deeppink;
 }
 
 .rightContainer {
-  width: 68vw;
-  height: 56vh;
-  margin-left: 2vw;
+	width: 68vw;
+	height: 56vh;
+	margin-left: 2vw;
 }
 
 .greenBoard {
-  width: 68vw;
-  height: 27vh;
-  /* background-color: darkgreen; */
+	width: 68vw;
+	height: auto;
+	/* background-color: darkgreen; */
 }
 
 .stream {
-  margin-top: 2vh;
-  width: 68vw;
-  height: 27vh;
-  background-color: greenyellow;
+	margin-top: 2vh;
+	width: 68vw;
+	background-color: brown;
 }
