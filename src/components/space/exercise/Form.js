@@ -219,6 +219,7 @@ export default function Form() {
 							setEditorContent={setTitleEditorContent}
 							defaultContent={titleEditorContent}
 							key={0}
+							editorContent={titleEditorContent}
 						/>
 					)}
 				</TitleCardEdit>
@@ -290,6 +291,7 @@ export default function Form() {
 																	element[0]
 																)}
 																defaultContent={element[1].content}
+																editorContent={element[1].content}
 															/>
 															{element[1].type == "MCQ" ? (
 																<MCQBuilder
