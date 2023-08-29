@@ -38,7 +38,14 @@ export default function O2O({ setSelectedChat, chat }) {
 			>
 				{"<--"}
 			</div>
-			<div style={{ color: "wheat" }}>
+			<div
+				style={{
+					height: "50vh",
+					color: "wheat",
+					overflowY: "scroll",
+					overflowX: "visible",
+				}}
+			>
 				{chat?.messages?.map((message, indx) => {
 					return (
 						<Message

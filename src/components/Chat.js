@@ -45,7 +45,7 @@ export default function Chat() {
 				Icon
 			</div>
 			{showPopUp ? <Chatbox profileId={profileId} /> : null}
-			<Toaster />
+			<Toaster position="top-right" />
 		</div>
 	);
 }
