@@ -1,3 +1,5 @@
+import toast from "react-hot-toast";
+
 export const notifyMe = () => {
 	if (!("Notification" in window)) {
 		alert("This browser does not support desktop notification");
@@ -28,4 +30,8 @@ export const notify = (message) => {
 	} else {
 		alert("Allow Notification");
 	}
+};
+
+export const notifyDM = (message, sender) => {
+	toast(`${message} \n\n -${sender}`);
 };
