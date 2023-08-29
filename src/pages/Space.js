@@ -16,107 +16,153 @@ import Shelf from "../components/space/Shelf";
 import Folder from "../components/space/shelf/Folder";
 import Page from "../components/space/Page";
 import { setFolders } from "../redux/shelfReducer";
+import Chat from "../components/Chat.js";
 export default function Space() {
-  const navigate = useNavigate();
-  const params = useParams();
-  const [isDropDown, setIsDropDown] = useState(false);
-  const [isChatboxOpen, setIsChatboxOpen] = useState(false);
-  const spaceId = params.spaceId;
-  const dispatch = useDispatch();
-  useEffect(() => {
-    resource_request_with_access_token(
-      "get",
-      "/api/space/essential/getMessages",
-      { spaceId },
-      ({ data }) => {
-        dispatch(initChat({ messages: data.data, spaceId }));
-      },
-      console.log
-    );
+	const navigate = useNavigate();
+	const params = useParams();
+	const [isDropDown, setIsDropDown] = useState(false);
+	const [isChatboxOpen, setIsChatboxOpen] = useState(false);
+	const spaceId = params.spaceId;
+	const dispatch = useDispatch();
+	useEffect(() => {
+		resource_request_with_access_token(
+			"get",
+			"/api/space/essential/getMessages",
+			{ spaceId },
+			({ data }) => {
+				dispatch(initChat({ messages: data.data, spaceId }));
+			},
+			console.log
+		);
 
-    resource_request_with_access_token(
-      "get",
-      "/api/space/shelf/getFolders",
-      { spaceId },
-      ({ data }) => {
-        dispatch(setFolders(data.data));
-      },
-      console.log
-    );
-  });
-  return (
-    <div className={styles.page}>
-      {isDropDown ? <DropDown /> : null}
-      {isChatboxOpen ? <Chatbox /> : null}
-      <div className={styles.navbar}>
-        <Branding />
-        <Tabs
-          name="Space"
-          link={`/space/${spaceId}/`}
-          selected={params["*"] === ""}
-          navigate={navigate}
-        >
-          <p>Space</p>
-        </Tabs>
+		resource_request_with_access_token(
+			"get",
+			"/api/space/shelf/getFolders",
+			{ spaceId },
+			({ data }) => {
+				dispatch(setFolders(data.data));
+			},
+			console.log
+		);
+	});
+	return (
+		<div className={styles.page}>
+			{isDropDown ? <DropDown /> : null}
+			{isChatboxOpen ? <Chatbox /> : null}
+			<div className={styles.navbar}>
+				<Branding />
+				<Tabs
+					name="Space"
+					link={`/space/${spaceId}/`}
+					selected={params["*"] === ""}
+					navigate={navigate}
+				>
+					<p>Space</p>
+				</Tabs>
 
-        <Tabs
-          link={`/space/${spaceId}/shelf`}
-          selected={params["*"] === "shelf"}
-          navigate={navigate}
-        >
-          <p>Shelf</p>
-        </Tabs>
+				<Tabs
+					link={`/space/${spaceId}/shelf`}
+					selected={params["*"] === "shelf"}
+					navigate={navigate}
+				>
+					<p>Shelf</p>
+				</Tabs>
 
-        <Tabs
-          link={`/space/${spaceId}/exercise`}
-          selected={params["*"] === "exercise"}
-          navigate={navigate}
-        >
-          <p>Exercise</p>
-        </Tabs>
-        <Tabs
-          link={`/space/${spaceId}/page`}
-          selected={params["*"] === "page"}
-          navigate={navigate}
-        >
-          <p>Page</p>
-        </Tabs>
-        <div
-          className={styles.dragDownButton}
-          onClick={() => {
-            setIsChatboxOpen(!isChatboxOpen);
-          }}
-        >
-          <img src="/resources/chatButton.svg" alt="chat button icon" />
-        </div>
-        <Tabs link={`/space/${spaceId}/calendar`} navigate={navigate}>
-          <div className={styles.calendarButton}>
-            <img src="/resources/calendar.svg" alt="calendar icon" />
-          </div>
-        </Tabs>
+				<Tabs
+					link={`/space/${spaceId}/exercise`}
+					selected={params["*"] === "exercise"}
+					navigate={navigate}
+				>
+					<p>Exercise</p>
+				</Tabs>
+				<Tabs
+					link={`/space/${spaceId}/page`}
+					selected={params["*"] === "page"}
+					navigate={navigate}
+				>
+					<p>Page</p>
+				</Tabs>
+				<div
+					className={styles.dragDownButton}
+					onClick={() => {
+						setIsChatboxOpen(!isChatboxOpen);
+					}}
+				>
+					<img
+						src="/resources/chatButton.svg"
+						alt="chat button icon"
+					/>
+				</div>
+				<Tabs
+					link={`/space/${spaceId}/calendar`}
+					navigate={navigate}
+				>
+					<div className={styles.calendarButton}>
+						<img
+							src="/resources/calendar.svg"
+							alt="calendar icon"
+						/>
+					</div>
+				</Tabs>
 
-        <div
-          className={styles.dragDownButton}
-          onClick={() => {
-            setIsDropDown(!isDropDown);
-          }}
-        >
-          <img src="/resources/dragdownlogo.svg" alt="drag down icon" />
-        </div>
-      </div>
+				<Chat />
 
-      <div className={styles.mainContainer}>
-        <Routes>
-          <Route exact path="/" element={<Home />} />
-          <Route exact path="/shelf" element={<Shelf />} />
-          <Route exact path="/shelf/:folderId" element={<Folder />} />
-          <Route exact path="/exercise" element={<Exercise />} />
-          <Route exact path="/page" element={<Page />} />
-          <Route exact path="/exercise/:formId" element={<Form />} />
-          <Route exact path="/calendar" element={<Calendar />} />
-          <Route path="/*" element={<> Not found </>} />
-        </Routes>
-      </div>
-    </div>
-  );
+				<div
+					className={styles.dragDownButton}
+					onClick={() => {
+						setIsDropDown(!isDropDown);
+					}}
+				>
+					<img
+						src="/resources/dragdownlogo.svg"
+						alt="drag down icon"
+					/>
+				</div>
+			</div>
+
+			<div className={styles.mainContainer}>
+				<Routes>
+					<Route
+						exact
+						path="/"
+						element={<Home />}
+					/>
+					<Route
+						exact
+						path="/shelf"
+						element={<Shelf />}
+					/>
+					<Route
+						exact
+						path="/shelf/:folderId"
+						element={<Folder />}
+					/>
+					<Route
+						exact
+						path="/exercise"
+						element={<Exercise />}
+					/>
+					<Route
+						exact
+						path="/page"
+						element={<Page />}
+					/>
+					<Route
+						exact
+						path="/exercise/:formId"
+						element={<Form />}
+					/>
+					<Route
+						exact
+						path="/calendar"
+						element={<Calendar />}
+					/>
+					<Route
+						path="/*"
+						element={<> Not found </>}
+					/>
+				</Routes>
+			</div>
+		</div>
+	);
 }

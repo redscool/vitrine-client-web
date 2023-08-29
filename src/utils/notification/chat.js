@@ -1,5 +1,5 @@
 import { addDM, addMessage, addDMChat } from "../../redux/chatReducer";
-import { notify, notifyMe } from "../BrowserNotification";
+import { notifyDM } from "../BrowserNotification";
 import { listen } from "../socketIO";
 import store from "../../redux/store.js";
 import { resource_request_with_access_token } from "../../utils/Service.js";
@@ -11,7 +11,7 @@ const listenChatEvents = (dispatch) => {
 	listen(
 		"chat-dm-received",
 		async ({ chatId, sender, reciever, data, timestamp }) => {
-			notify(`${data} :${sender}`);
+			notifyDM(data, sender);
 			const { chatHeads } = store.getState().chat;
 			console.log("chatHeads", chatHeads);
 			if (chatHeads[chatId]) {

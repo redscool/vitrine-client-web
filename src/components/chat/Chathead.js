@@ -13,6 +13,15 @@ export default function Chathead({ chat, setSelectedChat }) {
 			onClick={() => setSelectedChat(chat._id)}
 		>
 			<p>{chat.partner.name}</p>
+			<p
+				style={{
+					color: "grey",
+				}}
+			>
+				{chat.messages.length
+					? chat.messages[chat.messages.length - 1].data
+					: null}
+			</p>
 		</div>
 	);
 }
