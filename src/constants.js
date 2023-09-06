@@ -11,3 +11,21 @@ export const GOOGLE_AUTH_ACTION = {
 export const PAGE_TEMPLATES = [
     'SKY'
 ]
+
+export const USER_TYPES = {
+    PROVIDER: "PROVIDER",
+    CONSUMER: "CONSUMER",
+}
+
+export const FORM_TYPES = {
+    EXERCISE: "EXERCISE",
+    SURVEY: "SURVEY",
+    FEEDBACK: "FEEDBACK",
+}
+
+export const FORM_ENTITY_TYPES = {
+    MCQ: "MCQ",
+    SHORT: "SHORT",
+    LONG: "LONG",
+    FILE: "FILE",
+}

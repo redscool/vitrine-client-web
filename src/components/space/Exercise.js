@@ -6,6 +6,7 @@ import { authKeySelector } from "../../redux/authReducer";
 import { resource_request_with_access_token } from "../../utils/Service";
 import AddForm from "./exercise/AddForm";
 import { useNavigate, useParams } from "react-router-dom";
+import { USER_TYPES } from "../../constants";
 export default function Exercise() {
   const [popup, setPopup] = useState(false);
   const [formsList, setFormsList] = useState([]);
@@ -34,17 +35,19 @@ export default function Exercise() {
       {popup ? <AddForm view={setPopup} setClassList={setFormsList} /> : null}
       <div className={styles.content}>
         {type === "PROVIDER" ? (
-          <Button
-            label={"Add Form"}
-            handleClick={() => {
-              setPopup(!popup);
-            }}
-          />
+          <>
+            <Button
+              label={"Add Form"}
+              handleClick={() => {
+                setPopup(!popup);
+              }}
+            />
+          </>
         ) : null}
         <div className={styles.classList}>
           {formsList?.map((form) => (
             <div
-              onClick={() => navigate(`/space/${spaceId}/exercise/${form._id}`)}
+              onClick={() => navigate(`/space/${spaceId}/${{ [USER_TYPES.PROVIDER]: 'exercise', [USER_TYPES.CONSUMER]: 'exerciseSubmit' }[type]}/${form._id}`)}
             >
               {" "}
               {form.title}{" "}

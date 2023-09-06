@@ -11,6 +11,7 @@ import Exercise from "../components/space/Exercise";
 import { resource_request_with_access_token } from "../utils/Service";
 import { useDispatch } from "react-redux";
 import { initChat } from "../redux/chatReducer";
+import FormBuilder from "../components/space/exercise/FormBuilder";
 import Form from "../components/space/exercise/Form";
 import Shelf from "../components/space/Shelf";
 import Folder from "../components/space/shelf/Folder";
@@ -112,7 +113,8 @@ export default function Space() {
           <Route exact path="/shelf/:folderId" element={<Folder />} />
           <Route exact path="/exercise" element={<Exercise />} />
           <Route exact path="/page" element={<Page />} />
-          <Route exact path="/exercise/:formId" element={<Form />} />
+          <Route exact path="/exercise/:formId" element={<FormBuilder />} />
+          <Route exact path="/exerciseSubmit/:formId" element={<Form />} />
           <Route exact path="/calendar" element={<Calendar />} />
           <Route path="/*" element={<> Not found </>} />
         </Routes>
