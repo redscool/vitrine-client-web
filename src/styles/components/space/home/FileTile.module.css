@@ -1,8 +1,10 @@
 .container {
-	width: 5vw;
-	height: 5vh;
+	width: 8vw;
+	height: 11vh;
 	margin: 1vh 1vw;
-	border: solid 5px;
+	border: solid 2px;
+	margin-right: 3vw;
+	overflow: hidden;
 }
 
 .icon {
