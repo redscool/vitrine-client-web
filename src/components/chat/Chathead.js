@@ -9,6 +9,7 @@ export default function Chathead({ chat, setSelectedChat }) {
 				width: "100",
 				border: "solid green",
 				marginTop: "2vh",
+				cursor: "pointer",
 			}}
 			onClick={() => setSelectedChat(chat._id)}
 		>

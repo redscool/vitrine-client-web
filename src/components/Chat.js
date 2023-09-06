@@ -9,6 +9,7 @@ import { Toaster } from "react-hot-toast";
 
 export default function Chat() {
 	const profileId = useSelector(authKeySelector("profileId"));
+	console.log("profile: ", profileId);
 	const [showPopUp, setShowPopUp] = useState();
 
 	const dispatch = useDispatch();
@@ -42,7 +43,7 @@ export default function Chat() {
 				}}
 				onClick={() => setShowPopUp(!showPopUp)}
 			>
-				Icon
+				Chat
 			</div>
 			{showPopUp ? <Chatbox profileId={profileId} /> : null}
 			<Toaster position="top-right" />

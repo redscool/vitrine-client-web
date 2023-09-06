@@ -27,16 +27,33 @@ export default function O2O({ setSelectedChat, chat }) {
 		<div>
 			<div
 				style={{
-					cursor: "pointer",
-					border: "solid 6px",
-					height: "wrap-content",
-					width: "5vw",
-					backgroundColor: "black",
-					color: "wheat",
+					display: "flex",
+					flexDirection: "row",
 				}}
-				onClick={() => setSelectedChat(false)}
 			>
-				{"<--"}
+				<div
+					style={{
+						cursor: "pointer",
+						border: "solid 6px",
+						height: "wrap-content",
+						width: "5vw",
+						backgroundColor: "black",
+						color: "wheat",
+					}}
+					onClick={() => setSelectedChat(false)}
+				>
+					{"<--"}
+				</div>
+				<div
+					style={{
+						color: "wheat",
+						marginLeft: "5vw",
+						font: "icon",
+						fontSize: "4.5vh",
+					}}
+				>
+					{chat.partner.name}
+				</div>
 			</div>
 			<div
 				style={{
