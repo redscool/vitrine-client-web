@@ -16,7 +16,7 @@ function McqForm({ addResponse, entity }) {
 
     return (
         <div>
-            <Editor defaultContent={value?.content} readOnly />
+            <Editor editorContent={value?.content} readOnly />
             {value?.options?.map?.((option, index) => {
                 return (
                     <label>
@@ -33,7 +33,7 @@ function ShortForm({ addResponse, entity }) {
 
     return (
         <div>
-            <Editor defaultContent={value?.content} readOnly />
+            <Editor editorContent={value?.content} readOnly />
             <input onChange={e => addResponse(key, e.target.value)} />
         </div>
     )
@@ -44,7 +44,7 @@ function LongForm({ addResponse, entity }) {
 
     return (
         <div>
-            <Editor defaultContent={value?.content} readOnly />
+            <Editor editorContent={value?.content} readOnly />
             <textarea onChange={e => addResponse(key, e.target.value)} />
         </div>
     )
@@ -66,7 +66,7 @@ function FileForm({ addResponse, entity }) {
         <>
             {showPopup ? <ShelfPopUp addFile={handleSubmit} setPopUp={setShowPopup} /> : null}
             <div>
-                <Editor defaultContent={value?.content} readOnly />
+                <Editor editorContent={value?.content} readOnly />
                 <img src={file} alt='demo' />
                 <Button handleClick={() => setShowPopup(true)} label="upload" />
             </div>
