@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styles from "../../../../styles/components/space/exercise/form/TitleCardEdit.module.css";
 import Select from "../../../form/Select";
+import { FORM_ENTITY_TYPES } from "../../../../constants";
 
 export default function TitleCardEdit({
   children,
@@ -16,7 +17,7 @@ export default function TitleCardEdit({
   qType,
 }) {
   const [selectedItem, setSelectedItem] = useState(qType);
-  const questionTypesArray = ["MCQ", "Short Answer", "Long Answer", "File"];
+  const questionTypesArray = [FORM_ENTITY_TYPES.MCQ, FORM_ENTITY_TYPES.SHORT, FORM_ENTITY_TYPES.LONG, FORM_ENTITY_TYPES.FILE];
   return (
     <div className={styles.container}>
       <div

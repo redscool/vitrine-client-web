@@ -6,9 +6,11 @@ import { useSelector } from "react-redux";
 import { authKeySelector } from "../../../redux/authReducer";
 import { useParams } from "react-router-dom";
 import { resource_request_with_access_token } from "../../../utils/Service";
+import Select from "../../form/Select";
 export default function AddForm(props) {
   const { view } = props;
   const [title, setTitle] = useState("");
+  const [formType, setFormType] = useState("");
   //   const profileId = useSelector(authKeySelector("profileId"));
   //   const userId = useSelector(authKeySelector("userId"));
   //   const type = useSelector(authKeySelector("type"));
@@ -28,6 +30,7 @@ export default function AddForm(props) {
       {
         spaceId,
         title,
+        type: formType
       },
       console.log,
       console.log
@@ -40,6 +43,7 @@ export default function AddForm(props) {
         <img src="/close.png" alt="cancel" onClick={() => view(false)} />
         <h1>Add Form</h1>
         <div className={styles.topCtn}>
+          <Select label="Form Type" selectedItem={formType} setSelectedItem={setFormType} options={["SURVEY", "EXERCISE", "FEEDBACK"]} />
           <Textbox label="Form Name" state={title} setState={setTitle} />
           <Button label="Create" handleClick={handleClick} />
         </div>
