@@ -7,11 +7,13 @@ import Button from "../form/Button";
 import FileTile from "./home/FileTile";
 import Stream from "./home/Stream";
 import { useParams } from "react-router-dom";
+import { ORDER_PLAN_TYPES } from "../../constants.js";
 export default function Home() {
 	const [editorContent, setEditorContent] = useState();
 	const [shelfPopUp, setShelfPopUp] = useState(false);
 	const [files, setFiles] = useState([]);
 	const [posts, setPosts] = useState([]);
+	const [plans, setPlans] = useState({});
 	const params = useParams();
 	const spaceID = params.spaceId;
 
@@ -24,6 +26,18 @@ export default function Home() {
 			},
 			(data) => {
 				setPosts(data.data.posts);
+			},
+			console.log
+		);
+	}, []);
+
+	useEffect(() => {
+		resource_request_with_access_token(
+			"get",
+			"/api/space/essential/getPlans",
+			{ spaceId: spaceID },
+			({ data }) => {
+				setPlans(data.plans);
 			},
 			console.log
 		);
@@ -84,6 +98,16 @@ export default function Home() {
 		);
 	};
 
+	const handlePlanSubmit = () => {
+		resource_request_with_access_token(
+			"post",
+			"/api/space/essential/setPlans",
+			{ spaceId: spaceID, plans },
+			console.log,
+			console.log
+		);
+	};
+
 	return (
 		<div className={styles.mainContainer}>
 			{shelfPopUp ? (
@@ -92,7 +116,55 @@ export default function Home() {
 					setPopUp={setShelfPopUp}
 				/>
 			) : null}
-			<div className={styles.myclass}></div>
+			<div className={styles.myclass}>
+				<div>
+					<label>{ORDER_PLAN_TYPES.BUY} : </label>
+					<input
+						value={plans[ORDER_PLAN_TYPES.BUY] ?? ""}
+						onChange={(e) => {
+							const temp = { ...plans };
+							temp[ORDER_PLAN_TYPES.BUY] = e.target.value;
+							setPlans(temp);
+						}}
+						type={"number"}
+					/>
+				</div>
+				<div>
+					<label>{ORDER_PLAN_TYPES.MONTHLY} : </label>
+					<input
+						value={plans[ORDER_PLAN_TYPES.MONTHLY] ?? ""}
+						onChange={(e) => {
+							const temp = { ...plans };
+							temp[ORDER_PLAN_TYPES.MONTHLY] = e.target.value;
+							setPlans(temp);
+						}}
+						type={"number"}
+					/>
+				</div>
+				<div>
+					<label>{ORDER_PLAN_TYPES.YEARLY} : </label>
+					<input
+						value={plans[ORDER_PLAN_TYPES.YEARLY] ?? ""}
+						onChange={(e) => {
+							const temp = { ...plans };
+							temp[ORDER_PLAN_TYPES.YEARLY] = e.target.value;
+							setPlans(temp);
+						}}
+						type={"number"}
+					/>
+				</div>
+				<div
+					style={{
+						backgroundColor: "wheat",
+						height: "4vh",
+						cursor: "pointer",
+						marginLeft: "2vw",
+					}}
+					onClick={handlePlanSubmit}
+				>
+					Submit
+				</div>
+			</div>
 			<div className={styles.lowerContainer}>
 				<div className={styles.notification}></div>
 				<div className={styles.rightContainer}>
