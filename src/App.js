@@ -15,6 +15,7 @@ import { ThemeProvider, createTheme } from "@mui/material";
 import getDesignTokens from "./utils/theme";
 import UserAuthentication from "./pages/UserAuthentication";
 import Dashboard from "./pages/Dashboard";
+import Order from "./pages/Order.js";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -50,6 +51,7 @@ export default function App() {
           <Route exact path="/auth/*" element={<Auth />} />
           <Route exact path="/page/:spaceId" element={<Page />} />
           <Route exact path="/community" element={<Community />} />
+          <Route exact path="/order" element={<Order />} />
           <Route exact path="/*" element={<h1> not found app</h1>} />
         </Routes>
       </BrowserRouter>
