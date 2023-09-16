@@ -1,12 +1,13 @@
 {
-    "SERVER": "http://localhost:5000",
-    "FILE_SERVER": "http://localhost:5002",
-    "GOOGLE_EVENT": {
-        "client_id": "611755391410-8cin2sd35dg0o3p04d46a7qn9fpfsjcp.apps.googleusercontent.com",
-        "redirect_uri": "http://localhost:3000/auth",
-        "scope": "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/userinfo.profile",
-        "response_type": "code",
-        "access_type": "offline",
-        "prompt": "consent"
-    }
+	"SERVER": "http://localhost:5000",
+	"FILE_SERVER": "http://localhost:5002",
+	"GOOGLE_EVENT": {
+		"client_id": "611755391410-8cin2sd35dg0o3p04d46a7qn9fpfsjcp.apps.googleusercontent.com",
+		"redirect_uri": "http://localhost:3000/auth",
+		"scope": "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/userinfo.profile",
+		"response_type": "code",
+		"access_type": "offline",
+		"prompt": "consent"
+	},
+	"RAZORPAY_KEY_ID": "rzp_test_D68Znn6J9zSBFu"
 }

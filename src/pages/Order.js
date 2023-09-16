@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { cartSelector, emptyCart } from "../redux/orderReducer.js";
+import { cartSelector, emptyCart, setCart } from "../redux/orderReducer.js";
 import { authKeySelector } from "../redux/authReducer.js";
 import { resource_request_with_access_token } from "../utils/Service.js";
 import ConfirmationPopup from "../components/order/ConfirmationPopup.js";
-import Payment from "../components/order/Payment.js";
 import { useNavigate } from "react-router-dom";
+import PaymentService from "../components/PaymentService.js";
 
 export default function Order() {
 	const cart = useSelector(cartSelector);
@@ -14,22 +14,40 @@ export default function Order() {
 	const [plans, setPlans] = useState({});
 	const [selectedOrder, setSelectedOrder] = useState(false);
 	const [order, setOrder] = useState(false);
+	const [paymentDetails, setPaymentDetails] = useState(false);
 
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		if (!cart) return;
-		resource_request_with_access_token(
-			"get",
-			"/api/space/essential/getPlans",
-			{ spaceId: cart.item },
-			({ data }) => {
-				setPlans(data.plans);
-				console.log(data);
-			},
-			console.log
-		);
+		if (!cart) {
+			resource_request_with_access_token(
+				"post",
+				"/api/monet/order/getCart",
+				{ userId: profileId },
+				({ data }) => {
+					dispatch(
+						setCart({
+							item: data.order.item,
+							itemType: data.order.itemType,
+							planDetails: data.order.planDetails,
+						})
+					);
+				},
+				console.log
+			);
+		} else {
+			resource_request_with_access_token(
+				"get",
+				"/api/space/essential/getPlans",
+				{ spaceId: cart.item },
+				({ data }) => {
+					setPlans(data.plans);
+					console.log(data);
+				},
+				console.log
+			);
+		}
 	}, [cart]);
 
 	if (!cart) {
@@ -49,6 +67,7 @@ export default function Order() {
 			},
 			({ data }) => {
 				setOrder(data.order);
+				setPaymentDetails(data.paymentDetails);
 				setSelectedOrder(false);
 				console.log(data);
 			},
@@ -71,10 +90,10 @@ export default function Order() {
 			console.log
 		);
 	};
-
 	const handleCancel = () => {
 		setSelectedOrder(false);
 	};
+
 	const handleCancelPayment = () => {
 		resource_request_with_access_token(
 			"post",
@@ -88,6 +107,12 @@ export default function Order() {
 			},
 			console.log
 		);
+	};
+	const handlePaymentSuccess = (response) => {
+		const spaceId = cart.item;
+		navigate(`/space/${spaceId}/`);
+		dispatch(emptyCart(null));
+		console.log("Payment Success", response);
 	};
 
 	return (
@@ -128,10 +153,10 @@ export default function Order() {
 			) : null}
 
 			{order ? (
-				<Payment
-					amount={order.amount}
-					handleCancel={handleCancelPayment}
-					handlePaymentDone={handleConfirmPayment}
+				<PaymentService
+					paymentDetails={paymentDetails}
+					onSuccess={handlePaymentSuccess}
+					callbackUrl={"/api/monet/order/paymentConfirmation"}
 				/>
 			) : null}
 		</div>

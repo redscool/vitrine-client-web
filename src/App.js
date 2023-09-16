@@ -17,6 +17,7 @@ import { authKeySelector } from "./redux/authReducer";
 import Page from "./pages/Page";
 import Community from "./pages/Community";
 import Order from "./pages/Order.js";
+import { Toaster } from "react-hot-toast";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -47,6 +48,7 @@ export default function App() {
         <Route exact path="/*" element={<h1> not found app</h1>} />
         <Route exact path="/order" element={<Order />} />
       </Routes>
+      <Toaster position="top-right" />
     </BrowserRouter>
   );
 }

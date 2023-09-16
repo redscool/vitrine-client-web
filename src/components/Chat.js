@@ -5,7 +5,6 @@ import { resource_request_with_access_token } from "../utils/Service.js";
 import { useDispatch, useSelector } from "react-redux";
 import { authKeySelector } from "../redux/authReducer.js";
 import { initDM } from "../redux/chatReducer.js";
-import { Toaster } from "react-hot-toast";
 
 export default function Chat() {
 	const profileId = useSelector(authKeySelector("profileId"));
@@ -46,7 +45,6 @@ export default function Chat() {
 				Chat
 			</div>
 			{showPopUp ? <Chatbox profileId={profileId} /> : null}
-			<Toaster position="top-right" />
 		</div>
 	);
 }
