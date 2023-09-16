@@ -1,9 +1,15 @@
+import { Typography } from "@mui/material";
 import React from "react";
-import styles from "../styles/components/Branding.module.css";
 export default function Branding() {
   return (
-    <div className={styles.container}>
-      <p>Branding</p>
-    </div>
+    <Typography
+      sx={{
+        margin: "2vh auto 2vh 5px",
+        fontSize: "1.5rem",
+        color: "text.primary",
+      }}
+    >
+      BeeTwo
+    </Typography>
   );
 }
