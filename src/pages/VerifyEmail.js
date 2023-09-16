@@ -28,5 +28,5 @@ export default function VerifyEmail() {
       console.log
     );
   }, []);
-  return <div></div>;
+  return <></>;
 }
