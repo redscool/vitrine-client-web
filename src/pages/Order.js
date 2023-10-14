@@ -156,7 +156,7 @@ export default function Order() {
 				<PaymentService
 					paymentDetails={paymentDetails}
 					onSuccess={handlePaymentSuccess}
-					callbackUrl={"/api/monet/order/paymentConfirmation"}
+					callbackUrl={"/api/monet/order/confirmPaymentTester"}
 				/>
 			) : null}
 		</div>

@@ -12,7 +12,7 @@ export default function PaymentService({
 }) {
 	let userEmail = useSelector(authKeySelector("email"));
 	const handlePaymentClick = () => {
-		// console.log(paymentDetails);
+		console.log(paymentDetails?.notes?.customerId);
 		let razp1 = new window.Razorpay({
 			key: config.RAZORPAY_KEY_ID, // Enter the Key ID generated from the Dashboard
 			amount: paymentDetails.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
@@ -21,6 +21,9 @@ export default function PaymentService({
 			description: "Test Transaction",
 			image: "https://gaffar.vercel.app/logo.svg",
 			order_id: paymentDetails.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+			customer_id: paymentDetails?.notes?.customerId,
+			remember_customer: true,
+			save: 1,
 			handler: function (response) {
 				console.log("Payment Successful", response);
 				console.log(response.razorpay_payment_id);
