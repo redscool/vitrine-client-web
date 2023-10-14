@@ -8,17 +8,20 @@ export const settingSlice = createSlice({
   name: "setting",
   initialState,
   reducers: {
-    setTheme: (state, action) => {
-      const currentTheme = action.payload;
-
-      state.theme = currentTheme;
-      localStorage.setItem("theme", currentTheme);
-      document.body.className = currentTheme;
+    setTheme: () => {},
+    toggleTheme: (state) => {
+      const newTheme = state.theme === "light" ? "dark" : "light";
+      state.theme = newTheme;
+      localStorage.setItem("theme", newTheme);
+      document.body.className = {
+        light: "light-theme",
+        dark: "dark-theme",
+      }[newTheme];
     },
   },
 });
 
-export const { setTheme } = settingSlice.actions;
+export const { toggleTheme, setTheme } = settingSlice.actions;
 
 export const themeSelector = (state) => state.setting.theme;
 

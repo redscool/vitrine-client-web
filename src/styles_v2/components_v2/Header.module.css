@@ -1,0 +1,34 @@
+.button {
+  color: var(--para-color);
+  background-color: var(--bg-clr);
+}
+
+.mainContainer {
+  background-color: var(--header-bg-color);
+  display: flex;
+  height: 10vh;
+  width: 100%;
+}
+
+.tab {
+  border-bottom: 2px solid var(--header-bg-color);
+  cursor: pointer;
+  margin: auto;
+  display: flex;
+  height: 6vh;
+}
+
+.activeTab {
+  border-bottom: 2px solid var(--para-color);
+}
+
+.tab > p {
+  margin: auto;
+  color: var(--para-color);
+  font-size: var(--tab-font-size);
+  font-weight: 700;
+}
+
+.tab:hover {
+  border-bottom: 2px solid var(--para-color);
+}

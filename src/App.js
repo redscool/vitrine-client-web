@@ -1,5 +1,5 @@
 import LandingPage from "./pages/LandingPage";
-import VerifyEmail from "./pages/VerifyEmail";
+import VerifyEmail from "./pages_v2/VerifyEmail";
 import { initConnection } from "./utils/socketIO";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,9 +13,10 @@ import Page from "./pages/Page";
 import Community from "./pages/Community";
 import { ThemeProvider, createTheme } from "@mui/material";
 import getDesignTokens from "./utils/theme";
-import UserAuthentication from "./pages/UserAuthentication";
+import UserAuthentication from "./pages_v2/UserAuthentication";
 import Dashboard from "./pages/Dashboard";
 import Order from "./pages/Order.js";
+import ForgotPassword from "./pages_v2/ForgotPassword";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -25,7 +26,8 @@ export default function App() {
 
   useEffect(() => {
     initConnection(dispatch, { profileId, type });
-  });
+  }, []);
+
   const theme = React.useMemo(() => createTheme(getDesignTokens(THEME)));
   return (
     <ThemeProvider theme={theme}>
@@ -37,10 +39,7 @@ export default function App() {
             element={<UserAuthentication type="signup" />}
           />
           <Route path="/login" element={<UserAuthentication type="login" />} />
-          <Route
-            path="/forgetpassword"
-            element={<UserAuthentication type="forgetpassword" />}
-          />
+          <Route path="/forgetpassword" element={<ForgotPassword />} />
           <Route
             path="/resetpassword/:token"
             element={<UserAuthentication type="resetpassword" />}

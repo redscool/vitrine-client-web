@@ -3,18 +3,41 @@
   --para-color: #fff;
   --btn-bg-color: #5f99be;
   --btn-text-color: #fff;
-  --bg-clr: #111b20;
+  --button-text-color: #1e1e1e;
+  --bg-clr: #1a1d1f;
+  --header-bg-color: #121212;
+  --label-font-color: #efefef;
+  --primary-color: #fda92d;
+  --input-bg-color: #868b90;
+  --normal-text-color: #868b90;
+  --input-field-placeholder-color: #383d44;
+  --box-shadow-color: rgba(239, 239, 239, 1);
+  --google-button-color: #fff;
+  --google-button-text-color: #161c24;
 }
 
 .light-theme {
   --main-heading: #5f99be;
-  --para-color: #333;
+  --para-color: #383d44;
   --btn-bg-color: #5f99be;
-  --btn-text-color: #111b20;
-  --bg-clr: #fff;
+  --btn-text-color: #fff;
+  --button-text-color: #1e1e1e;
+  --bg-clr: #fcfcfc;
+  --header-bg-color: #efefef;
+  --label-font-color: #1a1d1f;
+  --primary-color: #fda92d;
+  --normal-text-color: #868b90;
+  --input-bg-color: #eceff2;
+  --input-field-placeholder-color: #383d44;
+  --box-shadow-color: rgba(239, 239, 239, 1);
+  --google-button-color: #000;
+  --google-button-text-color: #fcfcfc;
 }
 
 #root {
+  --tab-font-size: 1.4rem;
+  --border-radius: 8px;
   height: 100vh;
   width: 100vw;
+  box-sizing: border-box;
 }

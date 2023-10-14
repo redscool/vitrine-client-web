@@ -1,0 +1,64 @@
+.mainContainer {
+  width: 100vw;
+  height: 90vh;
+  background-color: var(--bg-clr);
+  display: flex;
+}
+
+.leftContainer,
+.rightContainer {
+  width: 40vw;
+  height: 60vh;
+  margin: auto;
+  display: flex;
+  /* border: 1px solid red; */
+}
+
+.leftContainer > img {
+  width: 40vw;
+  border-radius: 20px;
+}
+
+.rightContainer {
+  flex-direction: column;
+}
+
+.solidButton {
+  cursor: pointer;
+  display: flex;
+  background-color: var(--primary-color);
+  width: 7vw;
+  height: 5vh;
+  margin: auto;
+  border-radius: var(--border-radius);
+}
+
+.solidButton > p {
+  color: var(--button-text-color);
+  font-weight: 700;
+  margin: auto;
+}
+
+.googleButton {
+  cursor: pointer;
+  display: flex;
+  min-width: 12vw;
+  height: 5vh;
+  background-color: var(--google-button-color);
+  margin: auto;
+}
+
+.googleLogo {
+  font-size: 1.2rem;
+  color: #ff4127;
+  margin: auto;
+  margin-right: 1vh;
+  font-weight: 700;
+}
+.googleText {
+  font-size: 1rem;
+  margin: auto;
+  margin-left: 0;
+  font-weight: 500;
+  color: var(--google-button-text-color);
+}

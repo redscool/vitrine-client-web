@@ -7,7 +7,8 @@ import Textbox from "../form/Textbox";
 import { resource_request_with_access_token } from "../../utils/Service";
 import { useSelector } from "react-redux";
 import { authKeySelector } from "../../redux/authReducer";
-import { googleAuth } from "../GoogleAuth";
+// import { googleAuth } from "../GoogleAuth";
+const googleAuth = () => undefined;
 
 const stringifiedParams = queryString.stringify(config.GOOGLE_EVENT);
 const googleLoginUrl = `https://accounts.google.com/o/oauth2/v2/auth?${stringifiedParams}`;

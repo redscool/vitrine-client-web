@@ -43,7 +43,7 @@ async function login(code, dispatch, navigate) {
       },
     }) => {
       console.log(googleAuth);
-      const redirectUrl = localStorage.getItem(
+      let redirectUrl = localStorage.getItem(
         LOCALSTORAGE_KEYS.googleAuthRedirect
       );
       localStorage.removeItem(LOCALSTORAGE_KEYS.googleAuthAction);
@@ -53,6 +53,7 @@ async function login(code, dispatch, navigate) {
 
       if (verifyProfileToken) {
         dispatch(setAuthKey(["verifyProfileToken", verifyProfileToken]));
+        redirectUrl = "/confirmProfile";
       } else {
         dispatch(setAuthKey(["accessToken", accessToken]));
         dispatch(setAuthKey(["refreshToken", refreshToken]));

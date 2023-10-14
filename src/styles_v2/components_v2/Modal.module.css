@@ -1,0 +1,29 @@
+.modal {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 100;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  backdrop-filter: blur(2px);
+}
+.modalContainer {
+  border-radius: var(--border-radius);
+  width: 40vw;
+  height: 20vh;
+  background-color: var(--header-bg-color);
+  margin: auto;
+  display: flex;
+}
+.modalContainer > p {
+  color: var(--label-font-color);
+  margin: auto;
+  font-size: 1.5rem;
+}
+
+.hide {
+  display: none;
+}
