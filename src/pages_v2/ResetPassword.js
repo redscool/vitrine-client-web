@@ -1,25 +1,37 @@
 import React, { useState } from "react";
-import styles from "../styles_v2/pages_v2/ForgotPassword.module.css";
+import styles from "../styles_v2/pages_v2/ResetPassword.module.css";
 import InputFieldWithoutLabel from "../components_v2/form_components/InputFieldWithoutLabel";
 import Modal from "../components_v2/Modal";
 import { auth_request } from "../utils/Service";
-export default function ForgotPassword() {
-  const [email, setEmail] = useState("");
+import { useParams } from "react-router-dom";
+export default function ResetPassword() {
+  const { token } = useParams();
+  const [password, setPassword] = useState("");
+  const [cpassword, setCpassword] = useState("");
   const [success, setSuccess] = useState(false);
   const onClickReset = () => {
-    if (!email) {
-      setSuccess("Please Enter a Valid Email");
+    if (!password) {
+      setSuccess("Please Enter Password");
+      return;
+    }
+    if (!cpassword) {
+      setSuccess("Please Confirm Password");
+      return;
+    }
+    if (password !== cpassword) {
+      setSuccess("Password didn't match");
       return;
     }
     auth_request(
       "post",
-      "/api/auth/user/forgotpassword",
-      { email },
+      "/api/auth/user/resetpassword",
+      { token, password },
       ({ data }) => {
         setSuccess(data.message);
+        localStorage.removeItem("accessToken");
+        console.log(data);
       },
       ({ response }) => {
-        console.log(response.data);
         setSuccess(response.data.message);
       }
     );
@@ -35,18 +47,20 @@ export default function ForgotPassword() {
           <img src="/lock.svg" />
         </div>
         <div className={styles.heading}>
-          <p>Forgot Password?</p>
+          <p>Reset Password</p>
         </div>
         <div className={styles.normalText}>
-          <p>
-            Enter your account email to get a reset <br /> password link on your
-            email address
-          </p>
+          <p>Enter your new password</p>
         </div>
         <InputFieldWithoutLabel
-          placeholder="Enter Your Email"
-          state={email}
-          setState={setEmail}
+          placeholder="Enter Your Password"
+          state={password}
+          setState={setPassword}
+        />
+        <InputFieldWithoutLabel
+          placeholder="Confirm Your Password"
+          state={cpassword}
+          setState={setCpassword}
         />
         <div className={styles.button} onClick={onClickReset}>
           <p>Send Reset Link</p>

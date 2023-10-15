@@ -4,6 +4,15 @@ body {
   color: var(--btn-text-color);
 }
 
+html {
+  box-sizing: border-box;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
 @keyframes fade-in {
   0% {
     transform: scaleX(0%);

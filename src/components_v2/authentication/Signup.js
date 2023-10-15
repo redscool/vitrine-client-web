@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { authKeySelector } from "../../redux/authReducer";
 import { auth_request } from "../../utils/Service";
+import SignupWithGoogle from "./../SignupWIthGoogle";
 import Modal from "../Modal";
 export default function Signup() {
   const refreshToken = localStorage.getItem("refreshToken");
@@ -65,10 +66,7 @@ export default function Signup() {
         <img src="/welcome.svg" />
       </div>
       <div className={styles.rightContainer}>
-        <div className={styles.googleButton}>
-          <p className={styles.googleLogo}>G</p>
-          <p className={styles.googleText}>Signup with Google</p>
-        </div>
+        <SignupWithGoogle />
         <InputField
           placeholder="someone@example.com"
           label="Email"

@@ -1,0 +1,12 @@
+.page {
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--bg-clr);
+  display: flex;
+}
+
+.sidebar {
+  width: 8vw;
+  background-color: grey;
+  height: 100vh;
+}

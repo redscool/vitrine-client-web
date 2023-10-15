@@ -1,0 +1,7 @@
+.container {
+  background: var(--live-event-banner-bg-color);
+  width: 66vw;
+  height: 27vh;
+  border-radius: var(--border-radius);
+  margin: 0 2vw;
+}

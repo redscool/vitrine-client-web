@@ -14,9 +14,11 @@ import Community from "./pages/Community";
 import { ThemeProvider, createTheme } from "@mui/material";
 import getDesignTokens from "./utils/theme";
 import UserAuthentication from "./pages_v2/UserAuthentication";
-import Dashboard from "./pages/Dashboard";
+import Dashboard from "./pages_v2/Dashboard";
 import Order from "./pages/Order.js";
 import ForgotPassword from "./pages_v2/ForgotPassword";
+import ConfirmProfile from "./pages_v2/ConfirmProfile";
+import ResetPassword from "./pages_v2/ResetPassword";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -40,11 +42,9 @@ export default function App() {
           />
           <Route path="/login" element={<UserAuthentication type="login" />} />
           <Route path="/forgetpassword" element={<ForgotPassword />} />
-          <Route
-            path="/resetpassword/:token"
-            element={<UserAuthentication type="resetpassword" />}
-          />
+          <Route path="/resetpassword/:token" element={<ResetPassword />} />
           <Route path="/verifyemail/:token" element={<VerifyEmail />} />
+          <Route path="/confirmProfile" element={<ConfirmProfile />} />
           <Route exact path="/dashboard/*" element={<Dashboard />} />
           <Route exact path="/space/:spaceId/*" element={<Space />} />
           <Route exact path="/auth/*" element={<Auth />} />

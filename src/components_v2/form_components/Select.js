@@ -25,6 +25,7 @@ export default function Select({
         <p>
           {selectedItem ? items.find((item) => item == selectedItem) : "Select"}
         </p>
+        <img src={!isOpen ? "/down.svg" : "/up.svg"} />
       </div>
       <div className={`${styles.dropdownBody} ${isOpen ? "" : styles.visible}`}>
         {items.map((item) => (

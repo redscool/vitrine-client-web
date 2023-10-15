@@ -33,6 +33,12 @@
   margin-left: 1vw;
 }
 
+.dropdownHeader > img {
+  margin: auto;
+  margin-right: 1vw;
+  width: 1.5vw;
+}
+
 .dropdownBody {
   z-index: 100;
   width: 15vw;
