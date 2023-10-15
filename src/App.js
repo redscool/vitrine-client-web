@@ -1,20 +1,23 @@
+import React, { useEffect } from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { ThemeProvider, createTheme } from "@mui/material";
+
+
 import LandingPage from "./pages/LandingPage";
 import VerifyEmail from "./pages_v2/VerifyEmail";
 import { initConnection } from "./utils/socketIO";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import { themeSelector } from "./redux/settingReducer";
-import React, { useEffect } from "react";
 import "./App.css";
 import Space from "./pages/Space";
 import Auth from "./pages/Auth";
 import { authKeySelector } from "./redux/authReducer";
 import Page from "./pages/Page";
 import Community from "./pages/Community";
-import { ThemeProvider, createTheme } from "@mui/material";
 import getDesignTokens from "./utils/theme";
 import UserAuthentication from "./pages_v2/UserAuthentication";
-import Dashboard from "./pages_v2/Dashboard";
+import DashboardV2 from "./pages_v2/Dashboard";
+import Dashboard from "./pages/Dashboard";
 import Order from "./pages/Order.js";
 import ForgotPassword from "./pages_v2/ForgotPassword";
 import ConfirmProfile from "./pages_v2/ConfirmProfile";
@@ -46,6 +49,7 @@ export default function App() {
           <Route path="/verifyemail/:token" element={<VerifyEmail />} />
           <Route path="/confirmProfile" element={<ConfirmProfile />} />
           <Route exact path="/dashboard/*" element={<Dashboard />} />
+          <Route exact path="/dashboardv2/*" element={<DashboardV2 />} />
           <Route exact path="/space/:spaceId/*" element={<Space />} />
           <Route exact path="/auth/*" element={<Auth />} />
           <Route exact path="/page/:spaceId" element={<Page />} />

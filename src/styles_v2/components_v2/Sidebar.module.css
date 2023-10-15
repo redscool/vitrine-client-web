@@ -1,0 +1,123 @@
+.container {
+	display: flex;
+	flex-direction: row;
+	height: 100%;
+}
+
+.lefty {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	width: 6rem;
+	background: linear-gradient(to right, rgba(18, 18, 18, 1), #121212 1.13%);
+	/* rgba(18, 18, 18, 1); */
+}
+
+.gradient {
+	position: absolute;
+	left: 5.9rem;
+	height: 100%;
+	transition: width 0.3s ease-in-out;
+}
+
+.open {
+	height: 100%;
+	width: 20rem;
+	background: linear-gradient(
+		90.79deg,
+		#121212 1.13%,
+		rgba(26, 29, 31, 0) 108.07%
+	);
+}
+
+.close {
+	height: 100%;
+	width: 0;
+	background: linear-gradient(
+		90.79deg,
+		#121212 1.13%,
+		rgba(26, 29, 31, 0) 108.07%
+	);
+}
+
+.logo {
+	height: 20%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.links {
+	height: 90%;
+	width: fit-content;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	overflow-x: visible;
+	padding-left: 1.5rem;
+}
+
+.navlink {
+	display: flex;
+	flex-direction: row;
+	overflow-y: visible;
+	color: white;
+	align-items: center;
+	justify-items: center;
+	z-index: 101;
+	padding-bottom: 1.5rem;
+	text-decoration: none;
+}
+
+.displayText {
+	transition: opacity 0.4s ease, width 0.4s, font-size 0.3s;
+}
+
+.showText {
+	margin-left: 1rem;
+	font-family: Inter;
+	font-size: 1.25rem;
+	font-weight: 400;
+	line-height: 1.875rem;
+	letter-spacing: 0em;
+	text-align: left;
+	padding-right: 2rem;
+	padding-bottom: 5px;
+	opacity: 1;
+}
+
+.hoveredText {
+	font-size: 1.625rem;
+	font-weight: 700;
+}
+
+.hideText {
+	margin-left: 1rem;
+	font-family: Inter;
+	font-size: 1.25rem;
+	font-weight: 300;
+	line-height: 1.875rem;
+	letter-spacing: 0em;
+	text-align: left;
+	padding-right: 2rem;
+	padding-bottom: 5px;
+	width: 0px;
+	opacity: 0;
+}
+
+.logoImg {
+	width: 30px;
+}
+
+.hoveredImg {
+	width: 35px;
+}
+
+.notificaitonIndicator {
+	position: relative;
+	top: -1rem;
+}
+
+.selectedText {
+	font-weight: 700;
+}
