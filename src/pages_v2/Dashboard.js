@@ -5,11 +5,12 @@ import Home from "../components_v2/dashboard/Home";
 import Spaces from "../components/dashboard/Spaces";
 import Calendar from "../components/space/Calendar";
 import Profile from "../components/dashboard/Profile";
+import Sidebar from "../components_v2/Sidebar";
 
 export default function Dashboard() {
   return (
     <div className={styles.page}>
-      <div className={styles.sidebar}></div>
+      <Sidebar/>
       <Routes>
         <Route exact path="/home" element={<Home />} />
         <Route exact path="/" element={<Home />} />

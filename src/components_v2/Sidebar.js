@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import styles from "../styles_v2/components_v2/Sidebar.module.css";
 
 // for trying it out, remove links from props
-export default function Sidebar({ links, selected = "spaces" }) {
+export default function Sidebar({ selected = "spaces" }) {
 	const [expand, setExpand] = useState(false);
 	const [hoveredLink, setHoveredLink] = useState(-1);
 
@@ -12,9 +12,7 @@ export default function Sidebar({ links, selected = "spaces" }) {
 			<div className={`${styles.lefty}`}>
 				<div className={`${styles.logo}`}>
 					<img
-						style={{
-							width: "4.5rem",
-						}}
+						className={styles.logoImg}
 						src="/logo.svg"
 					/>
 				</div>
@@ -40,7 +38,7 @@ export default function Sidebar({ links, selected = "spaces" }) {
 								<span>
 									<img
 										className={`${
-											hoveredLink === indx ? styles.hoveredImg : styles.logoImg
+											hoveredLink === indx ? styles.hoveredImg : styles.linkImg
 										}`}
 										src={
 											selected === href || hoveredLink === indx

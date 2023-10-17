@@ -2,6 +2,7 @@
 	display: flex;
 	flex-direction: row;
 	height: 100%;
+	z-index: 100;
 }
 
 .lefty {
@@ -45,6 +46,10 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
+}
+
+.logoImg {
+	width: 4.5rem;
 }
 
 .links {
@@ -105,7 +110,7 @@
 	opacity: 0;
 }
 
-.logoImg {
+.linkImg {
 	width: 30px;
 }
 
@@ -120,4 +125,75 @@
 
 .selectedText {
 	font-weight: 700;
+}
+
+@media only screen and (max-width: 1400px) {
+	.lefty {
+		width: 3.5rem;
+	}
+
+	.gradient {
+		left: 3.4rem;
+	}
+
+	.open {
+		width: 12rem;
+	}
+
+	.logo {
+		height: 30%;
+	}
+
+	.logoImg {
+		width: 2.25rem;
+	}
+
+	.links {
+		padding-left: 1.1rem;
+	}
+
+	.navlink {
+		padding-bottom: 1.25rem;
+	}
+
+	.showText {
+		margin-left: 1rem;
+		font-family: Inter;
+		font-size: 1rem;
+		line-height: 1rem;
+		padding-right: 2rem;
+		padding-bottom: 5px;
+	}
+
+	.hoveredText {
+		font-size: 1.25rem;
+		font-weight: 700;
+	}
+
+	.hideText {
+		margin-left: 1rem;
+		font-family: Inter;
+		font-size: 1rem;
+		line-height: 1rem;
+		padding-right: 2rem;
+		padding-bottom: 5px;
+	}
+
+	.linkImg {
+		width: 1rem;
+	}
+
+	.hoveredImg {
+		width: 1.25rem;
+	}
+
+	.notificaitonIndicator {
+		position: relative;
+		top: -0.85rem;
+		width: 0;
+	}
+
+	.selectedText {
+		font-weight: 700;
+	}
 }
