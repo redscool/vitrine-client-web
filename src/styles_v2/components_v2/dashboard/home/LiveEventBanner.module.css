@@ -1,7 +1,139 @@
 .container {
   background: var(--live-event-banner-bg-color);
   width: 66vw;
-  height: 27vh;
+  height: 32vh;
   border-radius: var(--border-radius);
-  margin: 0 2vw;
+  margin: 0 4vw;
+  display: flex;
+}
+
+.leftContainer {
+  width: 36vw;
+  height: 28vh;
+  display: flex;
+  margin: auto;
+  margin-left: 2vw;
+}
+
+.image {
+  width: 28vw;
+  height: 28vh;
+  display: flex;
+}
+
+.container img {
+  width: 100%;
+  height: 100%;
+}
+
+.image > img {
+  border-top-left-radius: var(--border-radius);
+  border-bottom-left-radius: var(--border-radius);
+  object-fit: cover;
+}
+
+.eventDetails {
+  border-top-right-radius: var(--border-radius);
+  border-bottom-right-radius: var(--border-radius);
+  width: 8vw;
+  height: 28vh;
+  background-color: var(--primary-color);
+  display: flex;
+  flex-direction: column;
+}
+
+.date {
+  margin-top: 5vh;
+  display: flex;
+  width: 8vw;
+  height: 6vh;
+  /* border: 1px solid red; */
+}
+
+.date > p {
+  font-size: 6vh;
+  font-weight: 800;
+  margin: auto;
+  color: var(--color26);
+}
+
+.month {
+  display: flex;
+  width: 8vw;
+  height: 6vh;
+  /* border: 1px solid red; */
+}
+
+.month > p {
+  font-size: 3vh;
+  font-weight: 800;
+  margin: auto;
+  color: var(--color9);
+}
+
+.time {
+  margin-top: 5vh;
+  display: flex;
+  width: 8vw;
+  height: 6vh;
+  /* border: 1px solid red; */
+}
+
+.time > p {
+  font-size: 3vh;
+  font-weight: 800;
+  margin: auto;
+  color: var(--color26);
+}
+
+.rightContainer {
+  width: 24vw;
+  height: 28vh;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  margin-left: 2vw;
+  /* border: 1px solid red; */
+}
+
+.status > p {
+  margin: 0;
+  margin-top: 1vh;
+  color: var(--color18);
+}
+
+.title > p {
+  font-size: 3vh;
+  line-height: 4vh;
+  font-weight: 700;
+  color: var(--color9);
+}
+
+.bottomRightContainer {
+  margin: auto;
+  margin-left: 0;
+  margin-bottom: 1vh;
+  width: 24vw;
+  /* border: 1px solid red; */
+  display: flex;
+}
+
+.description {
+  color: var(--color17);
+  font-size: 2vh;
+}
+
+.enterEventButton {
+  width: 5vw;
+  height: 4vh;
+  background-color: var(--color9);
+  color: var(--color1);
+  display: flex;
+  cursor: pointer;
+  margin: 0 1vw auto auto;
+  border-radius: var(--border-radius);
+}
+
+.enterEventButton > p {
+  margin: auto;
 }
