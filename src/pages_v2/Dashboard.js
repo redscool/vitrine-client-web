@@ -2,10 +2,10 @@ import React from "react";
 import styles from "../styles_v2/pages_v2/Dashboard.module.css";
 import { Route, Routes } from "react-router-dom";
 import Home from "../components_v2/dashboard/Home";
-import Spaces from "../components/dashboard/Spaces";
 import Calendar from "../components/space/Calendar";
 import Profile from "../components/dashboard/Profile";
 import Sidebar from "../components_v2/Sidebar";
+import Spaces from "../components_v2/dashboard/Spaces";
 
 export default function Dashboard() {
   return (

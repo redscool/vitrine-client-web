@@ -16,57 +16,61 @@ export default function Sidebar({ selected = "spaces" }) {
 						src="/logo.svg"
 					/>
 				</div>
-				<div
-					className={`${styles.links}`}
-					onMouseEnter={() => setExpand(true)}
-					onMouseLeave={() => setExpand(false)}
-				>
-					{links?.map(({ href, displayText, disabled, notifs }, indx) => {
-						return (
-							<a
-								key={href}
-								href={href}
-								className={`${styles.navlink}`}
-								onClick={(e) => {
-									if (disabled) e.preventDefault();
-								}}
-								onMouseEnter={() => setHoveredLink(indx)}
-								onMouseLeave={() => {
-									if (hoveredLink === indx) setHoveredLink(-1);
-								}}
-							>
-								<span>
-									<img
-										className={`${
-											hoveredLink === indx ? styles.hoveredImg : styles.linkImg
-										}`}
-										src={
-											selected === href || hoveredLink === indx
-												? "/navlinkbold.svg"
-												: "/navlink.svg"
-										}
-									/>
-								</span>
-								{notifs.length ? (
-									<span className={styles.notificaitonIndicator}>
+				<div className={`${styles.bottom}`}>
+					<div
+						className={`${styles.links}`}
+						onMouseEnter={() => setExpand(true)}
+						onMouseLeave={() => setExpand(false)}
+					>
+						{links?.map(({ href, displayText, disabled, notifs }, indx) => {
+							return (
+								<a
+									key={href}
+									href={href}
+									className={`${styles.navlink}`}
+									onClick={(e) => {
+										if (disabled) e.preventDefault();
+									}}
+									onMouseEnter={() => setHoveredLink(indx)}
+									onMouseLeave={() => {
+										if (hoveredLink === indx) setHoveredLink(-1);
+									}}
+								>
+									<span>
 										<img
-											width={"5px"}
-											src="/notificationIndicator.svg"
+											className={`${
+												hoveredLink === indx
+													? styles.hoveredImg
+													: styles.linkImg
+											}`}
+											src={
+												selected === href || hoveredLink === indx
+													? "/navlinkbold.svg"
+													: "/navlink.svg"
+											}
 										/>
 									</span>
-								) : null}
-								<span
-									className={`${styles.displayText} ${
-										expand ? styles.showText : styles.hideText
-									} ${selected === href ? styles.selectedText : ""} ${
-										hoveredLink === indx ? styles.hoveredText : ""
-									}`}
-								>
-									{displayText}
-								</span>
-							</a>
-						);
-					})}
+									{notifs.length ? (
+										<span className={styles.notificaitonIndicator}>
+											<img
+												width={"5px"}
+												src="/notificationIndicator.svg"
+											/>
+										</span>
+									) : null}
+									<span
+										className={`${styles.displayText} ${
+											expand ? styles.showText : styles.hideText
+										} ${selected === href ? styles.selectedText : ""} ${
+											hoveredLink === indx ? styles.hoveredText : ""
+										}`}
+									>
+										{displayText}
+									</span>
+								</a>
+							);
+						})}
+					</div>
 				</div>
 			</div>
 			<div

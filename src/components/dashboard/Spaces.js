@@ -12,17 +12,43 @@ export default function Spaces() {
 	const profileId = useSelector(authKeySelector("profileId"));
 	const type = useSelector(authKeySelector("type"));
 	useEffect(() => {
-		const body = { profileId };
-		resource_request_with_access_token(
-			"get",
-			`/api/${type}/getAllSpaces`,
-			body,
-			({ data: { spaces } }) => {
-				setSpaceList(spaces);
-				console.log(spaces);
+		setSpaceList([
+			{
+				title: "Space 1",
+				description: "Udan Khatola",
+				backgroundImage: "defaultSpaceBackground.svg",
+				profileImage: "defaultSpaceProfile.svg",
+				provider: profileId,
+				events: ["Hi 1", "Hi 2"],
 			},
-			console.log
-		);
+			{
+				title: "Space 2",
+				description: "Udan Khatola",
+				backgroundImage: "defaultSpaceBackground.svg",
+				profileImage: "defaultSpaceProfile.svg",
+				provider: profileId,
+				events: ["Hi 1", "Hi 2", "Hi 3", "Hi 4"],
+			},
+			{
+				title: "Space 3",
+				description: "Udan Khatola",
+				backgroundImage: "defaultSpaceBackground.svg",
+				profileImage: "defaultSpaceProfile.svg",
+				provider: profileId,
+				events: [],
+			},
+		]);
+		// const body = { profileId };
+		// resource_request_with_access_token(
+		// 	"get",
+		// 	`/api/${type}/getAllSpaces`,
+		// 	body,
+		// 	({ data: { spaces } }) => {
+		// 		setSpaceList(spaces);
+		// 		console.log(spaces);
+		// 	},
+		// 	console.log
+		// );
 	}, []);
 	return (
 		<div className={styles.container}>

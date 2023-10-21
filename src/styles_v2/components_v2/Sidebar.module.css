@@ -52,7 +52,7 @@
 	width: 4.5rem;
 }
 
-.links {
+.bottom {
 	height: 90%;
 	width: fit-content;
 	display: flex;
@@ -60,6 +60,12 @@
 	justify-content: center;
 	overflow-x: visible;
 	padding-left: 1.5rem;
+	z-index: 102;
+}
+
+.links {
+	height: fit-content;
+	width: fit-content;
 }
 
 .navlink {
@@ -75,7 +81,7 @@
 }
 
 .displayText {
-	transition: opacity 0.4s ease, width 0.4s, font-size 0.3s;
+	transition: opacity 0.3s ease, width 0.3s, font-size 0.3s;
 }
 
 .showText {
@@ -148,7 +154,7 @@
 		width: 2.25rem;
 	}
 
-	.links {
+	.bottom {
 		padding-left: 1.1rem;
 	}
 
