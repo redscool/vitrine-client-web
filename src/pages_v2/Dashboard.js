@@ -4,11 +4,13 @@ import { Route, Routes } from "react-router-dom";
 import Home from "../components_v2/dashboard/Home";
 import Spaces from "../components/dashboard/Spaces";
 import Calendar from "../components/space/Calendar";
-import Profile from "../components/dashboard/Profile";
+import Sidebar from "../components_v2/Sidebar";
+import Profile from "../components_v2/dashboard/Profile";
 
 export default function Dashboard() {
   return (
     <div className={styles.page}>
+      {/* <Sidebar /> */}
       <div className={styles.sidebar}></div>
       <Routes>
         <Route exact path="/home" element={<Home />} />

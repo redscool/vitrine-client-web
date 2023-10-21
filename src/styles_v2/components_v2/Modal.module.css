@@ -21,7 +21,7 @@
 .modalContainer > p {
   color: var(--label-font-color);
   margin: auto;
-  font-size: 1.5rem;
+  font-size: 4vh;
 }
 
 .hide {

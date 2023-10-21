@@ -1,0 +1,107 @@
+.mainContainer {
+  border: 1px solid var(--color21);
+  background-color: var(--color9);
+  height: 10vh;
+  width: 57vw;
+  margin: auto;
+  margin-bottom: 1vh;
+  border-radius: var(--border-radius);
+  display: flex;
+  cursor: pointer;
+}
+
+.leftContainer,
+.centerContainer,
+.rightContainer {
+  height: 7vh;
+  margin: auto 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.leftContainer {
+  width: 7vw;
+}
+
+.centerContainer {
+  width: 36vw;
+  border-left: 2px solid var(--color21);
+  border-right: 2px solid var(--color21);
+}
+
+.rightContainer {
+  width: 14vw;
+}
+
+.date,
+.title {
+  height: 4vh;
+  display: flex;
+}
+
+.date > p {
+  color: var(--color21);
+  margin: auto;
+  font-size: 3vh;
+  font-weight: 700;
+}
+
+.title > p {
+  color: var(--color21);
+  margin: auto;
+  margin-left: 2vw;
+  font-size: 3vh;
+  font-weight: 600;
+}
+
+.month,
+.description {
+  height: 3vh;
+  display: flex;
+}
+
+.month > p {
+  color: var(--color18);
+  margin: auto;
+  font-size: 2vh;
+  font-weight: 700;
+}
+
+.description > p {
+  color: var(--color21);
+  margin: auto;
+  margin-left: 2vw;
+  font-size: 2vh;
+  font-weight: 400;
+}
+
+.time {
+  height: 7vh;
+  display: flex;
+}
+
+.time > p {
+  color: var(--color26);
+  margin: auto;
+  font-size: 3vh;
+  font-weight: 700;
+}
+
+.mainContainer:hover {
+  border: 1px solid var(--color1);
+  background-color: var(--color1);
+}
+
+.mainContainer:hover .month > p,
+.mainContainer:hover .title > p {
+  color: var(--color9);
+}
+
+.mainContainer:hover .description > p {
+  color: var(--color17);
+}
+
+.mainContainer:hover .centerContainer {
+  border-left: 2px solid var(--color31);
+  border-right: 2px solid var(--color31);
+}
