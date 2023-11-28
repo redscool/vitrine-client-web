@@ -28,7 +28,7 @@ export default function Login() {
       "/api/auth/user/login",
       { email, password },
       ({ data }) => {
-        for (const key in data.userData) {
+        for (const key in data) {
           const value = data[key];
           dispatch(setAuthKey([key, value]));
         }

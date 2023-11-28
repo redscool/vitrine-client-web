@@ -1,19 +1,17 @@
 import React, { useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { ThemeProvider, createTheme } from "@mui/material";
 
 import LandingPage from "./pages/LandingPage";
 import VerifyEmail from "./pages_v2/VerifyEmail";
 import { initConnection } from "./utils/socketIO";
 import { themeSelector } from "./redux/settingReducer";
 import "./App.css";
-import Space from "./pages/Space";
+import Space from "./pages_v2/Space";
 import Auth from "./pages/Auth";
 import { authKeySelector } from "./redux/authReducer";
 import Page from "./pages/Page";
 import Community from "./pages/Community";
-import getDesignTokens from "./utils/theme";
 import UserAuthentication from "./pages_v2/UserAuthentication";
 import Dashboard from "./pages_v2/Dashboard";
 import Order from "./pages/Order.js";

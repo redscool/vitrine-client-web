@@ -85,13 +85,14 @@ export default function Signup() {
           state={cpassword}
           setState={setCpassword}
         />
-        <Select
-          label="Role"
-          options={options}
-          selectedItem={type}
-          setSelectedItem={setType}
-        />
-
+        <div className={styles.select}>
+          <Select
+            label="Role"
+            options={options}
+            selectedItem={type}
+            setSelectedItem={setType}
+          />
+        </div>
         <div className={styles.solidButton} onClick={signupHandleClick}>
           <p>Sign up</p>
         </div>

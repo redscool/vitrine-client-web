@@ -1,0 +1,101 @@
+.container {
+  width: 90%;
+  min-height: 15vh;
+  background-color: var(--color21);
+  border-radius: 8px;
+  margin: 1vh auto 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.topContainer {
+  margin: auto;
+  width: 100%;
+  height: 7vh;
+  display: flex;
+}
+
+.profilePic {
+  width: 10%;
+  height: 100%;
+  display: flex;
+}
+
+.profilePic > img {
+  width: 6vh;
+  height: 6vh;
+  border-radius: 3vh;
+  margin: auto;
+}
+
+.details {
+  width: 80%;
+  height: 100%;
+  margin: auto 0;
+}
+
+.name {
+  width: 20vw;
+  height: 3vh;
+  display: flex;
+}
+
+.name > p {
+  margin: auto 0;
+  font-size: 2.4vh;
+  width: fit-content;
+  font-weight: 600;
+  color: var(--color9);
+}
+
+.time {
+  margin: auto;
+  margin-left: 0;
+  width: 20vw;
+  height: 3vh;
+  display: flex;
+}
+
+.time > p {
+  margin: auto;
+  margin-left: 0;
+  font-size: 1.92vh;
+  font-weight: 500;
+  color: var(--color16);
+}
+
+.name > img {
+  height: 2.5vh;
+  margin: auto;
+  margin-left: 1vw;
+}
+.deleteButton {
+  width: 10%;
+  height: 100%;
+  display: flex;
+}
+
+.deleteButton > img {
+  margin: auto;
+  width: 3vh;
+  height: 3vh;
+}
+
+.bottomContainer {
+  width: 100%;
+  height: 7.5vh;
+  margin: auto;
+}
+
+.message {
+  width: 80%;
+  height: 7vh;
+  margin: auto 10%;
+}
+
+.message > p {
+  margin: auto;
+  font-size: 1.92vh;
+  font-weight: 400;
+  color: var(--color9);
+}

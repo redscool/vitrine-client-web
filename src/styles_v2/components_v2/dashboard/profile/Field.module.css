@@ -1,0 +1,72 @@
+.container {
+  width: 80%;
+  height: 5vh;
+  display: flex;
+  margin: 0 auto 1vh auto;
+  border-bottom: 2px solid var(--color1);
+}
+
+.key {
+  width: 30%;
+  height: 100%;
+  display: flex;
+}
+
+.key > p {
+  margin: auto;
+  margin-left: 1vw;
+  font-weight: 700;
+  font-size: 2.4vh;
+  color: var(--label-font-color);
+}
+
+.value {
+  width: 50%;
+  height: 100%;
+  display: flex;
+}
+
+.value > p {
+  margin: auto;
+  margin-left: 0;
+  font-weight: 400;
+  font-size: 2.4vh;
+  color: var(--label-font-color);
+}
+
+.info {
+  width: 20%;
+  height: 100%;
+  /* border: 1px solid red; */
+  display: flex;
+  position: relative;
+}
+
+.info > img {
+  width: 3vh;
+  height: 3vh;
+  margin: auto 0;
+}
+
+.hide {
+  display: none;
+}
+
+.modal {
+  background-color: var(--color18);
+  width: 12vw;
+  height: 10vh;
+  border-radius: var(--border-radius);
+  z-index: 10;
+  position: absolute;
+  left: 1.5vw;
+  top: 3vh;
+  display: flex;
+}
+
+.modal > p {
+  margin: auto 1vw;
+  font-size: 1.6vh;
+  font-weight: 400;
+  color: var(--color20);
+}

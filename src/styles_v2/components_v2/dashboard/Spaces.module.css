@@ -1,127 +1,106 @@
 .container {
-	display: flex;
-	flex-direction: column;
-	width: 100%;
-	height: 100%;
-	background: rgba(26, 29, 31, 1);
+  background: var(--bg-clr);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  /* border: 1px solid red; */
 }
 
-.navContent {
-	width: 100%;
-	height: 10%;
-	background-color: pink;
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: right;
+.header {
+  display: flex;
+  height: 8vh;
+  width: 100%;
 }
 
-.main {
-	width: 100%;
-	height: 90%;
-	padding: 3rem;
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
+.reorderButton {
+  cursor: pointer;
+  height: 6vh;
+  width: 10vw;
+  border: 1px solid var(--color9);
+  border-radius: var(--border-radius);
+  margin: auto;
+  margin-right: 10vw;
+  display: flex;
+  user-select: none;
+  background-color: var(--reorder-btn-bg-color);
 }
 
-.space {
-	width: 12rem;
-	height: 12rem;
-	border-radius: 1rem;
-	display: flex;
-	flex-direction: column;
-	overflow: hidden;
-	margin-bottom: 4rem;
-	margin-right: 5rem;
-	cursor: pointer;
+.buttonLabel {
+  display: flex;
+  margin: auto;
 }
 
-.backgroundImage {
-	width: 100%;
+.buttonLabel > p {
+  margin: auto;
+  color: var(--label-font-color);
 }
 
-.content {
-	height: 100%;
-	background-color: beige;
-	width: 100%;
-	background: rgba(33, 43, 54, 1);
-	padding: 0.5rem;
-	display: flex;
-	flex-direction: column;
-	padding-top: 0.6rem;
-	padding-left: 1rem;
-	justify-content: space-evenly;
-	text-align: left;
+.buttonIcon {
+  display: flex;
+  margin: auto;
+}
+.buttonIcon > img {
+  height: 4vh;
 }
 
-.notifs {
-	width: 100%;
-	height: 35%;
-	background: rgba(145, 158, 171, 1);
-	font-family: Inter;
-	font-size: 0.8rem;
-	font-weight: 500;
-	line-height: 1rem;
-	letter-spacing: 0em;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	color: rgba(39, 43, 48, 1);
+.mainContent {
+  width: 100%;
+  height: 92vh;
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: 33% 33% 33%;
+  align-items: center;
+  justify-content: center;
+}
+.mainContent::-webkit-scrollbar {
+  width: 0.5vw;
 }
 
-.notifCount {
-	font-family: Inter;
-	font-size: 0.8rem;
-	font-weight: 700;
-	line-height: 1rem;
-	letter-spacing: 0em;
-	padding-right: 0.2em;
-	text-align: left;
+.mainContent::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 0.5rem;
 }
 
-.profilePic {
-	border-radius: 100%;
-	position: absolute;
-	width: 0;
-	height: 0;
-	background-color: yellow;
-	overflow: visible;
+@media screen and (max-width: 950px) {
+  .mainContent {
+    grid-template-columns: 50% 50%;
+  }
 }
 
-.profileImg {
-	width: 3rem;
-	position: relative;
-	left: 8rem;
-	top: 1.5rem;
+.addButtonContainer {
+  width: 40vh;
+  height: 40vh;
+  margin: 5vh 5vw;
+  display: flex;
+}
+.addButton {
+  width: 35vh;
+  height: 35vh;
+  margin: auto;
+  border-radius: 20px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--space-tile-bg-color);
 }
 
-.title {
-	font-family: Inter;
-	font-size: 1.25rem;
-	font-weight: 700;
-	letter-spacing: 0em;
-	text-align: left;
-	color: rgba(239, 239, 239, 1);
+.addButton > img {
+  margin: auto;
+  width: 15vh;
 }
 
-.description {
-	font-family: Inter;
-	font-size: 0.9rem;
-	font-weight: 500;
-	letter-spacing: 0em;
-	text-align: left;
-	color: rgba(239, 239, 239, 1);
+.addButton > p {
+  margin: auto;
+  margin-top: 0;
+  color: var(--label-font-color);
+  font-weight: 600;
+  font-size: 3.6vh;
 }
 
-.reorder {
-	width: 12rem;
-	height: 3.5rem;
-	border-radius: 0.5rem;
-	background: rgba(39, 43, 48, 1);
-	margin-right: 6rem;
-	display: flex;
-	justify-content: space-around;
-	align-items: center;
-	color: rgba(239, 239, 239, 1);
+.addButton:hover {
+  background-color: var(--color1);
+}
+.addButton:hover > p {
+  color: var(--color9);
 }
