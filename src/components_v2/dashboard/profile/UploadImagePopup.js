@@ -1,15 +1,19 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import styles from "../../../styles_v2/components_v2/dashboard/profile/UploadImagePopup.module.css";
 import Cropper from "react-cropper";
-import imageCompression from 'browser-image-compression';
+import imageCompression from "browser-image-compression";
 import "cropperjs/dist/cropper.css";
-
-export default function UploadImagePopup({ view, setView }) {
+import { useDispatch } from "react-redux";
+import { ServiceContext } from "../../../utils/context/serviceContext";
+import { file_server_request } from "../../../utils/Service";
+import { setProfileKey } from "../../../redux/profileReducer";
+export default function UploadImagePopup({ setView, isCoverPic, setMessage }) {
+  const dispatch = useDispatch();
+  const serviceObject = useContext(ServiceContext);
   const [rawImage, setRawImage] = useState();
   const [previewImage, setPreviewImage] = useState();
   const [imageFile, setImageFile] = useState();
   const [mime, setMime] = useState();
-
   const [cropper, setCropper] = useState();
 
   const generateImage = async (url) => {
@@ -20,11 +24,13 @@ export default function UploadImagePopup({ view, setView }) {
       maxSizeMB: 1,
       maxWidthOrHeight: 1080,
     });
-    const compressedFile = new File([compressedBlob], "myFileName", { type: mime });
+    const compressedFile = new File([compressedBlob], "myFileName", {
+      type: mime,
+    });
     setPreviewImage(URL.createObjectURL(compressedBlob));
     setImageFile(compressedFile);
-    setPreviewImage(URL.createObjectURL(file)); 
-  }
+    setPreviewImage(URL.createObjectURL(file));
+  };
 
   const onChange = (e) => {
     e.preventDefault();
@@ -38,25 +44,60 @@ export default function UploadImagePopup({ view, setView }) {
     reader.onload = () => {
       setPreviewImage(undefined);
       setRawImage(reader.result);
-      setMime(files[0].type)
+      setMime(files[0].type);
     };
     reader.readAsDataURL(files[0]);
   };
 
-  const handleSubmit = () => { }
+  const handleSubmit = () => {
+    if (imageFile) {
+      file_server_request(
+        "post",
+        "/uploadFile",
+        { file: imageFile },
+        ({ data: { filename } }) => {
+          if (filename) {
+            console.log(filename);
+            if (isCoverPic) {
+              serviceObject.request(
+                "post",
+                "/api/provider/profile/update",
+                { coverPicture: filename },
+                ({ data }) => {
+                  setMessage(data.message);
+                  dispatch(setProfileKey(["coverPicture", filename]));
+                },
+                console.log
+              );
+            } else {
+              serviceObject.request(
+                "post",
+                "/api/provider/profile/update",
+                { profilePicture: filename },
+                ({ data }) => {
+                  setMessage(data.message);
+                  dispatch(setProfileKey(["profilePicture", filename]));
+                },
+                console.log
+              );
+            }
+          }
+        },
+        console.log
+      );
+    } else setMessage("Please upload a picture");
+    setView(false);
+  };
 
   const handleCrop = async () => {
     if (typeof cropper !== "undefined") {
       const imageUrl = cropper.getCroppedCanvas().toDataURL();
       await generateImage(imageUrl);
     }
-  }
+  };
 
   return (
-    <div
-      className={`${styles.mainContainer} ${view ? "" : styles.hide}`}
-      onClick={() => setView(false)}
-    >
+    <div className={`${styles.mainContainer}`} onClick={() => setView(false)}>
       <div
         className={styles.container}
         onClick={(e) => {
@@ -71,55 +112,50 @@ export default function UploadImagePopup({ view, setView }) {
             <img src="/cross.svg" />
           </div>
         </div>
-        {
-          !rawImage || previewImage ?
-            <label className={styles.iconContainer}>
-              <input
-                type="file"
-                onChange={onChange}
-                accept="image/png, image/jpeg"
-              />
-              <div className={styles.icon}>
-                <img src={previewImage ?? "/upload_image_icon.svg"} />
-              </div>
-              <div className={styles.iconText}>
-                <p>
-                  Upload Image
-                </p>
-              </div>
-            </label>
-            :
-            <Cropper
-              style={{
-                height: "30vh",
-                width: "100%",
-                backgroundColor: "cyan",
-              }}
-              zoomTo={0}
-              aspectRatio={1}
-              src={rawImage}
-              viewMode={1}
-              minCropBoxHeight={10}
-              minCropBoxWidth={10}
-              background={false}
-              responsive={true}
-              autoCropArea={1}
-              checkOrientation={false}
-              onInitialized={(instance) => setCropper(instance)}
-              guides={true}
+        {!rawImage || previewImage ? (
+          <label className={styles.iconContainer}>
+            <input
+              type="file"
+              onChange={onChange}
+              accept="image/png, image/jpeg"
             />
-
-        }
-        {
-          !rawImage || previewImage ?
-            <div className={styles.button} onClick={handleSubmit}>
-              <p>Submit</p>
+            <div className={styles.icon}>
+              <img src={previewImage ?? "/upload_image_icon.svg"} />
             </div>
-            :
-            <div className={styles.button} onClick={handleCrop}>
-              <p>Crop</p>
+            <div className={styles.iconText}>
+              <p>Upload Image</p>
             </div>
-        }
+          </label>
+        ) : (
+          <Cropper
+            style={{
+              height: "30vh",
+              width: "100%",
+              backgroundColor: "cyan",
+            }}
+            zoomTo={0}
+            aspectRatio={isCoverPic ? 16 / 3 : 1}
+            src={rawImage}
+            viewMode={1}
+            minCropBoxHeight={10}
+            minCropBoxWidth={10}
+            background={false}
+            responsive={true}
+            autoCropArea={1}
+            checkOrientation={false}
+            onInitialized={(instance) => setCropper(instance)}
+            guides={true}
+          />
+        )}
+        {!rawImage || previewImage ? (
+          <div className={styles.button} onClick={handleSubmit}>
+            <p>Submit</p>
+          </div>
+        ) : (
+          <div className={styles.button} onClick={handleCrop}>
+            <p>Crop</p>
+          </div>
+        )}
       </div>
     </div>
   );

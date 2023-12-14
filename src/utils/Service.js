@@ -30,7 +30,7 @@ const getUpdatedRoute = (route, body) => {
 
   return newRoute;
 };
-const refresh_access_token = async () => {
+const refresh_access_token = async (navigate) => {
   const refreshToken = localStorage.getItem("refreshToken");
   const userId = localStorage.getItem("userId");
   try {
@@ -41,7 +41,7 @@ const refresh_access_token = async () => {
     localStorage.setItem("accessToken", data.data.accessToken);
     return true;
   } catch {
-    return false;
+    navigate("/login");
   }
 };
 export const auth_request_with_access_token = async (
@@ -90,45 +90,40 @@ export const auth_request = async (method, route, body, onSuccess, onError) => {
     });
 };
 
-export const resource_request_with_access_token = async (
-  method,
-  route,
-  body,
-  onSuccess,
-  onError,
-  level = 0
-) => {
-  const token = localStorage.getItem("accessToken");
-  const config = {
-    headers: {
-      Authorization: token,
-    },
-  };
-  if (routeUpdateRequired(method)) {
-    route = getUpdatedRoute(route, body);
-    body = config;
-  }
+export const resource_request_with_access_token =
+  (navigate) =>
+  async (method, route, body, onSuccess, onError, level = 0) => {
+    const token = localStorage.getItem("accessToken");
+    const config = {
+      headers: {
+        Authorization: token,
+      },
+    };
+    if (routeUpdateRequired(method)) {
+      route = getUpdatedRoute(route, body);
+      body = config;
+    }
 
-  axios[method](`${SERVER}${route}`, body, config)
-    .then((response) => {
-      onSuccess(response);
-    })
-    .catch(async (err) => {
-      if (err?.response?.data?.invalid) {
-        const success = await refresh_access_token();
-        if (!success || level >= 5) onError(err);
-        else
-          resource_request_with_access_token(
-            method,
-            route,
-            body,
-            onSuccess,
-            onError,
-            level + 1
-          );
-      } else onError(err);
-    });
-};
+    axios[method](`${SERVER}${route}`, body, config)
+      .then((response) => {
+        onSuccess(response);
+      })
+      .catch(async (err) => {
+        if (err?.response?.data?.invalid) {
+          await refresh_access_token(navigate);
+          if (level >= 5) onError(err);
+          else
+            resource_request_with_access_token(navigate)(
+              method,
+              route,
+              body,
+              onSuccess,
+              onError,
+              level + 1
+            );
+        } else onError(err);
+      });
+  };
 
 export const file_server_request = async (
   method,

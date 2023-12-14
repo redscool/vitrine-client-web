@@ -2,8 +2,8 @@
   /* border: 1px solid red; */
   width: 40vh;
   height: 40vh;
-  margin: 5vh 5vw;
   border-radius: 20px;
+  margin: 5vh auto 0 auto;
   position: relative;
   cursor: pointer;
 }

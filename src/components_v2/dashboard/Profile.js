@@ -10,11 +10,14 @@ import { useSelector } from "react-redux";
 import { profileKeySelector } from "../../redux/profileReducer";
 import config from "../../config.json";
 import Modal from "../Modal";
+import { useNavigate } from "react-router-dom";
+import { auth_request } from "../../utils/Service";
 
 export default function Profile() {
   const [message, setMessage] = useState("");
   const FILE_SERVER = config.FILE_SERVER;
   const [profileHovered, setProfileHovered] = useState(false);
+  const [isCoverPic, setIsCoverPic] = useState(false);
   const [uploadImagePopUp, setUploadImagePopUp] = useState(false);
   const [updateProfilePopup, setUpdateProfilePopup] = useState(false);
   const [updateSocialsPopup, setUpdateSocialsPopup] = useState(false);
@@ -31,10 +34,38 @@ export default function Profile() {
   const offDays = useSelector(profileKeySelector("offDays"));
   const email = localStorage.getItem("email");
   const type = localStorage.getItem("type");
+  const navigate = useNavigate();
+  const tempOffDays = offDays && offDays.length ? offDays?.join(" ") : "";
+  const handleLogout = () => {
+    localStorage.setItem("accessToken", "");
+    localStorage.setItem("refreshToken", "");
+    navigate("/login");
+  };
+  const handleResetPassword = () => {
+    const email = localStorage.getItem("email");
+    auth_request(
+      "post",
+      "/api/auth/user/forgotpassword",
+      { email },
+      ({ data }) => {
+        setMessage(data.message);
+      },
+      ({ response }) => {
+        console.log(response.data);
+        setMessage(response.data.message);
+      }
+    );
+  };
   return (
     <div className={styles.mainContainer}>
       <Modal success={message} setSuccess={setMessage} />
-      <UploadImagePopup view={uploadImagePopUp} setView={setUploadImagePopUp} />
+      {uploadImagePopUp ? (
+        <UploadImagePopup
+          setView={setUploadImagePopUp}
+          isCoverPic={isCoverPic}
+          setMessage={setMessage}
+        />
+      ) : null}
       {updateProfilePopup ? (
         <UpdateProfilePopup
           setView={setUpdateProfilePopup}
@@ -42,19 +73,30 @@ export default function Profile() {
           oname={name}
         />
       ) : null}
-      <UpdateBioPopup view={updateBioPopup} setView={setUpdateBioPopup} />
+      {updateBioPopup ? (
+        <UpdateBioPopup
+          setView={setUpdateBioPopup}
+          oabout={about}
+          setMessage={setMessage}
+        />
+      ) : null}
       {updateSocialsPopup ? (
         <UpdateSocialsPopup
           setView={setUpdateSocialsPopup}
+          setMessage={setMessage}
           oinstagram={instagram}
-          olinkedin={linkedIn}
+          olinkedIn={linkedIn}
           ox={x}
         />
       ) : null}
-      <UpdateSettingPopup
-        view={updateSettingPopup}
-        setView={setUpdateSettingPopup}
-      />
+      {updateSettingPopup ? (
+        <UpdateSettingPopup
+          setView={setUpdateSettingPopup}
+          ooffDays={offDays}
+          oworkingHours={workingHours}
+          setMessage={setMessage}
+        />
+      ) : null}
       <div className={styles.coverPicture}>
         <img src={`${FILE_SERVER}/getFile?id=${coverPicture}`} />
       </div>
@@ -72,7 +114,10 @@ export default function Profile() {
         <img src={`${FILE_SERVER}/getFile?id=${profilePicture}`} id="1222" />
       </div>
       <div
-        onClick={() => setUploadImagePopUp(true)}
+        onClick={() => {
+          setIsCoverPic(false);
+          setUploadImagePopUp(true);
+        }}
         onMouseEnter={(e) => {
           e.preventDefault();
           setProfileHovered(true);
@@ -87,7 +132,13 @@ export default function Profile() {
       >
         <img src="/pencil.svg" id="12" />
       </div>
-      <div className={styles.changeCoverPictureButton}>
+      <div
+        className={styles.changeCoverPictureButton}
+        onClick={() => {
+          setIsCoverPic(true);
+          setUploadImagePopUp(true);
+        }}
+      >
         <p>Change Profile Banner</p>
       </div>
       <div className={`${styles.section} ${styles.userProfileSection}`}>
@@ -115,17 +166,21 @@ export default function Profile() {
         <div className={styles.socialMediaHandlesContainer}>
           <a
             className={styles.socialMediaHandles}
-            href={linkedIn}
+            href={`http://${linkedIn}`}
             target="_blank"
           >
             <img src="/linkedin.svg" />
           </a>
-          <a className={styles.socialMediaHandles} href={x} target="_blank">
+          <a
+            className={styles.socialMediaHandles}
+            href={`http://${x}`}
+            target="_blank"
+          >
             <img src="/x.svg" />
           </a>
           <a
             className={styles.socialMediaHandles}
-            href={instagram}
+            href={`http://${instagram}`}
             target="_blank"
           >
             <img src="/instagram.svg" />
@@ -157,7 +212,7 @@ export default function Profile() {
           <img src={"/edit_white.svg"} />
         </div>
         <Field keyname="Working Hours" value={workingHours} info />
-        <Field keyname="Off Days" value={offDays?.join(" ")} info />
+        <Field keyname="Off Days" value={tempOffDays} info />
       </div>
       <div className={`${styles.section} ${styles.myAccountSection}`}>
         <div className={styles.label}>
@@ -168,10 +223,16 @@ export default function Profile() {
         <Field keyname="Account Type" value={type} />
       </div>
       <div className={styles.buttonsContainer}>
-        <div className={`${styles.buttons} ${styles.resetPasswordButton}`}>
+        <div
+          className={`${styles.buttons} ${styles.resetPasswordButton}`}
+          onClick={handleResetPassword}
+        >
           <p>Reset Password</p>
         </div>
-        <div className={`${styles.buttons} ${styles.logoutButton}`}>
+        <div
+          className={`${styles.buttons} ${styles.logoutButton}`}
+          onClick={handleLogout}
+        >
           <p>Logout</p>
         </div>
       </div>

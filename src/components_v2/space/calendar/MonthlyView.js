@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import styles from "../../../styles_v2/components_v2/dashboard/calendar/MonthlyView.module.css";
+import styles from "../../../styles_v2/components_v2/space/calendar/MonthlyView.module.css";
 
 export default function MonthlyView() {
   const navigate = useNavigate();
@@ -24,6 +24,7 @@ export default function MonthlyView() {
   if (year != 0 && !year) year = new Date().getFullYear();
   if (month != 0 && !month) month = new Date().getMonth();
   const days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+  const spaceId = useParams().spaceId;
   useEffect(() => {
     const array = [];
     const firstDayOfMonth = new Date(year, month).getDay();
@@ -86,7 +87,7 @@ export default function MonthlyView() {
                 year = year - 1;
                 month = 12;
               }
-              navigate(`/dashboard/calendar/${year}/${month}`);
+              navigate(`/space/${spaceId}/calendar/${year}/${month}`);
             }}
           >
             <p>&lt;</p>
@@ -102,7 +103,7 @@ export default function MonthlyView() {
                 year = year - 0 + 1;
                 month = 1;
               }
-              navigate(`/dashboard/calendar/${year}/${month}`);
+              navigate(`/space/${spaceId}/calendar/${year}/${month}`);
             }}
           >
             <p>&gt;</p>

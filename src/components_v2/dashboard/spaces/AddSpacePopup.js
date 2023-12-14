@@ -4,32 +4,33 @@ import styles from "../../../styles_v2/components_v2/dashboard/profile/UpdateSoc
 import { ServiceContext } from "../../../utils/context/serviceContext";
 import { useDispatch } from "react-redux";
 import { setProfileKey } from "../../../redux/profileReducer";
-export default function UpdateSocialsPopup({
-  setView,
-  oinstagram,
-  ox,
-  olinkedIn,
-  setMessage,
-}) {
+export default function AddSpacePopup({ setView, setMessage, setSpaces,spaces }) {
   const dispatch = useDispatch();
   const serviceObject = useContext(ServiceContext);
-  const [linkedIn, setLinkedIn] = useState(olinkedIn);
-  const [x, setX] = useState(ox);
-  const [instagram, setInstagram] = useState(oinstagram);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+
   const handleClick = () => {
-    if (x === ox && linkedIn === olinkedIn && instagram === oinstagram) {
+    if (!title) {
+      setMessage("Title cannot be empty.");
+      setView(false);
+      return;
+    }
+    if (!description) {
+      setMessage("Description cannot be empty.");
       setView(false);
       return;
     }
     serviceObject.request(
       "post",
-      "/api/provider/profile/update",
-      { linkedIn, instagram, x },
+      "/api/provider/createspace",
+      { title, description},
       ({ data }) => {
         setMessage(data.message);
-        dispatch(setProfileKey(["instagram", instagram]));
-        dispatch(setProfileKey(["linkedIn", linkedIn]));
-        dispatch(setProfileKey(["x", x]));
+        const spacesArray = [...spaces];
+        spacesArray.push(data.space)
+        setSpaces(spacesArray)
+        dispatch(setProfileKey(["spaces", spacesArray]));
       },
       console.log
     );
@@ -45,32 +46,26 @@ export default function UpdateSocialsPopup({
       >
         <div className={styles.heading}>
           <div className={styles.title}>
-            <p>Update Socials</p>
+            <p>Add Space</p>
           </div>
           <div className={styles.cross} onClick={() => setView(false)}>
             <img src="/cross.svg" />
           </div>
         </div>
         <InputField
-          label="Linkedin"
-          placeholder="Placeholder"
-          state={linkedIn}
-          setState={setLinkedIn}
+          label="Title"
+          placeholder="Title"
+          state={title}
+          setState={setTitle}
         />
         <InputField
-          label="X"
-          placeholder="Placeholder"
-          state={x}
-          setState={setX}
-        />
-        <InputField
-          label="Instagram"
-          placeholder="Placeholder"
-          state={instagram}
-          setState={setInstagram}
+          label="Description"
+          placeholder="Description"
+          state={description}
+          setState={setDescription}
         />
         <div className={styles.button} onClick={handleClick}>
-          <p>Submit</p>
+          <p>Add Space</p>
         </div>
       </div>
     </div>

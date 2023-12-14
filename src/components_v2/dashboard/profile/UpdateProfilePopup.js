@@ -1,16 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import InputField from "../../form_components/InputField";
 import styles from "../../../styles_v2/components_v2/dashboard/profile/UpdateProfilePopup.module.css";
-import { resource_request_with_access_token } from "../../../utils/Service";
 import { useDispatch } from "react-redux";
 import { setProfileKey } from "../../../redux/profileReducer";
-export default function UpdateProfilePopup({
-  setView,
-  setMessage,
-  oname,
-}) {
+import { ServiceContext } from "../../../utils/context/serviceContext";
+export default function UpdateProfilePopup({ setView, setMessage, oname }) {
+  const serviceObject = useContext(ServiceContext);
+
   const [name, setName] = useState(oname);
-  console.log(oname);
   const profileId = localStorage.getItem("profileId");
   const dispatch = useDispatch();
   const handleClick = () => {
@@ -20,7 +17,7 @@ export default function UpdateProfilePopup({
       return;
     }
 
-    resource_request_with_access_token(
+    serviceObject.request(
       "post",
       "/api/provider/profile/update",
       { profileId, name },

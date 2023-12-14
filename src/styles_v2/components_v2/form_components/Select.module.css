@@ -50,6 +50,19 @@
   position: absolute;
   margin-top: 9vh;
   background: var(--header-bg-color);
+  max-height: 30vh;
+  overflow-y: auto;
+}
+
+.dropdownBody::-webkit-scrollbar,
+.messagesContainer::-webkit-scrollbar {
+  width: 0.3vw;
+}
+
+.dropdownBody::-webkit-scrollbar,
+.messagesContainer::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 0.5rem;
 }
 
 .dropdownItem:hover {

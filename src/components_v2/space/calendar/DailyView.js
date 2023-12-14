@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import styles from "../../../styles_v2/components_v2/dashboard/calendar/DailyView.module.css";
+import styles from "../../../styles_v2/components_v2/space/calendar/DailyView.module.css";
 import Event from "./dailyView/Event";
 import { useEffect, useState } from "react";
 
@@ -23,6 +23,7 @@ export default function DailyView() {
   const [curDay, setCurDay] = useState(1);
   const [curMonth, setCurMonth] = useState(1);
   const [curYear, setCurYear] = useState(1);
+  const spaceId = params.spaceId;
   useEffect(() => {
     setCurYear(params.year);
     setCurMonth(params.month);
@@ -41,7 +42,7 @@ export default function DailyView() {
               const day = tempDate.getDate();
               const month = tempDate.getMonth();
               const year = tempDate.getFullYear();
-              navigate(`/dashboard/calendar/${year}/${month + 1}/${day}`);
+              navigate(`/space/${spaceId}/calendar/${year}/${month + 1}/${day}`);
             }}
           >
             <p>&lt;</p>
@@ -58,7 +59,7 @@ export default function DailyView() {
               const day = tempDate.getDate();
               const month = tempDate.getMonth();
               const year = tempDate.getFullYear();
-              navigate(`/dashboard/calendar/${year}/${month + 1}/${day}`);
+              navigate(`/space/${spaceId}/calendar/${year}/${month + 1}/${day}`);
             }}
           >
             <p>&gt;</p>

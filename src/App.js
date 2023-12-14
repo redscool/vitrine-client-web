@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
+import { Provider, useSelector, useDispatch } from "react-redux";
 
 import LandingPage from "./pages/LandingPage";
 import VerifyEmail from "./pages_v2/VerifyEmail";
@@ -18,8 +18,19 @@ import Order from "./pages/Order.js";
 import ForgotPassword from "./pages_v2/ForgotPassword";
 import ConfirmProfile from "./pages_v2/ConfirmProfile";
 import ResetPassword from "./pages_v2/ResetPassword";
+import store from "./redux/store.js";
+import { ServiceContext } from "./utils/context/serviceContext.js";
+import { resource_request_with_access_token } from "./utils/Service.js";
+import GoogleIntegrationCallback from "./pages_v2/GoogleIntegrationCallback.js";
 
-export default function App() {
+const getServiceObject = (navigate) => {
+  return {
+    request: resource_request_with_access_token(navigate),
+  };
+};
+
+function App() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const profileId = useSelector(authKeySelector("profileId"));
   const type = useSelector(authKeySelector("type"));
@@ -34,7 +45,7 @@ export default function App() {
   }, []);
 
   return (
-    <BrowserRouter>
+    <ServiceContext.Provider value={getServiceObject(navigate)}>
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/signup" element={<UserAuthentication type="signup" />} />
@@ -49,8 +60,19 @@ export default function App() {
         <Route exact path="/page/:spaceId" element={<Page />} />
         <Route exact path="/community" element={<Community />} />
         <Route exact path="/order" element={<Order />} />
+        <Route exact path="/integration/google/callback" element={<GoogleIntegrationCallback />} />
         <Route exact path="/*" element={<h1> not found app</h1>} />
       </Routes>
-    </BrowserRouter>
+    </ServiceContext.Provider>
+  );
+}
+
+export default function Wrapper() {
+  return (
+    <Provider store={store}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </Provider>
   );
 }

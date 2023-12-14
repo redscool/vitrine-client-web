@@ -1,20 +1,30 @@
-import React from "react";
 import styles from "../../../styles_v2/components_v2/dashboard/spaces/SpaceTile.module.css";
-export default function SpaceTile({ message }) {
+import config from "../../../config.json";
+import { useNavigate } from "react-router-dom";
+export default function SpaceTile({ message, spaceObj }) {
+  const FILE_SERVER = config.FILE_SERVER;
+  const navigate = useNavigate();
   return (
-    <div className={styles.mainContainer}>
+    <div
+      className={styles.mainContainer}
+      onClick={() => navigate(`/space/${spaceObj._id}/`)}
+    >
       <div className={styles.profileContainer}>
-        <img src="/profile_pic.jpg" />
+        <img src={`${FILE_SERVER}/getFile?id=${spaceObj.displayPicture}`} />
       </div>
       <div className={styles.topContainer}>
-        <img src="/cover_pic.jpg" />
+        <img src={`${FILE_SERVER}/getFile?id=${spaceObj.coverPicture}`} />
       </div>
       <div className={styles.middleContainer}>
         <div className={styles.title}>
-          <p>Title here goes brrrr</p>
+          <p>{spaceObj.title}</p>
         </div>
         <div className={styles.subtitle}>
-          <p>Sub title goes brrr</p>
+          <p>
+            {spaceObj.description.length > 60
+              ? spaceObj.description.substr(0, 57) + "..."
+              : spaceObj.description}
+          </p>
         </div>
       </div>
       <div className={styles.bottomContainer}>

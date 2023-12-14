@@ -3,6 +3,7 @@ import styles from "../styles_v2/pages_v2/Dashboard.module.css";
 import { Route, Routes, useLocation } from "react-router-dom";
 import Sidebar from "../components_v2/Sidebar";
 import Chat from "../components_v2/space/Chat";
+import Calendar from "../components_v2/space/Calendar";
 export default function Dashboard() {
   const links = [
     {
@@ -21,7 +22,7 @@ export default function Dashboard() {
       href: "exercise",
       displayText: "Exercise",
       disabled: false,
-      notifs: ["hi"],
+      notifs: [],
     },
     {
       href: "page",
@@ -32,6 +33,12 @@ export default function Dashboard() {
     {
       href: "chat",
       displayText: "Chat",
+      disabled: false,
+      notifs: [],
+    },
+    {
+      href: "calendar",
+      displayText: "Calendar",
       disabled: false,
       notifs: [],
     },
@@ -51,6 +58,13 @@ export default function Dashboard() {
         <Route exact path="/exercise" element={<></>} />
         <Route exact path="/page" element={<></>} />
         <Route exact path="/chat" element={<Chat />} />
+        <Route exact path="/Calendar" element={<Calendar />} />
+        <Route exact path="/calendar/:year/:month" element={<Calendar />} />
+        <Route
+          exact
+          path="/calendar/:year/:month/:day"
+          element={<Calendar />}
+        />
         <Route path="/*" element={<span> Not found </span>} />
       </Routes>
     </div>

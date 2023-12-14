@@ -1,11 +1,47 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Select from "../../form_components/Select";
 import styles from "../../../styles_v2/components_v2/dashboard/profile/UpdateSettingPopup.module.css";
 import CheckBox from "../../../components/form/CheckBox";
-export default function UpdateSettingPopup({ view, setView }) {
-  const options = ["Select"];
-  const [startTime, setStartTime] = useState("Select");
-  const [endTime, setEndTime] = useState("Select");
+import { useDispatch } from "react-redux";
+import { ServiceContext } from "../../../utils/context/serviceContext";
+import { setProfileKey } from "../../../redux/profileReducer";
+export default function UpdateSettingPopup({
+  setView,
+  setMessage,
+  ooffDays,
+  oworkingHours,
+}) {
+  const options = [
+    "Select",
+    "12 am",
+    "01 am",
+    "02 am",
+    "03 am",
+    "04 am",
+    "05 am",
+    "06 am",
+    "07 am",
+    "08 am",
+    "09 am",
+    "10 am",
+    "11 am",
+    "12 pm",
+    "01 pm",
+    "02 pm",
+    "03 pm",
+    "04 pm",
+    "05 pm",
+    "06 pm",
+    "07 pm",
+    "08 pm",
+    "09 pm",
+    "10 pm",
+    "11 pm",
+  ];
+  const dispatch = useDispatch();
+  const serviceObject = useContext(ServiceContext);
+  const [startTime, setStartTime] = useState(0);
+  const [endTime, setEndTime] = useState(0);
   const [sunday, setSunday] = useState(false);
   const [monday, setMonday] = useState(false);
   const [tuesday, setTuesday] = useState(false);
@@ -13,11 +49,35 @@ export default function UpdateSettingPopup({ view, setView }) {
   const [thursday, setThursday] = useState(false);
   const [friday, setFriday] = useState(false);
   const [saturday, setSaturday] = useState(false);
+
+  const handleClick = () => {
+    let workingHours = oworkingHours;
+    if (startTime && endTime) {
+      workingHours = `${options[startTime]} - ${options[endTime]}`;
+    }
+    const offDays = [];
+    if (sunday) offDays.push("Sunday");
+    if (monday) offDays.push("Monday");
+    if (tuesday) offDays.push("Tuesday");
+    if (wednesday) offDays.push("Wednesday");
+    if (thursday) offDays.push("Thursday");
+    if (friday) offDays.push("Friday");
+    if (saturday) offDays.push("Saturday");
+    serviceObject.request(
+      "post",
+      "/api/provider/profile/update",
+      { offDays, workingHours },
+      ({ data }) => {
+        setMessage(data.message);
+        dispatch(setProfileKey(["workingHours", workingHours]));
+        dispatch(setProfileKey(["offDays", offDays]));
+      },
+      console.log
+    );
+    setView(false);
+  };
   return (
-    <div
-      className={`${styles.mainContainer} ${view ? "" : styles.hide}`}
-      onClick={() => setView(false)}
-    >
+    <div className={`${styles.mainContainer}`} onClick={() => setView(false)}>
       <div
         className={styles.container}
         onClick={(e) => {
@@ -86,7 +146,7 @@ export default function UpdateSettingPopup({ view, setView }) {
             </div>
           </div>
         </div>
-        <div className={styles.button}>
+        <div className={styles.button} onClick={handleClick}>
           <p>Submit</p>
         </div>
       </div>

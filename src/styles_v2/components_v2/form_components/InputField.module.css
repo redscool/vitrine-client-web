@@ -32,3 +32,7 @@
   color: var(--input-field-placeholder-color);
   font-size: 1.5vh;
 }
+
+.fieldInput::-webkit-calendar-picker-indicator{
+  margin-right: 2vw;
+}

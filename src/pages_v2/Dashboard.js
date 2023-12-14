@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styles from "../styles_v2/pages_v2/Dashboard.module.css";
 import { Route, Routes, useLocation } from "react-router-dom";
 import Home from "../components_v2/dashboard/Home";
@@ -9,6 +9,7 @@ import Spaces from "../components_v2/dashboard/Spaces";
 import { resource_request_with_access_token } from "../utils/Service";
 import { useDispatch } from "react-redux";
 import { setProfileKey } from "../redux/profileReducer";
+import { ServiceContext } from "../utils/context/serviceContext";
 
 export default function Dashboard() {
   const links = [
@@ -39,12 +40,13 @@ export default function Dashboard() {
   ];
   const dispatch = useDispatch();
   const location = useLocation();
+  const serviceObject = useContext(ServiceContext);
   const [selected, setSelected] = useState("");
   useEffect(() => {
     setSelected(location.pathname.split("/")[2]);
   }, [location]);
   useEffect(() => {
-    resource_request_with_access_token(
+    serviceObject.request(
       "get",
       "/api/provider/profile/view",
       {},
@@ -59,12 +61,20 @@ export default function Dashboard() {
           "offDays",
           "profilePicture",
           "coverPicture",
-          "spaces",
         ];
         for (const key of requiredKeys) {
           const value = data[key];
           dispatch(setProfileKey([key, value]));
         }
+      },
+      console.log
+    );
+    serviceObject.request(
+      "get",
+      "/api/provider/getAllSpaces",
+      {},
+      ({ data }) => {
+        dispatch(setProfileKey(["spaces", data["spaces"]]));
       },
       console.log
     );
@@ -77,6 +87,11 @@ export default function Dashboard() {
         <Route exact path="/" element={<Home />} />
         <Route exact path="/spaces" element={<Spaces />} />
         <Route exact path="/calendar/:year/:month" element={<Calendar />} />
+        <Route
+          exact
+          path="/calendar/:year/:month/:day"
+          element={<Calendar />}
+        />
         <Route exact path="/calendar" element={<Calendar />} />
         <Route exact path="/profile" element={<Profile />} />
         <Route path="/*" element={<span> Not found </span>} />

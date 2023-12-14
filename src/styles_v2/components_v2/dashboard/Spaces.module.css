@@ -50,7 +50,6 @@
   overflow-y: auto;
   display: grid;
   grid-template-columns: 33% 33% 33%;
-  align-items: center;
   justify-content: center;
 }
 .mainContent::-webkit-scrollbar {
@@ -71,9 +70,10 @@
 .addButtonContainer {
   width: 40vh;
   height: 40vh;
-  margin: 5vh 5vw;
   display: flex;
+  margin: 5vh auto 0 auto;
 }
+
 .addButton {
   width: 35vh;
   height: 35vh;

@@ -22,19 +22,17 @@ export default function Select({
         <p>{label}</p>
       </div>
       <div className={styles.dropdownHeader} onClick={toggleDropdown}>
-        <p>
-          {selectedItem ? items.find((item) => item == selectedItem) : "Select"}
-        </p>
+        <p>{options[selectedItem]}</p>
         <img src={!isOpen ? "/down.svg" : "/up.svg"} />
       </div>
       <div className={`${styles.dropdownBody} ${isOpen ? "" : styles.visible}`}>
-        {items.map((item) => (
+        {items.map((item, idx) => (
           <div
             className={`${styles.dropdownItem} ${
               item === selectedItem ? styles.selectedItem : ""
             }`}
-            onClick={() => handleItemClick(item)}
-            key={item}
+            onClick={() => handleItemClick(idx)}
+            key={idx}
           >
             <p>{item}</p>
           </div>
