@@ -16,20 +16,26 @@ export const shelfSlice = createSlice({
 		updateFolder: (state, action) => {
 			const update = action.payload;
 			state.folders = state.folders.map((folder) => {
-				console.log('update._id.toString()', update._id.toString());
-				console.log('folder._id.toString()', folder._id.toString());
 				if (update._id.toString() === folder._id.toString()) {
 					console.log('update', update);
 					return update;
 				}
 				return folder;
 			});
-			console.log('state.folders', state.folders);
 		},
+		deleteFolder: (state, action) => {
+			const folderId = action.payload;
+			state.folders = state.folders.filter((folder) => {
+				if (folderId.toString() === folder._id.toString()) {
+					return false;
+				}
+				return true;
+			});
+		}
 	},
 });
 
-export const { setFolders, updateFolder } = shelfSlice.actions;
+export const { setFolders, updateFolder, deleteFolder } = shelfSlice.actions;
 
 export const foldersSelector = (state) => state.shelf.folders;
 

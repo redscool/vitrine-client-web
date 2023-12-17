@@ -1,4 +1,4 @@
-.button {
+.plusButton {
 	background-color: #f9b552;
 	position: absolute;
 	bottom: 5vh;
@@ -11,5 +11,5 @@
 	align-items: center;
 	cursor: pointer;
 	font-size: x-large;
-	font-weight: 600;
+    font-weight: 600;
 }

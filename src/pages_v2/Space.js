@@ -72,6 +72,7 @@ export default function Dashboard() {
 					path="/shelf"
 					element={<Shelf />}
 				/>
+				/>
 				<Route
 					exact
 					path="/shelf/:folderId"

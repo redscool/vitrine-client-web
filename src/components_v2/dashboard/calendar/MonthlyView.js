@@ -2,7 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import styles from "../../../styles_v2/components_v2/dashboard/calendar/MonthlyView.module.css";
 
-export default function MonthlyView() {
+export default function MonthlyView({ setShow, setDate }) {
   const navigate = useNavigate();
   const months = [
     "JAN",
@@ -120,7 +120,16 @@ export default function MonthlyView() {
         {datesArray?.map((row, i) => (
           <div className={styles.row} key={i}>
             {Object.entries(row).map(([k, v]) => (
-              <div className={styles.dateCard} key={i + v[0]}>
+              <div
+                className={styles.dateCard}
+                key={i + v[0]}
+                onClick={() => {
+                  if (!v[1]) {
+                    setDate(`${year}/${month + 1}/${v[0]}`);
+                    setShow(true);
+                  }
+                }}
+              >
                 <div
                   className={`${styles.date} ${v[1] ? styles.inactive : ""}`}
                 >
