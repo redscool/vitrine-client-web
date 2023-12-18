@@ -16,6 +16,9 @@
   --live-event-banner-bg-color: var(--color21);
   --upcoming-events-container-bg-color: var(--color9);
   --switch-label-font-color: var(--color9);
+  --side-bar-bg-color: var(--color7);
+  --reorder-btn-bg-color: var(--color17);
+  --space-tile-bg-color: var(--color3)
 }
 
 .light-theme {
@@ -36,6 +39,9 @@
   --live-event-banner-bg-color: var(--color21);
   --upcoming-events-container-bg-color: var(--color21);
   --switch-label-font-color: var(--color23);
+  --side-bar-bg-color: var(--color18);
+  --reorder-btn-bg-color: var(--color24);
+  --space-tile-bg-color: var(--color23)
 }
 
 #root {
@@ -70,6 +76,7 @@
   --color29: #5e4d33;
   --color30: #000000;
   --color31: rgba(239, 239, 239, 1);
+  --color32: rgba(239, 239, 239, 50%);
 
   --tab-font-size: 3vh;
   --border-radius: 8px;

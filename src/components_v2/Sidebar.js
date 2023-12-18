@@ -1,19 +1,19 @@
 import React, { useState } from "react";
 
 import styles from "../styles_v2/components_v2/Sidebar.module.css";
+import { useLocation, useNavigate } from "react-router-dom";
 
-// for trying it out, remove links from props
-export default function Sidebar({ selected = "spaces" }) {
+export default function Sidebar({ selected, links }) {
   const [expand, setExpand] = useState(false);
   const [hoveredLink, setHoveredLink] = useState(-1);
-
+  const navigate = useNavigate();
   return (
     <div className={`${styles.container}`}>
-      <div className={`${styles.lefty}`}>
+      <div className={`${styles.mainContainer}`}>
         <div className={`${styles.logo}`}>
           <img className={styles.logoImg} src="/logo.svg" />
         </div>
-        <div className={`${styles.bottom}`}>
+        <div className={`${styles.bottom} ${expand ? styles.expand : ""}`}>
           <div
             className={`${styles.links}`}
             onMouseEnter={() => setExpand(true)}
@@ -21,12 +21,11 @@ export default function Sidebar({ selected = "spaces" }) {
           >
             {links?.map(({ href, displayText, disabled, notifs }, indx) => {
               return (
-                <a
+                <div
                   key={href}
-                  href={href}
                   className={`${styles.navlink}`}
-                  onClick={(e) => {
-                    if (disabled) e.preventDefault();
+                  onClick={() => {
+                    navigate(href);
                   }}
                   onMouseEnter={() => setHoveredLink(indx)}
                   onMouseLeave={() => {
@@ -61,7 +60,7 @@ export default function Sidebar({ selected = "spaces" }) {
                   >
                     {displayText}
                   </span>
-                </a>
+                </div>
               );
             })}
           </div>
@@ -74,29 +73,3 @@ export default function Sidebar({ selected = "spaces" }) {
   );
 }
 
-const links = [
-  {
-    href: "hello",
-    displayText: "Home",
-    disabled: false,
-    notifs: [],
-  },
-  {
-    href: "spaces",
-    displayText: "Spaces",
-    disabled: false,
-    notifs: [],
-  },
-  {
-    href: "profile",
-    displayText: "Profile",
-    disabled: false,
-    notifs: ["hi"],
-  },
-  {
-    href: "calender",
-    displayText: "Calender",
-    disabled: false,
-    notifs: [],
-  },
-];

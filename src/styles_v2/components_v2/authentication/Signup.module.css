@@ -38,3 +38,9 @@
   font-weight: 700;
   margin: auto;
 }
+
+.select {
+  width: 15vw;
+  margin: auto;
+  height: fit-content;
+}

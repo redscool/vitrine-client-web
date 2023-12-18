@@ -1,7 +1,6 @@
 body {
   margin: 0;
-  background-color: var(--bg-clr);
-  color: var(--btn-text-color);
+  font-family: Inter;
 }
 
 html {
@@ -11,22 +10,4 @@ html {
 *:before,
 *:after {
   box-sizing: inherit;
-}
-
-@keyframes fade-in {
-  0% {
-    transform: scaleX(0%);
-  }
-  45% {
-    transform: scaleX(0%);
-  }
-  50% {
-    transform: scaleX(50%);
-  }
-  75% {
-    transform: scaleX(75%);
-  }
-  100% {
-    transform: scaleX(100%);
-  }
 }

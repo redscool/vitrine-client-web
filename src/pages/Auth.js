@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import queryString from "query-string";
-import { resource_request_with_access_token } from "../utils/Service";
+import { auth_request, resource_request_with_access_token } from "../utils/Service";
 import { setAuthKey, setGoogleAuth } from "../redux/authReducer";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -25,7 +25,7 @@ async function getAccessToken(code, dispatch, navigate) {
 }
 
 async function login(code, dispatch, navigate) {
-  resource_request_with_access_token(
+  auth_request(
     "post",
     "/api/auth/user/googleLogin",
     { code },
@@ -42,7 +42,6 @@ async function login(code, dispatch, navigate) {
         dataToken,
       },
     }) => {
-      console.log(googleAuth);
       let redirectUrl = localStorage.getItem(
         LOCALSTORAGE_KEYS.googleAuthRedirect
       );
@@ -77,8 +76,6 @@ export default function Auth() {
   useEffect(() => {
     const urlParams = queryString.parse(window.location.search);
     const action = localStorage.getItem(LOCALSTORAGE_KEYS.googleAuthAction);
-
-    console.log(urlParams.code);
 
     if (urlParams.error) {
       console.log(`An error occurred: ${urlParams.error}`);

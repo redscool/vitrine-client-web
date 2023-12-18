@@ -18,7 +18,7 @@ export default function Signup() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
-  const [type, setType] = useState("Select");
+  const [type, setType] = useState(0);
   const [password, setPassword] = useState("");
   const [cpassword, setCpassword] = useState("");
   const verifyProfileToken = useSelector(authKeySelector("verifyProfileToken"));
@@ -41,11 +41,11 @@ export default function Signup() {
       setSuccess("Password didn't match");
       return;
     }
-    if (!type || type === "Select") {
+    if (!type) {
       setSuccess("Please Select a type");
       return;
     }
-    let userType = type === "Consumer" ? "CONSUMER" : "PROVIDER";
+    let userType = type === 2 ? "CONSUMER" : "PROVIDER";
     console.log(userType);
     const body = { email, password, type: userType };
     auth_request(
@@ -85,13 +85,14 @@ export default function Signup() {
           state={cpassword}
           setState={setCpassword}
         />
-        <Select
-          label="Role"
-          options={options}
-          selectedItem={type}
-          setSelectedItem={setType}
-        />
-
+        <div className={styles.select}>
+          <Select
+            label="Role"
+            options={options}
+            selectedItem={type}
+            setSelectedItem={setType}
+          />
+        </div>
         <div className={styles.solidButton} onClick={signupHandleClick}>
           <p>Sign up</p>
         </div>

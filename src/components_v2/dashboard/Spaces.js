@@ -1,92 +1,78 @@
-import React, { useEffect, useState } from "react";
-import styles from "../../styles_v2/components_v2/dashboard/Spaces.module.css";
+import React, { useEffect, useState } from 'react';
+import styles from '../../styles_v2/components_v2/dashboard/Spaces.module.css';
+import { useSelector } from 'react-redux';
+import { themeSelector } from '../../redux/settingReducer';
+import SpaceTile from './spaces/SpaceTile';
+import AddSpacePopup from './spaces/AddSpacePopup';
+import { profileKeySelector } from '../../redux/profileReducer';
+import Modal from '../Modal';
 
 export default function Spaces() {
-	const [spaceList, setSpaceList] = useState([]);
-
+	const mode = useSelector(themeSelector);
+	const [modal, setModal] = useState(false);
+	const [message, setMessage] = useState('');
+	const [spaces, setSpaces] = useState([]);
+	const spacesArray = useSelector(profileKeySelector('spaces'));
 	useEffect(() => {
-		setSpaceList([
-			{
-				title: "Space 1",
-				description: "Udan Khatola",
-				backgroundImage: "/defaultSpaceBackground.svg",
-				profileImage: "/defaultSpaceProfile.svg",
-				provider: "123",
-				events: ["Hi 1", "Hi 2"],
-			},
-			{
-				title: "Space 2",
-				description: "Udan Khatola",
-				backgroundImage: "/defaultSpaceBackground.svg",
-				profileImage: "/defaultSpaceProfile.svg",
-				provider: "123",
-				events: ["Hi 1", "Hi 2", "Hi 3", "Hi 4"],
-			},
-			{
-				title: "Space 3",
-				description: "Udan Khatola",
-				backgroundImage: "/defaultSpaceBackground.svg",
-				profileImage: "/defaultSpaceProfile.svg",
-				provider: "123",
-				events: [],
-			},
-		]);
-		// const body = { profileId };
-		// resource_request_with_access_token(
-		// 	"get",
-		// 	`/api/${type}/getAllSpaces`,
-		// 	body,
-		// 	({ data: { spaces } }) => {
-		// 		setSpaceList(spaces);
-		// 		console.log(spaces);
-		// 	},
-		// 	console.log
-		// );
-	}, []);
+		setSpaces(spacesArray);
+	}, [spacesArray, spaces]);
 	return (
 		<div className={styles.container}>
-			<div className={styles.navContent}>
-				<div className={styles.reorder}>Reorder</div>
-			</div>
-			<div className={styles.main}>
-				{spaceList.map(
-					(
-						{ backgroundImage, events, profileImage, title, description },
-						indx
-					) => (
-						<div
-							key={indx}
-							className={styles.space}
-						>
-							{/* <div className={`${styles.backgroundImageContainer}`}> */}
-							<img
-								className={styles.backgroundImage}
-								src={backgroundImage}
-							/>
-							{/* </div> */}
-							<div className={`${styles.content}`}>
-								<div className={styles.title}>{title}</div>
-								<div className={styles.description}>{description}</div>
-							</div>
-							<div className={`${styles.notifs}`}>
-								{events.length ? (
-									<>
-										<span className={styles.notifCount}>{events.length}</span>{" "}
-										new messages
-									</>
-								) : (
-									"No new messages"
-								)}
-							</div>
-							<div className={styles.profilePic}>
-								<img
-									className={styles.profileImg}
-									src={profileImage}
-								/>
-							</div>
-						</div>
-					)
-				)}
+			{message ? (
+				<Modal
+					setSuccess={setMessage}
+					success={message}
+				/>
+			) : null}
+			{modal ? (
+				<AddSpacePopup
+					setMessage={setMessage}
+					setView={setModal}
+					setSpaces={setSpaces}
+					spaces={spacesArray}
+				/>
+			) : null}
+			{/* <div className={styles.header}>
+        <div className={styles.reorderButton}>
+          <div className={styles.buttonLabel}>
+            <p>Reorder</p>
+          </div>
+          <div className={styles.buttonIcon}>
+            <img
+              src={
+                mode === "dark"
+                  ? "/reorder_icon_white.svg"
+                  : "/reorder_icon_black.svg"
+              }
+            />
+          </div>
+        </div>
+      </div> */}
+			<div className={styles.mainContent}>
+				{spaces?.map((space, indx) => {
+					return (
+						<SpaceTile
+							spaceObj={space}
+							message={0}
+							key={space._id}
+						/>
+					);
+				})}
+				<div
+					className={styles.addButtonContainer}
+					onClick={() => setModal(true)}
+				>
+					<div className={styles.addButton}>
+						<img
+							src={
+								mode === 'dark'
+									? '/add_button_white.svg'
+									: '/add_button_black.svg'
+							}
+						/>
+						<p>Add New Space</p>
+					</div>
+				</div>
 			</div>
 		</div>
 	);

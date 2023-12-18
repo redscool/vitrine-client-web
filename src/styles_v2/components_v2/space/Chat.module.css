@@ -1,0 +1,100 @@
+.mainContainer {
+  background-color: var(--color9);
+  width: 100%;
+  height: 100vh;
+  display: flex;
+}
+
+.membersContainer {
+  width: 20%;
+  height: 95%;
+  margin: auto 1vw;
+  background-color: var(--color19);
+  border-radius: 8px;
+}
+
+.adminContainerTitle {
+  display: flex;
+  height: 4vh;
+  width: 100%;
+}
+
+.adminContainerTitle > p {
+  margin: 1vh auto;
+  margin-left: 1vw;
+  font-weight: 500;
+  font-size: 2vh;
+  color: var(--color22);
+}
+
+.messagingContainer {
+  width: 65%;
+  height: 95%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.messagesContainer {
+  width: 100%;
+  height: 88%;
+  background-color: var(--color17);
+  border-radius: 8px;
+  overflow-y: auto;
+}
+
+.inputBox::-webkit-scrollbar,
+.messagesContainer::-webkit-scrollbar {
+  width: 0.3vw;
+}
+
+.inputBox::-webkit-scrollbar,
+.messagesContainer::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 0.5rem;
+}
+
+.sendMessageContainer {
+  width: 100%;
+  min-height: 10%;
+  background-color: var(--color13);
+  border-radius: 8px;
+  margin: auto;
+  margin-bottom: 0;
+  display: flex;
+}
+
+.inputBox {
+  width: 80%;
+  min-height: 70%;
+  margin: auto;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: var(--color25);
+  font-size: 2.4vh;
+  font-weight: 400;
+  font-family: inherit;
+  resize: none;
+}
+.inputBox::placeholder {
+  font-family: inherit;
+  color: var(--color25);
+  font-size: 2.4vh;
+  font-weight: 400;
+}
+
+.icon {
+  width: 4%;
+  margin: auto;
+  margin-right: 3%;
+  cursor: pointer;
+}
+
+.spacesContainer {
+  width: 10%;
+  height: 100%;
+  margin: auto;
+  margin-right: 0;
+  background-color: var(--color3);
+}

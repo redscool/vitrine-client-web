@@ -4,11 +4,11 @@ import LiveEventBanner from "./home/LiveEventBanner";
 import UpcomingEvent from "./home/UpcomingEvent";
 import Switch from "../form_components/Switch";
 import { themeSelector, toggleTheme } from "../../redux/settingReducer";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 export default function Home() {
+  const dispatch = useDispatch();
   const theme = useSelector(themeSelector);
-  const [value, setValue] = useState(theme === "dark");
   return (
     <div className={styles.container}>
       <div className={styles.topContainer}>
@@ -18,8 +18,16 @@ export default function Home() {
           month="OCT"
           time="7:00 pm"
         />
-        <div className={styles.lights}>
-          <Switch value={value} setValue={setValue} theme={true} />
+        <div className={styles.utilitiesContainer}>
+          <div className={styles.utility}>
+            <div className={styles.utilityLabel}>
+              <p>Lights</p>
+            </div>
+            <Switch
+              value={theme === "dark"}
+              setValue={() => dispatch(toggleTheme())}
+            />
+          </div>
         </div>
       </div>
       <div className={styles.bottomContainer}>
