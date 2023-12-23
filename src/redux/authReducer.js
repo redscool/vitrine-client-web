@@ -17,6 +17,7 @@ const initialState = {
 	profileId: localStorage.getItem('profileId'),
 	type: localStorage.getItem('type'),
 	email: localStorage.getItem('email'),
+	verifyProfileToken: localStorage.getItem('verifyProfileToken'),
 	googleAuth: getGoogleAuthLocalStorage(),
 };
 
