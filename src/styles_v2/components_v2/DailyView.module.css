@@ -1,9 +1,20 @@
-.calendar {
+.container {
+  position: absolute;
+  z-index: 1000;
+  left: 0;
+  top: 0;
   width: 100%;
   height: 100%;
+  backdrop-filter: blur(10px);
+  display: flex;
+}
+
+.calendar {
+  width: 50vw;
+  height: 90vh;
   display: flex;
   flex-direction: column;
-  background: transparent;
+  background: var(--bg-clr);
   border-radius: var(--border-radius);
   border: 1px solid var(--label-font-color);
   margin: auto;
@@ -60,6 +71,8 @@
   height: 80%;
   /* border: 1px solid palevioletred; */
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .body::-webkit-scrollbar {
@@ -69,4 +82,11 @@
 .body::-webkit-scrollbar-thumb {
   background-color: rgba(0, 0, 0, 0.4);
   border-radius: 0.5rem;
+}
+
+.body > p {
+  margin: auto;
+  font-size: 3vh;
+  color: var(--label-font-color);
+  font-weight: 600;
 }

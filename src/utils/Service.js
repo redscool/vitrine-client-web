@@ -130,14 +130,15 @@ export const file_server_request = async (
   route,
   body,
   onSuccess,
-  onError
+  onError,
+  formData = true
 ) => {
   const token = localStorage.getItem("accessToken");
 
   const config = {
     headers: {
       Authorization: token,
-      "Content-Type": "multipart/form-data",
+      ...(formData && { "Content-Type": "multipart/form-data" }),
     },
   };
 
@@ -145,6 +146,7 @@ export const file_server_request = async (
     route = getUpdatedRoute(route, body);
     body = config;
   }
+  console.log(body);
 
   axios[method](`${FILE_SERVER}${route}`, body, config)
     .then((response) => {

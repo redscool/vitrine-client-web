@@ -124,3 +124,49 @@
   height: 50%;
   /* border: 1px solid red; */
 }
+
+.task {
+  /* border: 1px solid red; */
+
+  width: 100%;
+  height: 50%;
+  display: flex;
+}
+
+.indicator {
+  width: 12px;
+  height: 12px;
+  aspect-ratio: 1;
+  border-radius: 6px;
+  margin: auto 0.5vw;
+  background: var(--color15);
+}
+
+.details {
+  height: 100%;
+  width: 100%;
+  display: flex;
+}
+
+.details > p {
+  margin: auto;
+  margin-left: 0;
+  font-size: 2vh;
+  color: var(--label-font-color);
+}
+
+.color0 {
+  background-color: var(--color15);
+}
+
+.color1 {
+  background-color: var(--color11);
+}
+
+.color2 {
+  background-color: var(--color14);
+}
+
+.color3 {
+  background-color: var(--color12);
+}

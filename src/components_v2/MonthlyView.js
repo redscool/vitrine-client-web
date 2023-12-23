@@ -1,8 +1,8 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import styles from "../../../styles_v2/components_v2/dashboard/calendar/MonthlyView.module.css";
+import styles from "../styles_v2/components_v2/MonthlyView.module.css";
 
-export default function MonthlyView({ setShow, setDate }) {
+export default function MonthlyView({ setShow, setDate, eventsDictionary }) {
   const navigate = useNavigate();
   const months = [
     "JAN",
@@ -26,53 +26,31 @@ export default function MonthlyView({ setShow, setDate }) {
   const days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
   useEffect(() => {
     const array = [];
-    const firstDayOfMonth = new Date(year, month).getDay();
     const firstDateOfMonth = new Date(year, month);
-    const lastDayOfMonth = new Date(year, month + 1, 0).getDay();
+    const firstDayOfMonth = firstDateOfMonth.getDay();
     const lastDateOfMonth = new Date(year, month + 1, 0);
-    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const lastDayOfMonth = lastDateOfMonth.getDay();
+    const daysInMonth = lastDateOfMonth.getDate();
     for (let i = firstDayOfMonth; i > 0; i--) {
       const tempDateObj = new Date(firstDateOfMonth - 24 * 3600000 * i);
       const tempDayKey = tempDateObj.getDate();
-      const tempYear = String(tempDateObj.getFullYear());
-      const tempMonth =
-        String(Math.floor((tempDateObj.getMonth() + 1) / 10)) +
-        String((tempDateObj.getMonth() + 1) % 10);
-      const tempDay =
-        String(Math.floor(tempDayKey / 10)) + String(tempDayKey % 10);
-      const tempDate = tempYear + "-" + tempMonth + "-" + tempDay;
-      array[tempDate] = [tempDayKey, true];
+      array.push([tempDayKey, true]);
     }
     for (let i = 1; i <= daysInMonth; i++) {
       const tempDateObj = new Date(firstDateOfMonth - 24 * 3600000 * (1 - i));
       const tempDayKey = tempDateObj.getDate();
-      const tempYear = String(tempDateObj.getFullYear());
-      const tempMonth =
-        String(Math.floor((tempDateObj.getMonth() + 1) / 10)) +
-        String((tempDateObj.getMonth() + 1) % 10);
-      const tempDay =
-        String(Math.floor(tempDayKey / 10)) + String(tempDayKey % 10);
-      const tempDate = tempYear + "-" + tempMonth + "-" + tempDay;
-      array[tempDate] = [tempDayKey, false];
+      array.push([tempDayKey, false]);
     }
     for (let i = lastDayOfMonth + 1; i < 7; i++) {
       const tempDateObj = new Date(
         lastDateOfMonth - 24 * 3600000 * (lastDayOfMonth - i)
       );
       const tempDayKey = tempDateObj.getDate();
-      const tempYear = String(tempDateObj.getFullYear());
-      const tempMonth =
-        String(Math.floor((tempDateObj.getMonth() + 1) / 10)) +
-        String((tempDateObj.getMonth() + 1) % 10);
-      const tempDay =
-        String(Math.floor(tempDayKey / 10)) + String(tempDayKey % 10);
-      const tempDate = tempYear + "-" + tempMonth + "-" + tempDay;
-      array[tempDate] = [tempDayKey, true];
+      array.push([tempDayKey, true]);
     }
     const temp = [];
-    for (let i = 0; i < Object.keys(array).length; i += 7) {
-      temp.push(Object.fromEntries(Object.entries(array).slice(i, i + 7)));
-    }
+    for (let i = 0; i < Object.keys(array).length; i += 7)
+      temp.push(array.slice(i, i + 7));
     setDatesArray(temp);
   }, [month, year]);
   return (
@@ -119,13 +97,13 @@ export default function MonthlyView({ setShow, setDate }) {
       <div className={styles.body}>
         {datesArray?.map((row, i) => (
           <div className={styles.row} key={i}>
-            {Object.entries(row).map(([k, v]) => (
+            {row.map((v, j) => (
               <div
                 className={styles.dateCard}
-                key={i + v[0]}
+                key={i * 7 + j}
                 onClick={() => {
                   if (!v[1]) {
-                    setDate(`${year}/${month + 1}/${v[0]}`);
+                    setDate(v[0]);
                     setShow(true);
                   }
                 }}
@@ -136,7 +114,25 @@ export default function MonthlyView({ setShow, setDate }) {
                   <p>{v[0]}</p>
                 </div>
                 <div className={styles.topTasks}>
-                  <p></p>
+                  {!v[1] &&
+                    eventsDictionary[v[0]]?.map((events, indx) => (
+                      <div
+                        className={styles.task}
+                        key={indx}
+                        style={indx > 1 ? { display: "none" } : {}}
+                      >
+                        <div
+                          className={`${styles.indicator} ${
+                            styles[`color${Math.floor(Math.random() * 4)}`]
+                          }`}
+                        ></div>
+                        <div className={styles.details}>
+                          <p>
+                            {events.start} - {events.title}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
                 </div>
               </div>
             ))}

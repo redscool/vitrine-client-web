@@ -1,22 +1,75 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styles from "../../styles_v2/components_v2/dashboard/Home.module.css";
 import LiveEventBanner from "./home/LiveEventBanner";
 import UpcomingEvent from "./home/UpcomingEvent";
 import Switch from "../form_components/Switch";
 import { themeSelector, toggleTheme } from "../../redux/settingReducer";
 import { useSelector, useDispatch } from "react-redux";
+import { ServiceContext } from "../../utils/context/serviceContext";
+import config from "../../config.json";
+import { convertTime, getFileURL } from "../../utils/Misc";
 
 export default function Home() {
   const dispatch = useDispatch();
+  const [bannerImage, setBannerImage] = useState("/banner.svg");
   const theme = useSelector(themeSelector);
+  const [upcomingEvents, setUpcomingEvents] = useState([]);
+  const serviceObject = useContext(ServiceContext);
+  const getUpcomingEvents = async () => {
+    await serviceObject.request(
+      "get",
+      "/api/calendar/getUpcomingEvents",
+      { rangeStart: new Date().toISOString() },
+      ({ data }) => {
+        const tempEvents = [];
+        const { events } = data;
+        for (const event of events) {
+          const { startTime, title, description, spaceId } = event;
+          const sTime = new Date(startTime);
+          const date = sTime.getDate();
+          const month = sTime.toDateString().substring(4, 7).toUpperCase();
+          const time = convertTime(sTime);
+          tempEvents.push({
+            time,
+            date,
+            month,
+            title,
+            description,
+            spaceId,
+          });
+        }
+        setUpcomingEvents(tempEvents);
+      },
+      console.log
+    );
+  };
+  useEffect(() => {
+    getUpcomingEvents();
+  }, []);
+  useEffect(() => {
+    if (upcomingEvents) {
+      const spaceId = upcomingEvents[0]?.spaceId;
+      if (spaceId) {
+        serviceObject.request(
+          "get",
+          "/api/provider/getspace",
+          { spaceId },
+          ({ data }) => {
+            const { space } = data;
+            setBannerImage(getFileURL(space.displayPicture));
+          },
+          console.log
+        );
+      }
+    }
+  }, [upcomingEvents]);
   return (
     <div className={styles.container}>
       <div className={styles.topContainer}>
         <LiveEventBanner
-          bannerImage="/banner.svg"
-          date="25"
-          month="OCT"
-          time="7:00 pm"
+          bannerImage={bannerImage}
+          event={upcomingEvents ? upcomingEvents[0] : {}}
+          noContent={upcomingEvents ? false : true}
         />
         <div className={styles.utilitiesContainer}>
           <div className={styles.utility}>
@@ -37,10 +90,9 @@ export default function Home() {
           </div>
 
           <div className={styles.upcomingEventsContainerContent}>
-            <UpcomingEvent />
-            <UpcomingEvent />
-            <UpcomingEvent />
-            <UpcomingEvent />
+            {upcomingEvents?.map((event, ind) => (
+              <UpcomingEvent key={ind} event={event} />
+            ))}
           </div>
         </div>
         <div className={styles.notificationsContainer}></div>
