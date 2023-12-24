@@ -1,0 +1,19 @@
+.container {
+	width: 80%;
+	border: 1px solid rgba(134, 139, 144, 1);
+	border-radius: 22px;
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	padding: 1.5rem;
+}
+
+.title {
+	font-family: Inter;
+	font-size: 20px;
+	font-weight: 500;
+	letter-spacing: 0em;
+	text-align: left;
+	color: rgba(239, 239, 239, 1);
+	padding-bottom: 1.5rem;
+}
