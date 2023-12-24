@@ -11,7 +11,7 @@ import Space from "./pages_v2/Space";
 import Auth from "./pages/Auth";
 import { authKeySelector } from "./redux/authReducer";
 import Page from "./pages/Page";
-import Community from "./pages/Community";
+// import Community from "./pages/Community";
 import UserAuthentication from "./pages_v2/UserAuthentication";
 import Dashboard from "./pages_v2/Dashboard";
 import Order from "./pages/Order.js";
@@ -22,6 +22,7 @@ import store from "./redux/store.js";
 import { ServiceContext } from "./utils/context/serviceContext.js";
 import { resource_request_with_access_token } from "./utils/Service.js";
 import GoogleIntegrationCallback from "./pages_v2/GoogleIntegrationCallback.js";
+import Community from './pages_v2/Community.js';
 
 const getServiceObject = (navigate) => {
   return {

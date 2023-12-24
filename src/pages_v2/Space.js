@@ -6,6 +6,7 @@ import Chat from '../components_v2/space/Chat';
 import Calendar from '../components_v2/space/Calendar';
 import Shelf from '../components_v2/space/Shelf';
 import Folder from '../components_v2/space/shelf/Folder';
+import Page from '../components_v2/space/Page';
 export default function Dashboard() {
 	const links = [
 		{
@@ -72,7 +73,6 @@ export default function Dashboard() {
 					path="/shelf"
 					element={<Shelf />}
 				/>
-				/>
 				<Route
 					exact
 					path="/shelf/:folderId"
@@ -86,7 +86,7 @@ export default function Dashboard() {
 				<Route
 					exact
 					path="/page"
-					element={<></>}
+					element={<Page />}
 				/>
 				<Route
 					exact
