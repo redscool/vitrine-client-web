@@ -99,3 +99,7 @@
   font-weight: 400;
   color: var(--color9);
 }
+
+.hide{
+  display: none;
+}

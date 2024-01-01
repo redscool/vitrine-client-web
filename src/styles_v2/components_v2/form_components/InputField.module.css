@@ -1,4 +1,5 @@
-.fieldContainer {
+.fieldContainer,
+.areaContainer {
   width: 20vw;
   display: flex;
   flex-direction: column;
@@ -33,6 +34,44 @@
   font-size: 1.5vh;
 }
 
-.fieldInput::-webkit-calendar-picker-indicator{
+.fieldInput::-webkit-calendar-picker-indicator {
   margin-right: 2vw;
+}
+
+.areaContainer {
+  width: 20vw;
+  min-height: 5vh;
+  display: flex;
+  border-radius: var(--border-radius);
+  background-color: var(--input-bg-color);
+}
+
+.textarea {
+  margin: auto;
+  width: 90%;
+  resize: none;
+  overflow-y: scroll;
+  outline: none;
+  border: none;
+  font-weight: 700;
+  color: var(--input-field-placeholder-color);
+  background-color: transparent;
+  font-size: 2vh;
+  font-family: Inter;
+}
+
+.textarea::placeholder {
+  font-weight: 700;
+  color: var(--input-field-placeholder-color);
+  font-size: 2vh;
+  font-family: Inter;
+}
+
+.textarea::-webkit-scrollbar {
+  width: 0.2vw;
+}
+
+.textarea::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 0.5rem;
 }

@@ -6,7 +6,6 @@ import Switch from "../form_components/Switch";
 import { themeSelector, toggleTheme } from "../../redux/settingReducer";
 import { useSelector, useDispatch } from "react-redux";
 import { ServiceContext } from "../../utils/context/serviceContext";
-import config from "../../config.json";
 import { convertTime, getFileURL } from "../../utils/Misc";
 
 export default function Home() {
@@ -56,7 +55,8 @@ export default function Home() {
           { spaceId },
           ({ data }) => {
             const { space } = data;
-            setBannerImage(getFileURL(space.displayPicture));
+            console.log(space);
+            setBannerImage(getFileURL(space.coverPicture));
           },
           console.log
         );
@@ -69,7 +69,7 @@ export default function Home() {
         <LiveEventBanner
           bannerImage={bannerImage}
           event={upcomingEvents ? upcomingEvents[0] : {}}
-          noContent={upcomingEvents ? false : true}
+          noContent={upcomingEvents && upcomingEvents.length ? false : true}
         />
         <div className={styles.utilitiesContainer}>
           <div className={styles.utility}>
@@ -90,9 +90,13 @@ export default function Home() {
           </div>
 
           <div className={styles.upcomingEventsContainerContent}>
-            {upcomingEvents?.map((event, ind) => (
-              <UpcomingEvent key={ind} event={event} />
-            ))}
+            {upcomingEvents && upcomingEvents.length ? (
+              upcomingEvents?.map((event, ind) => (
+                <UpcomingEvent key={ind} event={event} />
+              ))
+            ) : (
+              <p>No Upcoming Events</p>
+            )}
           </div>
         </div>
         <div className={styles.notificationsContainer}></div>

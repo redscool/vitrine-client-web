@@ -92,6 +92,14 @@
   margin: 1vh auto;
   overflow-y: scroll;
   background-color: var(--upcoming-events-container-bg-color);
+  display: flex;
+  flex-direction: column;
+}
+
+.upcomingEventsContainerContent > p {
+  color: var(--color1);
+  font-size: 3.5vh;
+  margin: auto;
 }
 
 .upcomingEventsContainerContent::-webkit-scrollbar {

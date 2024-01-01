@@ -34,7 +34,6 @@ export default function Calendar() {
       ({ data }) => {
         const tempEventsDictionary = {};
         const { events } = data;
-        console.log(events);
         for (const event of events) {
           const {
             startTime,
@@ -59,7 +58,6 @@ export default function Calendar() {
             spaceId,
           });
         }
-        console.log(tempEventsDictionary);
         setEventsDictionary(tempEventsDictionary);
       },
       console.log
@@ -98,6 +96,7 @@ export default function Calendar() {
           setShow={setShow}
           setDate={setDate}
           eventsDictionary={eventsDictionary}
+          root={"space"}
         />
       </div>
     </div>

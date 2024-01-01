@@ -4,7 +4,7 @@
   height: 10vh;
   width: 57vw;
   margin: auto;
-  margin-bottom: 1vh;
+  margin-top: 1vh;
   border-radius: var(--border-radius);
   display: flex;
   cursor: pointer;

@@ -36,7 +36,6 @@ export default function Login() {
       },
       ({ response }) => {
         const { data } = response;
-        console.log(data);
         setSuccess(data.message);
       }
     );

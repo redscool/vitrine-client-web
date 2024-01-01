@@ -20,8 +20,6 @@ export default function Calendar() {
     }
     const rangeStart = new Date(year, month - 1);
     const rangeEnd = new Date(new Date(year, month) - 1);
-    console.log(rangeStart.getTime());
-    console.log(rangeEnd.getTime());
     serviceObject.request(
       "get",
       "/api/calendar/getEventsForRange",
@@ -32,7 +30,6 @@ export default function Calendar() {
       ({ data }) => {
         const tempEventsDictionary = {};
         const { events } = data;
-        console.log(events);
         for (const event of events) {
           const { startTime, endTime, title, googleMeet, description } = event;
           const sTime = new Date(startTime),
@@ -49,7 +46,6 @@ export default function Calendar() {
             description,
           });
         }
-        console.log(tempEventsDictionary);
         setEventsDictionary(tempEventsDictionary);
       },
       console.log
@@ -69,6 +65,7 @@ export default function Calendar() {
           setShow={setShow}
           setDate={setDate}
           eventsDictionary={eventsDictionary}
+          root={"dashboard"}
         />
       </div>
     </div>

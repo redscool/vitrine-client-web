@@ -47,11 +47,6 @@ export const authSlice = createSlice({
 
 export const { setAuthKey, resetAuth, setGoogleAuth } = authSlice.actions;
 
-/**
- *
- * @deprecated
- * use local storage instead
- */
 export const authKeySelector = (key) => (state) => state.auth[key];
 
 export default authSlice.reducer;

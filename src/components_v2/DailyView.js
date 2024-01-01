@@ -1,7 +1,5 @@
-import { useNavigate, useParams } from "react-router-dom";
 import styles from "../styles_v2/components_v2/DailyView.module.css";
 import Event from "./dailyView/Event";
-import { useEffect, useState } from "react";
 
 export default function DailyView({ date, setShow, eventsDictionary }) {
   return (

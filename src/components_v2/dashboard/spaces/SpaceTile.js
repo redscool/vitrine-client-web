@@ -1,8 +1,7 @@
 import styles from "../../../styles_v2/components_v2/dashboard/spaces/SpaceTile.module.css";
-import config from "../../../config.json";
 import { useNavigate } from "react-router-dom";
+import { getFileURL } from "../../../utils/Misc";
 export default function SpaceTile({ message, spaceObj }) {
-  const FILE_SERVER = config.FILE_SERVER;
   const navigate = useNavigate();
   return (
     <div
@@ -10,10 +9,10 @@ export default function SpaceTile({ message, spaceObj }) {
       onClick={() => navigate(`/space/${spaceObj._id}/`)}
     >
       <div className={styles.profileContainer}>
-        <img src={`${FILE_SERVER}/getFile?id=${spaceObj.displayPicture}`} />
+        <img src={getFileURL(spaceObj.displayPicture)} />
       </div>
       <div className={styles.topContainer}>
-        <img src={`${FILE_SERVER}/getFile?id=${spaceObj.coverPicture}`} />
+        <img src={getFileURL(spaceObj.coverPicture)} />
       </div>
       <div className={styles.middleContainer}>
         <div className={styles.title}>

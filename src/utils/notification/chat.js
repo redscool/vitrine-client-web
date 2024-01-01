@@ -1,36 +1,29 @@
-import { addDM, addMessage, addDMChat } from "../../redux/chatReducer";
-import { notifyDM } from "../BrowserNotification";
+import {
+  addMessage,
+  changeOnlineMember,
+  initOnlineMembers,
+} from "../../redux/chatReducer";
 import { listen } from "../socketIO";
-import store from "../../redux/store.js";
-import { resource_request_with_access_token } from "../../utils/Service.js";
+import { SOCKET_EVENTS } from "../../constants.js";
 
 const listenChatEvents = (dispatch) => {
-	listen("chat-message-received", (data) => {
-		dispatch(addMessage(data));
-	});
-	listen(
-		"chat-dm-received",
-		async ({ chatId, sender, reciever, data, timestamp }) => {
-			notifyDM(data, sender);
-			const { chatHeads } = store.getState().chat;
-			console.log("chatHeads", chatHeads);
-			if (chatHeads[chatId]) {
-				dispatch(addDM({ chatId, sender, reciever, data, timestamp }));
-				return;
-			}
-			await resource_request_with_access_token(
-				"post",
-				"/api/chat/getChat",
-				{ chatId, userId: reciever },
-				(resData) => {
-					const { chat } = resData.data;
-					console.log("post request: ", chat);
-					dispatch(addDMChat(chat));
-				},
-				console.log
-			);
-		}
-	);
+  listen(SOCKET_EVENTS.MESSAGE_RECIEVED, (data) => {
+    const { message } = data;
+    const { spaceId } = message;
+    dispatch(addMessage({ message, spaceId }));
+  });
+  listen(SOCKET_EVENTS.JOINED_CHAT, (data) => {
+    const { profileId } = data;
+    dispatch(changeOnlineMember({ profileId, isOnline: true }));
+  });
+  listen(SOCKET_EVENTS.LEFT_CHAT, (data) => {
+    const { profileId } = data;
+    dispatch(changeOnlineMember({ profileId, isOnline: false }));
+  });
+  listen(SOCKET_EVENTS.RECIEVED_ONLINE_MEMBER, (data) => {
+    const { spaceId, onlineMembers } = data;
+    dispatch(initOnlineMembers({ onlineMembers, spaceId }));
+  });
 };
 
 export default listenChatEvents;

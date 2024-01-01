@@ -1,7 +1,7 @@
 import styles from "../../../styles_v2/components_v2/space/chat/Member.module.css";
-export default function Member({ img, name, tick, offline }) {
+export default function Member({ img, name, tick, online }) {
   return (
-    <div className={`${styles.container} ${offline ? styles.offline : ""}`}>
+    <div className={`${styles.container} ${online ? "" : styles.offline}`}>
       <div className={styles.profilePic}>
         <img src={img} />
       </div>

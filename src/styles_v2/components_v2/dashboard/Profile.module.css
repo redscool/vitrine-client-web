@@ -57,7 +57,7 @@
   display: flex;
   cursor: pointer;
 }
-.hide{
+.hide {
   display: none;
 }
 
@@ -196,10 +196,59 @@
   background-color: var(--color1);
 }
 
-.logoutButton > p {
+.previewButton {
+  margin: auto;
+  margin-left: 5vw;
+  background-color: var(--color21);
+}
+
+.saveButton {
+  margin: auto;
+  margin-right: 5vw;
+  background-color: var(--color1);
+}
+
+.logoutButton > p,
+.previewButton > p,
+.saveButton > p {
   color: var(--color20);
 }
 
 .resetPasswordButton > p {
   color: var(--color21);
+}
+
+.headingSection {
+  height: 25vh;
+}
+
+.highlightsSection {
+  height: 35vh;
+}
+
+.descriptionSection {
+  height: 35vh;
+}
+
+.highlightsContainer,
+.warning {
+  width: 90%;
+  height: 23vh;
+  margin: auto;
+  display: flex;
+  overflow-y: auto;
+}
+
+.pricingSection {
+  min-height: 20vh;
+  padding-bottom: 5vh;
+}
+
+.highlightsContainer > p,
+.descriptionSection > p,
+.warning > p {
+  margin: auto;
+  font-weight: 400;
+  font-size: 2.4vh;
+  color: var(--label-font-color);
 }

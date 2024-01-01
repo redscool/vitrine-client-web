@@ -1,5 +1,6 @@
 import axios from 'axios';
 import config from '../config.json';
+import { setAuthKey } from '../redux/authReducer';
 
 const SERVER = config.SERVER;
 const FILE_SERVER = config.FILE_SERVER;
@@ -30,7 +31,7 @@ const getUpdatedRoute = (route, body) => {
 
 	return newRoute;
 };
-const refresh_access_token = async (navigate) => {
+const refresh_access_token = async (navigate, dispatch) => {
 	const refreshToken = localStorage.getItem('refreshToken');
 	const userId = localStorage.getItem('userId');
 	if (!userId || !refreshToken) {
@@ -42,7 +43,7 @@ const refresh_access_token = async (navigate) => {
 			userId,
 			refreshToken,
 		});
-		localStorage.setItem('accessToken', data.data.accessToken);
+		dispatch(setAuthKey(["accessToken", data.data.accessToken]))
 		return true;
 	} catch {
 		navigate('/login');
@@ -95,7 +96,7 @@ export const auth_request = async (method, route, body, onSuccess, onError) => {
 };
 
 export const resource_request_with_access_token =
-	(navigate) =>
+	(navigate, dispatch) =>
 	async (method, route, body, onSuccess, onError, level = 0) => {
 		const token = localStorage.getItem('accessToken');
 		const config = {
@@ -114,10 +115,10 @@ export const resource_request_with_access_token =
 			})
 			.catch(async (err) => {
 				if (err?.response?.data?.invalid) {
-					await refresh_access_token(navigate);
+					await refresh_access_token(navigate, dispatch);
 					if (level >= 5) onError(err);
 					else
-						resource_request_with_access_token(navigate)(
+						resource_request_with_access_token(navigate, dispatch)(
 							method,
 							route,
 							body,
@@ -150,8 +151,6 @@ export const file_server_request = async (
     route = getUpdatedRoute(route, body);
     body = config;
   }
-  console.log(body);
-
   axios[method](`${FILE_SERVER}${route}`, body, config)
     .then((response) => {
       onSuccess(response);

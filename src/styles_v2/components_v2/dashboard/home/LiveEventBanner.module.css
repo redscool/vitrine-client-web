@@ -7,6 +7,14 @@
   display: flex;
 }
 
+.container > p{
+  margin: auto;
+  font-size: 4vh;
+  font-weight: 800;
+  margin: auto;
+  color: var(--color1);
+}
+
 .leftContainer {
   width: 36vw;
   height: 28vh;

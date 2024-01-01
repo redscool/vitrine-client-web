@@ -4,7 +4,7 @@ import { Provider, useSelector, useDispatch } from "react-redux";
 
 import LandingPage from "./pages/LandingPage";
 import VerifyEmail from "./pages_v2/VerifyEmail";
-import { initConnection } from "./utils/socketIO";
+import { initConnection, isConnected } from "./utils/socketIO";
 import { themeSelector } from "./redux/settingReducer";
 import "./App.css";
 import Space from "./pages_v2/Space";
@@ -22,7 +22,7 @@ import store from "./redux/store.js";
 import { ServiceContext } from "./utils/context/serviceContext.js";
 import { resource_request_with_access_token } from "./utils/Service.js";
 import GoogleIntegrationCallback from "./pages_v2/GoogleIntegrationCallback.js";
-import Community from './pages_v2/Community.js';
+import Community from "./pages_v2/Community.js";
 
 const getServiceObject = (navigate) => {
   return {
@@ -33,8 +33,7 @@ const getServiceObject = (navigate) => {
 function App() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const profileId = useSelector(authKeySelector("profileId"));
-  const type = useSelector(authKeySelector("type"));
+  const accessToken = useSelector(authKeySelector("accessToken"));
   const theme = useSelector(themeSelector);
   document.getElementById("root").className = {
     light: "light-theme",
@@ -42,11 +41,13 @@ function App() {
   }[theme];
 
   useEffect(() => {
-    initConnection(dispatch, { profileId, type });
-  }, []);
+    if (accessToken && !isConnected()) {
+      initConnection(dispatch, { accessToken });
+    }
+  }, [accessToken]);
 
   return (
-    <ServiceContext.Provider value={getServiceObject(navigate)}>
+    <ServiceContext.Provider value={getServiceObject(navigate, dispatch)}>
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/signup" element={<UserAuthentication type="signup" />} />
@@ -61,7 +62,11 @@ function App() {
         <Route exact path="/page/:spaceId" element={<Page />} />
         <Route exact path="/community" element={<Community />} />
         <Route exact path="/order" element={<Order />} />
-        <Route exact path="/integration/google/callback" element={<GoogleIntegrationCallback />} />
+        <Route
+          exact
+          path="/integration/google/callback"
+          element={<GoogleIntegrationCallback />}
+        />
         <Route exact path="/*" element={<h1> not found app</h1>} />
       </Routes>
     </ServiceContext.Provider>

@@ -1,5 +1,8 @@
 import io from "socket.io-client";
 import listenChatEvents from "./notification/chat";
+import { SOCKET_EVENTS } from "../constants";
+import { auth_request } from "./Service";
+import { setAuthKey } from "../redux/authReducer";
 
 const URL = "http://localhost:5000";
 const SOCKET_TOKEN = "SOCKET_TOKEN";
@@ -11,20 +14,37 @@ const listenAllEvents = (dispatch) => {
 };
 
 export const initConnection = (dispatch, props) => {
-  const { profileId, type } = props;
+  disconnect();
+  const { accessToken } = props;
   socket = io(URL, {
     auth: {
-      token: SOCKET_TOKEN,
-      profileId,
-      type,
+      accessToken,
     },
   });
-
+  socket.on(SOCKET_EVENTS.CONNECTION_ERROR, async () => {
+    const refreshToken = localStorage.getItem("refreshToken");
+    const userId = localStorage.getItem("userId");
+    if (!userId || !refreshToken) {
+      return;
+    }
+    auth_request(
+      "post",
+      `/api/auth/access/newAccessToken`,
+      {
+        userId,
+        refreshToken,
+      },
+      ({ data }) => {
+        dispatch(setAuthKey(["accessToken", data.accessToken]));
+      },
+      () => undefined
+    );
+  });
   listenAllEvents(dispatch);
 };
 
 export const disconnect = () => {
-  socket.disconnect();
+  socket?.disconnect();
 };
 
 export const emit = (event, data) => {

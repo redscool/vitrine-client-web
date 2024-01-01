@@ -4,7 +4,12 @@ import styles from "../../../styles_v2/components_v2/dashboard/profile/UpdateSoc
 import { ServiceContext } from "../../../utils/context/serviceContext";
 import { useDispatch } from "react-redux";
 import { setProfileKey } from "../../../redux/profileReducer";
-export default function AddSpacePopup({ setView, setMessage, setSpaces,spaces }) {
+export default function AddSpacePopup({
+  setView,
+  setMessage,
+  setSpaces,
+  spaces,
+}) {
   const dispatch = useDispatch();
   const serviceObject = useContext(ServiceContext);
   const [title, setTitle] = useState("");
@@ -24,12 +29,12 @@ export default function AddSpacePopup({ setView, setMessage, setSpaces,spaces })
     serviceObject.request(
       "post",
       "/api/provider/createspace",
-      { title, description},
+      { title, subtitle: description },
       ({ data }) => {
         setMessage(data.message);
         const spacesArray = [...spaces];
-        spacesArray.push(data.space)
-        setSpaces(spacesArray)
+        spacesArray.push(data.space);
+        setSpaces(spacesArray);
         dispatch(setProfileKey(["spaces", spacesArray]));
       },
       console.log

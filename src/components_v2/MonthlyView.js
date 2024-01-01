@@ -2,7 +2,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import styles from "../styles_v2/components_v2/MonthlyView.module.css";
 
-export default function MonthlyView({ setShow, setDate, eventsDictionary }) {
+export default function MonthlyView({
+  setShow,
+  setDate,
+  eventsDictionary,
+  root,
+}) {
   const navigate = useNavigate();
   const months = [
     "JAN",
@@ -53,6 +58,8 @@ export default function MonthlyView({ setShow, setDate, eventsDictionary }) {
       temp.push(array.slice(i, i + 7));
     setDatesArray(temp);
   }, [month, year]);
+
+  const { spaceId } = useParams();
   return (
     <div className={styles.calendar}>
       <div className={styles.title}>
@@ -64,7 +71,11 @@ export default function MonthlyView({ setShow, setDate, eventsDictionary }) {
                 year = year - 1;
                 month = 12;
               }
-              navigate(`/dashboard/calendar/${year}/${month}`);
+              navigate(
+                `/${root}${
+                  root == "space" ? `/${spaceId}` : ""
+                }/calendar/${year}/${month}`
+              );
             }}
           >
             <p>&lt;</p>
@@ -77,10 +88,14 @@ export default function MonthlyView({ setShow, setDate, eventsDictionary }) {
             onClick={() => {
               month += 2;
               if (month > 12) {
-                year = year - 0 + 1;
+                year = +year + 1;
                 month = 1;
               }
-              navigate(`/dashboard/calendar/${year}/${month}`);
+              navigate(
+                `/${root}${
+                  root == "space" ? `/${spaceId}` : ""
+                }/calendar/${year}/${month}`
+              );
             }}
           >
             <p>&gt;</p>
