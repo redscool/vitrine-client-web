@@ -23,17 +23,16 @@
 }
 
 .heading {
-  width: 25vw;
+  width: 100%;
   height: 10vh;
   /* border: 1px solid red; */
   display: flex;
 }
 
 .title {
-  width: 15vw;
+  width: 100%;
   height: 5vh;
   margin: auto;
-  margin-left: 5vw;
   display: flex;
   /* border: 1px solid red; */
 }
@@ -70,6 +69,7 @@
   display: flex;
   border-radius: var(--border-radius);
   cursor: pointer;
+  user-select: none;
 }
 
 .button > p {
@@ -77,4 +77,59 @@
   font-weight: 700;
   font-size: 2.5vh;
   color: var(--color24);
+}
+
+.autoHeight {
+  height: 70vh;
+  width: 40vw;
+}
+
+.buttonsContainer {
+  width: 90%;
+  height: 8vh;
+  margin: auto;
+  display: flex;
+}
+
+.highlightsContainer {
+  height: 60%;
+  overflow-y: auto;
+  /* border: 1px solid yellow; */
+}
+
+.highlightsContainer::-webkit-scrollbar {
+  width: 0.3vw;
+}
+
+.highlightsContainer::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 0.5rem;
+}
+
+.color {
+  background-color: var(--color21);
+}
+
+.color > p {
+  color: black;
+}
+
+.highlight {
+  width: 95%;
+  margin: 0 auto 1vh;
+  height: fit-content;
+  display: flex;
+}
+
+.upArrowIcon,
+.downArrowIcon,
+.deleteIcon {
+  width: 10%;
+  display: flex;
+  cursor: pointer;
+}
+
+.upArrowIcon > img, .downArrowIcon > img, .deleteIcon > img {
+  width: 40%;
+  margin: auto;
 }

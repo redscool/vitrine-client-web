@@ -1,22 +1,27 @@
 import InputField from "../../form_components/InputField";
 import styles from "../../../styles_v2/components_v2/dashboard/profile/UpdateProfilePopup.module.css";
+import { useState } from "react";
 export default function UpdateHeadingPopup({
   setView,
   heading,
   setHeading,
   subHeading,
   setSubHeading,
-  spaceObj,
+  setMessage,
 }) {
+  const [tHeading, setTHeading] = useState(heading);
+  const [tSubHeading, setTSubHeading] = useState(subHeading);
+  const handleSubmit = () => {
+    setView(false);
+    if (!tHeading || !tSubHeading) {
+      setMessage(`${!tHeading ? "Title" : "Sub Title"} can not be empty.`);
+      return;
+    }
+    setHeading(tHeading);
+    setSubHeading(tSubHeading);
+  };
   return (
-    <div
-      className={`${styles.mainContainer}`}
-      onClick={() => {
-        setHeading(spaceObj?.heading);
-        setSubHeading(spaceObj?.subHeading);
-        setView(false);
-      }}
-    >
+    <div className={`${styles.mainContainer}`} onClick={() => setView(false)}>
       <div
         className={styles.container}
         onClick={(e) => {
@@ -25,32 +30,25 @@ export default function UpdateHeadingPopup({
       >
         <div className={styles.heading}>
           <div className={styles.title}>
-            <p>Update Heading</p>
+            <p>Update Title</p>
           </div>
-          <div
-            className={styles.cross}
-            onClick={() => {
-              setHeading(spaceObj?.heading);
-              setSubHeading(spaceObj?.subHeading);
-              setView(false);
-            }}
-          >
+          <div className={styles.cross} onClick={() => setView(false)}>
             <img src="/cross.svg" />
           </div>
         </div>
         <InputField
-          label="Heading"
-          placeholder="Enter Heading"
-          state={heading}
-          setState={setHeading}
+          label="Title"
+          placeholder="Enter Title"
+          state={tHeading}
+          setState={setTHeading}
         />
         <InputField
-          label="Sub Heading"
-          placeholder="Enter Sub Heading"
-          state={subHeading}
-          setState={setSubHeading}
+          label="Sub Title"
+          placeholder="Enter Sub Title"
+          state={tSubHeading}
+          setState={setTSubHeading}
         />
-        <div className={styles.button} onClick={() => setView(false)}>
+        <div className={styles.button} onClick={handleSubmit}>
           <p>Submit</p>
         </div>
       </div>

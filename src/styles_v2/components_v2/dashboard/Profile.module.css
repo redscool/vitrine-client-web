@@ -149,6 +149,7 @@
   width: 90%;
   height: 20vh;
   margin: auto;
+  overflow: auto;
 }
 
 .aboutMeContainer > p {
@@ -237,6 +238,7 @@
   margin: auto;
   display: flex;
   overflow-y: auto;
+  flex-direction: column;
 }
 
 .pricingSection {
@@ -246,9 +248,35 @@
 
 .highlightsContainer > p,
 .descriptionSection > p,
-.warning > p {
+.warning > p, .highlight > p {
   margin: auto;
   font-weight: 400;
   font-size: 2.4vh;
   color: var(--label-font-color);
+}
+
+.highlight > p{
+  margin: 1vh auto 1vh 1vw;
+  list-style: circle;
+}
+.highlight{
+  height: fit-content;
+  display: flex;
+}
+
+.bulletPoints{
+  height: 2vh;
+  width: 2vh;
+  border-radius: 1vh;
+  background-color: var(--color1);
+  margin: auto 0;
+}
+
+.highlightsContainer::-webkit-scrollbar, .aboutMeContainer::-webkit-scrollbar {
+  width: 0.2vw;
+}
+
+.highlightsContainer::-webkit-scrollbar-thumb, .aboutMeContainer ::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 0.5rem;
 }

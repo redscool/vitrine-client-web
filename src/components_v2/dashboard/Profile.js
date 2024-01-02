@@ -8,7 +8,6 @@ import UpdateBioPopup from "./profile/UpdateBioPopup";
 import UpdateSettingPopup from "./profile/UpdateSettingPopup";
 import { useSelector } from "react-redux";
 import { profileKeySelector } from "../../redux/profileReducer";
-import config from "../../config.json";
 import Modal from "../Modal";
 import { useNavigate } from "react-router-dom";
 import { auth_request } from "../../utils/Service";

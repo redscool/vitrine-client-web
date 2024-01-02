@@ -3,6 +3,7 @@
   margin: auto;
   display: flex;
   height: 5vh;
+  user-select: none;
 }
 
 .hide {
@@ -10,7 +11,7 @@
 }
 
 .checkbox {
-  width: 15%;
+  width: 3vh;
   height: 3vh;
   margin: auto;
   margin-left: 1vw;
@@ -40,4 +41,16 @@
   font-weight: 500;
   font-size: 2.2vh;
   color: var(--color21);
+}
+
+.borderRadius{
+  border-radius: 50%;
+}
+
+.innerCircle{
+  width: 60%;
+  height: 60%;
+  border-radius: 50%;
+  background-color: var(--color1);
+  margin: auto;
 }

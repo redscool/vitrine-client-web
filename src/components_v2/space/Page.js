@@ -1,17 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
-import styles from "../../styles_v2/components_v2/dashboard/Profile.module.css";
-import Field from "../dashboard/profile/Field";
-// import UploadImagePopup from "./profile/UploadImagePopup";
-// import UpdateSocialsPopup from "./profile/UpdateSocialsPopup";
-// import UpdateBioPopup from "./profile/UpdateBioPopup";
-// import UpdateSettingPopup from "./profile/UpdateSettingPopup";
-import Modal from "../Modal";
 import { useNavigate, useParams } from "react-router-dom";
-import { auth_request } from "../../utils/Service";
+import styles from "../../styles_v2/components_v2/dashboard/Profile.module.css";
 import { getFileURL } from "../../utils/Misc";
 import { ServiceContext } from "../../utils/context/serviceContext";
+import Field from "../dashboard/profile/Field";
+import Modal from "../Modal";
+import UploadImagePopup from "./page/UploadImagePopup";
 import UpdateHeadingPopup from "./page/UpdateHeadingPopup";
 import UpdateHighlightsPopup from "./page/UpdateHighlightsPopup";
+import UpdateDescriptionPopup from "./page/UpdateDescriptionPopup";
+import UpdatePricingPopup from "./page/UpdatePricingModule";
 
 export default function Page() {
   const [message, setMessage] = useState("");
@@ -22,33 +20,76 @@ export default function Page() {
   const [updateHighlightsPopup, setUpdateHighlightsPopup] = useState(false);
   const [updateDescriptionPopup, setUpdateDescriptionPopup] = useState(false);
   const [updatePricingPopup, setUpdatePricingPopup] = useState(false);
-  const [space, setSpace] = useState({});
   const serviceObj = useContext(ServiceContext);
   const { spaceId } = useParams();
+  const [pProfileImg, setPProfileImg] = useState(false);
+  const [fProfileImg, setFProfileImg] = useState(false);
+  const [pBanner, setPBanner] = useState(false);
+  const [fBanner, setFBanner] = useState(false);
+  const [profileImg, setProfileImg] = useState("");
+  const [banner, setBanner] = useState("");
   const [heading, setHeading] = useState("");
   const [subHeading, setSubHeading] = useState("");
   const [highlights, setHighlights] = useState([]);
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState("");
   const navigate = useNavigate();
-  const handleSave = () => {};
+  const setDetails = (obj) => {
+    setHeading(obj.heading);
+    setSubHeading(obj.subHeading);
+    setHighlights(obj.highlights ? obj.highlights : []);
+    setDescription(obj.description);
+    setPrice(obj.price);
+    setBanner(obj.banner);
+    setProfileImg(obj.profileImg);
+  };
   useEffect(() => {
     serviceObj.request(
       "get",
       "/api/community/space/page",
       { id: spaceId },
       ({ data }) => {
-        setSpace(data.pageData);
         const { pageData } = data;
-        setHeading(pageData.heading);
-        setSubHeading(pageData.subHeading);
-        setHighlights(pageData.highlights ? pageData.highlights : []);
+        setDetails(pageData);
       },
       console.log
     );
   }, []);
+  const handleSave = () => {
+    function sendData() {
+      serviceObj.request(
+        "post",
+        "/api/space/page/createOrUpdate",
+        {
+          profileImg,
+          banner,
+          heading,
+          subHeading,
+          highlights,
+          description,
+          price,
+        },
+        console.log,
+        console.log
+      );
+    }
+    sendData()
+  };
   const handlePreview = () => {};
   return (
     <div className={styles.mainContainer}>
       <Modal success={message} setSuccess={setMessage} />
+      {uploadImagePopUp ? (
+        <UploadImagePopup
+          setView={setUploadImagePopUp}
+          isCoverPic={isCoverPic}
+          setMessage={setMessage}
+          setPBanner={setPBanner}
+          setFBanner={setFBanner}
+          setPProfileImg={setPProfileImg}
+          setFProfileImg={setFProfileImg}
+        />
+      ) : null}
       {updateTitleBlockPopup ? (
         <UpdateHeadingPopup
           setView={setUpdateTitleBlockPopup}
@@ -56,57 +97,35 @@ export default function Page() {
           setHeading={setHeading}
           subHeading={subHeading}
           setSubHeading={setSubHeading}
-          spaceObj={space}
+          setMessage={setMessage}
         />
       ) : null}
       {updateHighlightsPopup ? (
         <UpdateHighlightsPopup
-          setView={setUpdateTitleBlockPopup}
-          spaceObj={space}
+          setView={setUpdateHighlightsPopup}
           highlights={highlights}
           setHighlights={setHighlights}
-        />
-      ) : null}
-      {/* {uploadImagePopUp ? (
-        <UploadImagePopup
-          setView={setUploadImagePopUp}
-          isCoverPic={isCoverPic}
           setMessage={setMessage}
         />
       ) : null}
-      // {updateProfilePopup ? (
-      //   <UpdateProfilePopup
-      //     setView={setUpdateProfilePopup}
-      //     setMessage={setMessage}
-      //     oname={name}
-      //   />
-      // ) : null}
-      {updateBioPopup ? (
-        <UpdateBioPopup
-          setView={setUpdateBioPopup}
-          oabout={about}
+      {updateDescriptionPopup ? (
+        <UpdateDescriptionPopup
+          setView={setUpdateDescriptionPopup}
+          description={description}
+          setDescription={setDescription}
           setMessage={setMessage}
         />
       ) : null}
-      {updateSocialsPopup ? (
-        <UpdateSocialsPopup
-          setView={setUpdateSocialsPopup}
+      {updatePricingPopup ? (
+        <UpdatePricingPopup
+          setView={setUpdatePricingPopup}
+          price={price}
+          setPrice={setPrice}
           setMessage={setMessage}
-          oinstagram={instagram}
-          olinkedIn={linkedIn}
-          ox={x}
         />
       ) : null}
-      {updateSettingPopup ? (
-        <UpdateSettingPopup
-          setView={setUpdateSettingPopup}
-          ooffDays={offDays}
-          oworkingHours={workingHours}
-          setMessage={setMessage}
-        />
-      ) : null} */}
       <div className={styles.coverPicture}>
-        <img src={getFileURL(space.banner)} />
+        <img src={pBanner ? pBanner : getFileURL(banner)} />
       </div>
       <div
         className={styles.profilePicture}
@@ -119,7 +138,7 @@ export default function Page() {
           setDisplayPictureHovered(false);
         }}
       >
-        <img src={getFileURL(space.profileImg)} />
+        <img src={pProfileImg ? pProfileImg : getFileURL(profileImg)} />
       </div>
       <div
         onClick={() => {
@@ -180,6 +199,7 @@ export default function Page() {
           {highlights && highlights.length > 0 ? (
             highlights.map((highlight, i) => (
               <div className={styles.highlight} key={i}>
+                <div className={styles.bulletPoints}></div>
                 <p>{highlight}</p>
               </div>
             ))
@@ -196,13 +216,15 @@ export default function Page() {
         </div>
         <div
           className={styles.editButton}
-          onClick={() => setUpdateHighlightsPopup(true)}
+          onClick={() => setUpdateDescriptionPopup(true)}
         >
           <img src={"/edit_white.svg"} />
         </div>
-        {space.description ? (
-          <div className={styles.descriptionContainer}>
-            <p>{space.description}</p>
+        {description ? (
+          <div
+            className={`${styles.descriptionContainer} ${styles.aboutMeContainer}`}
+          >
+            <p>{description}</p>
           </div>
         ) : (
           <div className={styles.warning}>
@@ -218,12 +240,20 @@ export default function Page() {
         </div>
         <div
           className={styles.editButton}
-          onClick={() => setUpdateHighlightsPopup(true)}
+          onClick={() => setUpdatePricingPopup(true)}
         >
           <img src={"/edit_white.svg"} />
         </div>
-        <Field keyname="Plan Type" value="Monthly Subscription" />
-        <Field keyname="Price" value="₹499" />
+        <Field
+          keyname="Plan Type"
+          value={price === 0 ? "FREE" : "One Time Purchase"}
+        />
+        {price !== 0 ? (
+          <Field
+            keyname="Price"
+            value={`${price ? `₹${price}` : "Price not set"}`}
+          />
+        ) : null}
       </div>
 
       <div className={styles.buttonsContainer}>

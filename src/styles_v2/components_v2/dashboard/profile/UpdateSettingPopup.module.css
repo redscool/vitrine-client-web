@@ -63,6 +63,7 @@
 .settingsContainer {
   width: 100%;
   height: 38vh;
+
 }
 
 .time {
@@ -137,4 +138,24 @@
   font-weight: 700;
   font-size: 2.5vh;
   color: var(--color24);
+}
+
+.priceType {
+  width: 80%;
+  height: 5vh;
+  margin: auto;
+}
+
+.typesContainer {
+  width: 100%;
+  height: 12vh;
+  display: flex;
+  flex-direction: column;
+
+}
+
+.priceContainer{
+  display: flex;
+  height: 20vh;
+  padding-top: 5vh;
 }
