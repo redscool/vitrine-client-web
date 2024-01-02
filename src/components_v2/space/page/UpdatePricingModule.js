@@ -4,7 +4,7 @@ import CheckBox from "../../../components/form/CheckBox";
 import InputField from "../../form_components/InputField";
 export default function UpdatePricingPopup({ setView, setPrice, price }) {
   const options = ["One Time Purchase", "FREE"];
-  const [tPrice, setTPrice] = useState(price ? price : 1e9);
+  const [tPrice, setTPrice] = useState(price || price === 0 ? price : 1e9);
   const [vals, setVals] = useState([price !== 0, price === 0]);
   const handleCheck = (ind) => {
     const temp = [false, false];

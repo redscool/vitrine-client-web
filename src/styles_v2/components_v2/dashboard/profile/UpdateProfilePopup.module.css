@@ -129,7 +129,33 @@
   cursor: pointer;
 }
 
-.upArrowIcon > img, .downArrowIcon > img, .deleteIcon > img {
+.upArrowIcon > img,
+.downArrowIcon > img,
+.deleteIcon > img {
   width: 40%;
   margin: auto;
+}
+
+.cContainer {
+  height: 50vh;
+  width: 40vw;
+}
+
+.warning {
+  margin-top: 5vh;
+  width: 100%;
+  height: 5vh;
+  display: flex;
+}
+
+.warning > p {
+  margin: auto;
+  text-align: center;
+  font-size: 2.4vh;
+  font-weight: 500;
+  color: var(--color21);
+}
+
+.red > p {
+  color: var(--color8);
 }

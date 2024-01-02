@@ -10,6 +10,8 @@ import UpdateHeadingPopup from "./page/UpdateHeadingPopup";
 import UpdateHighlightsPopup from "./page/UpdateHighlightsPopup";
 import UpdateDescriptionPopup from "./page/UpdateDescriptionPopup";
 import UpdatePricingPopup from "./page/UpdatePricingModule";
+import { file_server_request } from "../../utils/Service";
+import ConfirmationPopup from "./page/ConfirmationPopup";
 
 export default function Page() {
   const [message, setMessage] = useState("");
@@ -20,6 +22,7 @@ export default function Page() {
   const [updateHighlightsPopup, setUpdateHighlightsPopup] = useState(false);
   const [updateDescriptionPopup, setUpdateDescriptionPopup] = useState(false);
   const [updatePricingPopup, setUpdatePricingPopup] = useState(false);
+  const [confirmationPopup, setConfirmationPopup] = useState(false);
   const serviceObj = useContext(ServiceContext);
   const { spaceId } = useParams();
   const [pProfileImg, setPProfileImg] = useState(false);
@@ -33,6 +36,7 @@ export default function Page() {
   const [highlights, setHighlights] = useState([]);
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
+  const [oprice, setOprice] = useState(0);
   const navigate = useNavigate();
   const setDetails = (obj) => {
     setHeading(obj.heading);
@@ -40,6 +44,7 @@ export default function Page() {
     setHighlights(obj.highlights ? obj.highlights : []);
     setDescription(obj.description);
     setPrice(obj.price);
+    setOprice(obj.price);
     setBanner(obj.banner);
     setProfileImg(obj.profileImg);
   };
@@ -49,18 +54,22 @@ export default function Page() {
       "/api/community/space/page",
       { id: spaceId },
       ({ data }) => {
-        const { pageData } = data;
-        setDetails(pageData);
+        const { pageData, space } = data;
+        setDetails({
+          ...pageData,
+          price: Math.min(space.price, 2000),
+        });
       },
       console.log
     );
   }, []);
-  const handleSave = () => {
-    function sendData() {
-      serviceObj.request(
-        "post",
-        "/api/space/page/createOrUpdate",
-        {
+  function sendData() {
+    serviceObj.request(
+      "post",
+      "/api/space/page/createOrUpdate",
+      {
+        data: {
+          id: spaceId,
           profileImg,
           banner,
           heading,
@@ -69,16 +78,79 @@ export default function Page() {
           description,
           price,
         },
+      },
+      ({ data }) => {
+        setMessage("Page saved successfully.");
+        setFBanner(false);
+        setPBanner(false);
+        setFProfileImg(false);
+        setPProfileImg(false);
+      },
+      console.log
+    );
+    setConfirmationPopup(false);
+  }
+
+  function handleSave() {
+    if (fProfileImg) {
+      file_server_request(
+        "post",
+        "/uploadFile",
+        { file: fProfileImg },
+        ({ data: { filename } }) => {
+          setProfileImg(filename);
+        },
+        console.log
+      );
+    }
+    if (fBanner) {
+      file_server_request(
+        "post",
+        "/uploadFile",
+        { file: fBanner },
+        ({ data: { filename } }) => {
+          setBanner(filename);
+          console.log(filename);
+        },
+        console.log
+      );
+    }
+    setConfirmationPopup(true);
+  }
+  const handlePreview = () => {};
+  const handleCancel = () => {
+    if (fBanner) {
+      file_server_request(
+        "post",
+        "/deleteFile",
+        { file: banner },
         console.log,
         console.log
       );
     }
-    sendData()
+    if (fProfileImg) {
+      file_server_request(
+        "post",
+        "/deleteFile",
+        { file: profileImg },
+        console.log,
+        console.log,
+        false
+      );
+    }
+    setConfirmationPopup(false);
   };
-  const handlePreview = () => {};
   return (
     <div className={styles.mainContainer}>
       <Modal success={message} setSuccess={setMessage} />
+      {confirmationPopup ? (
+        <ConfirmationPopup
+          handleCancel={handleCancel}
+          handlePreview={handlePreview}
+          handleSubmit={sendData}
+          priceChanged={price != oprice}
+        />
+      ) : null}
       {uploadImagePopUp ? (
         <UploadImagePopup
           setView={setUploadImagePopUp}

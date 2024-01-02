@@ -45,9 +45,6 @@ export default function FileTile({ fileName, id, setFiles, url }) {
   }
 
   async function handleDelete() {
-    const formData = new FormData();
-    formData.append("file", url);
-    console.log(formData);
     file_server_request(
       "post",
       "/deleteFile",
