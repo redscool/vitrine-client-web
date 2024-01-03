@@ -45,7 +45,6 @@ export default function Folder() {
         ))}
       </div>
       <AddButton onClick={() => setUploadFilePopup(true)} />
-      <div className={styles.spacesContainer}></div>
     </div>
   );
 }

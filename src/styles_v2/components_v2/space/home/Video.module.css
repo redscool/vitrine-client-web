@@ -1,0 +1,69 @@
+.container {
+  height: 90%;
+  width: 90%;
+  background-color: var(--color3);
+  align-self: center;
+  justify-self: center;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.mainContainer {
+  height: 60%;
+  width: 90%;
+  margin: 1vh auto;
+  background-color: var(--color21);
+  border-radius: 16px;
+  padding: 1vh 1vw;
+  overflow-y: auto;
+  position: relative;
+}
+
+.playButton {
+  height: 12vh;
+  width: 12vh;
+  position: absolute;
+  left: calc(50% - 6vh);
+  top: calc(50% - 6vh);
+  cursor: pointer;
+}
+.playButton > img {
+  width: 10vh;
+  height: 10vh;
+}
+.footer {
+  height: 30%;
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.title,
+.description {
+  height: 50%;
+  width: 100%;
+  display: flex;
+}
+
+.p1,
+.p2 {
+  margin: auto;
+  font-size: 2vh;
+  font-weight: 500;
+  color: var(--color21);
+}
+
+.p1 {
+  margin-left: 0;
+}
+.p2 {
+  margin-right: 0;
+}
+
+.description > p {
+  font-weight: 400;
+  font-size: 1.8vh;
+  color: var(--color21);
+}

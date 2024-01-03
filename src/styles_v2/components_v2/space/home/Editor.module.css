@@ -1,0 +1,70 @@
+.container {
+  height: 90%;
+  width: 90%;
+  background-color: var(--color25);
+  align-self: center;
+  justify-self: center;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  height: 15%;
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+}
+.title > p {
+  font-size: 2.4vh;
+  font-weight: 600;
+  color: black;
+  margin: auto;
+  margin-left: 1vw;
+}
+
+.mainContainer {
+  height: 70%;
+  width: 90%;
+  margin: 0 auto;
+  background-color: var(--color21);
+  border-radius: 16px;
+  padding: 1vh 1vw;
+  overflow-y: auto;
+}
+
+.mainContainer::-webkit-scrollbar {
+  width: 0.3vw;
+}
+
+.mainContainer::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 0.5rem;
+}
+
+.mainContainer > p {
+  font-size: 2vh;
+  font-weight: 400;
+  color: black;
+}
+
+.footer {
+  height: 15%;
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+}
+
+
+
+.footer > img{
+    height: 40%;
+    margin: auto 0;
+}
+.footer > p{
+    margin: auto;
+    margin-left: 0.5vw;
+    font-size: 2vh;
+    font-weight: 400;
+    color: var(--color9)
+}

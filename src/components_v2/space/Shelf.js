@@ -53,7 +53,6 @@ export default function Shelf() {
         ))}
       </div>
       <AddButton onClick={createFolder} />
-      <div className={styles.spacesContainer}></div>
     </div>
   );
 }

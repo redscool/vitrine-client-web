@@ -117,7 +117,6 @@ export default function Chat() {
           />
         </div>
       </div>
-      <div className={styles.spacesContainer}></div>
     </div>
   );
 }

@@ -7,6 +7,8 @@ import Calendar from "../components_v2/space/Calendar";
 import Shelf from "../components_v2/space/Shelf";
 import Folder from "../components_v2/space/shelf/Folder";
 import Page from "../components_v2/space/Page";
+import Home from "../components_v2/space/Home";
+import SpacesNavbar from "../components_v2/space/SpacesNavbar";
 export default function Dashboard() {
   const links = [
     {
@@ -44,13 +46,14 @@ export default function Dashboard() {
   const location = useLocation();
   const [selected, setSelected] = useState("");
   useEffect(() => {
-    setSelected(location.pathname.split("/")[2]);
+    setSelected(location.pathname.split("/")[3]);
   }, [location]);
+  console.log(selected);
   return (
     <div className={styles.page}>
       <Sidebar selected={selected} links={links} />
       <Routes>
-        <Route exact path="/home" element={<></>} />
+        <Route exact path="/home" element={<Home />} />
         <Route exact path="/" element={<></>} />
         <Route exact path="/shelf" element={<Shelf />} />
         <Route exact path="/shelf/:folderId" element={<Folder />} />
@@ -60,6 +63,7 @@ export default function Dashboard() {
         <Route exact path="/calendar/:year/:month" element={<Calendar />} />
         <Route path="/*" element={<span> Not found </span>} />
       </Routes>
+      {selected !== "page" && selected !== "calendar" ? <SpacesNavbar /> : null}
     </div>
   );
 }

@@ -1,0 +1,15 @@
+.container {
+    height: 90%;
+    width: 90%;
+    background-color: var(--color17);
+    align-self: center;
+    justify-self: center;
+    border-radius: 16px;
+    display: flex;
+  }
+  .container > img{
+    height: 90%;
+    width: 90%;
+    margin: auto;
+    border-radius: 16px;
+  }
