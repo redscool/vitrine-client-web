@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import queryString from "query-string";
-import { auth_request, resource_request_with_access_token } from "../utils/Service";
+import {
+  auth_request,
+  resource_request_with_access_token,
+} from "../utils/Service";
 import { setAuthKey, setGoogleAuth } from "../redux/authReducer";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";

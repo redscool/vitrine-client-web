@@ -47,3 +47,11 @@ export const SOCKET_EVENTS = {
   GET_ONLINE_MEMBERS: "get-online-members",
   RECIEVED_ONLINE_MEMBER: "recieved-online-members",
 };
+
+export const STREAM_TYPES = {
+  VIDEO: "VIDEO",
+  EDITOR: "EDITOR",
+  IMAGE: "IMAGE",
+  FILE: "FILE",
+  POLL: "POLL",
+};

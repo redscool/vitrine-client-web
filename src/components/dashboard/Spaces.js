@@ -1,91 +1,55 @@
 import React, { useEffect, useState } from "react";
 import styles from "../../styles/components/dashboard/Spaces.module.css";
-import Button from "../form/Button";
-import { resource_request_with_access_token } from "../../utils/Service";
-import AddSpace from "./spaces/AddSpace";
 import { useSelector } from "react-redux";
-import { authKeySelector } from "../../redux/authReducer";
+import { themeSelector } from "../../redux/settingReducer";
 import SpaceTile from "./spaces/SpaceTile";
+import AddSpacePopup from "./spaces/AddSpacePopup";
+import { profileKeySelector } from "../../redux/profileReducer";
+import Modal from "../Modal";
+import AddButton from "../form_components/AddButton";
+
 export default function Spaces() {
-	const [popup, setPopup] = useState(false);
-	const [spaceList, setSpaceList] = useState([]);
-	const profileId = useSelector(authKeySelector("profileId"));
-	const type = useSelector(authKeySelector("type"));
-	useEffect(() => {
-		setSpaceList([
-			{
-				title: "Space 1",
-				description: "Udan Khatola",
-				backgroundImage: "defaultSpaceBackground.svg",
-				profileImage: "defaultSpaceProfile.svg",
-				provider: profileId,
-				events: ["Hi 1", "Hi 2"],
-			},
-			{
-				title: "Space 2",
-				description: "Udan Khatola",
-				backgroundImage: "defaultSpaceBackground.svg",
-				profileImage: "defaultSpaceProfile.svg",
-				provider: profileId,
-				events: ["Hi 1", "Hi 2", "Hi 3", "Hi 4"],
-			},
-			{
-				title: "Space 3",
-				description: "Udan Khatola",
-				backgroundImage: "defaultSpaceBackground.svg",
-				profileImage: "defaultSpaceProfile.svg",
-				provider: profileId,
-				events: [],
-			},
-		]);
-		// const body = { profileId };
-		// resource_request_with_access_token(
-		// 	"get",
-		// 	`/api/${type}/getAllSpaces`,
-		// 	body,
-		// 	({ data: { spaces } }) => {
-		// 		setSpaceList(spaces);
-		// 		console.log(spaces);
-		// 	},
-		// 	console.log
-		// );
-	}, []);
-	return (
-		<div className={styles.container}>
-			<div className={styles.title}>
-				<p>Spaces</p>
-			</div>
-			{popup ? (
-				<AddSpace
-					view={setPopup}
-					setSpaceList={setSpaceList}
-				/>
-			) : null}
-			<div className={styles.content}>
-				{type === "PROVIDER" ? (
-					<Button
-						label={"Add Space"}
-						handleClick={() => {
-							setPopup(!popup);
-						}}
-					/>
-				) : (
-					<Button
-						label={"Join Space"}
-						handleClick={() => {
-							setPopup(!popup);
-						}}
-					/>
-				)}
-				<div className={styles.classList}>
-					{spaceList.map((spaceObj, indx) => (
-						<SpaceTile
-							key={indx}
-							spaceObj={spaceObj}
-						/>
-					))}
-				</div>
-			</div>
-		</div>
-	);
+  const mode = useSelector(themeSelector);
+  const [modal, setModal] = useState(false);
+  const [message, setMessage] = useState("");
+  const [spaces, setSpaces] = useState([]);
+  const spacesArray = useSelector(profileKeySelector("spaces"));
+  useEffect(() => {
+    setSpaces(spacesArray);
+  }, [spacesArray, spaces]);
+  return (
+    <div className={styles.container}>
+      {message ? <Modal setSuccess={setMessage} success={message} /> : null}
+      {modal ? (
+        <AddSpacePopup
+          setMessage={setMessage}
+          setView={setModal}
+          setSpaces={setSpaces}
+          spaces={spacesArray}
+        />
+      ) : null}
+      {/* <div className={styles.header}>
+        <div className={styles.reorderButton}>
+          <div className={styles.buttonLabel}>
+            <p>Reorder</p>
+          </div>
+          <div className={styles.buttonIcon}>
+            <img
+              src={
+                mode === "dark"
+                  ? "/reorder_icon_white.svg"
+                  : "/reorder_icon_black.svg"
+              }
+            />
+          </div>
+        </div>
+      </div> */}
+      <div className={styles.mainContent}>
+        {spaces?.map((space, indx) => {
+          return <SpaceTile spaceObj={space} message={0} key={space._id} />;
+        })}
+        <AddButton onClick={() => setModal(true)} />
+      </div>
+    </div>
+  );
 }

@@ -16,4 +16,9 @@ const convertTime = (time) => {
 const getFileURL = (name) => {
   return `${config.FILE_SERVER}/getFile?id=${name}`;
 };
-export { convertTime, getFileURL };
+
+const getVideoURL = (name) => {
+  return `${config.FILE_SERVER}/videos/video/${name}`;
+};
+
+export { convertTime, getFileURL, getVideoURL };

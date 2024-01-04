@@ -1,80 +1,104 @@
-import React, { useState } from "react";
-import Button from "../form/Button";
-import config from "../../config.json";
-import { useNavigate, useParams } from "react-router-dom";
-import queryString from "query-string";
-import Textbox from "../form/Textbox";
-import { resource_request_with_access_token } from "../../utils/Service";
-import { useSelector } from "react-redux";
-import { authKeySelector } from "../../redux/authReducer";
-// import { googleAuth } from "../GoogleAuth";
-const googleAuth = () => undefined;
-
-const stringifiedParams = queryString.stringify(config.GOOGLE_EVENT);
-const googleLoginUrl = `https://accounts.google.com/o/oauth2/v2/auth?${stringifiedParams}`;
+import styles from "../../styles/components/space/Calendar.module.css";
+import { useContext, useEffect, useState } from "react";
+import MonthlyView from "../MonthlyView";
+import DailyView from "../DailyView";
+import { useParams } from "react-router-dom";
+import AddEventPopup from "./calendar/AddEventPopup";
+import Modal from "../Modal";
+import { ServiceContext } from "../../utils/context/serviceContext";
+import { convertTime } from "../../utils/Misc";
 
 export default function Calendar() {
-  const navigate = useNavigate();
-  const [popUp, setPopUp] = useState(false);
-  const [startTime, setStartTime] = useState("");
-  const [endTime, setEndTime] = useState("");
-  const [title, setTitle] = useState("");
-  const meetAttendees = [
-    { email: "jrvineetoli52.2@gmail.com" },
-    { email: "kulbois007@gmail.com" },
-  ];
-  const [participants, setParticipants] = useState([
-    "647b230376d2e9e6bd30cabe",
-    "647b2522d2a252177f4b0d85",
-  ]);
   const params = useParams();
-  const spaceId = params.spaceId;
-  const googleAccessToken = useSelector(
-    authKeySelector("googleAuth")
-  )?.access_token;
-
+  const { spaceId } = params;
+  const [show, setShow] = useState(false);
+  const [date, setDate] = useState("");
+  const serviceObject = useContext(ServiceContext);
+  const [eventsDictionary, setEventsDictionary] = useState({});
+  let { month, year } = params;
+  useEffect(() => {
+    if (!month) {
+      month = new Date().getMonth() + 1;
+      year = new Date().getFullYear();
+    }
+    const rangeStart = new Date(year, month - 1);
+    const rangeEnd = new Date(new Date(year, month) - 1);
+    serviceObject.request(
+      "get",
+      "/api/calendar/getEventsForRangeSpace",
+      {
+        rangeStart: rangeStart.getTime(),
+        rangeEnd: rangeEnd.getTime(),
+        spaceId,
+      },
+      ({ data }) => {
+        const tempEventsDictionary = {};
+        const { events } = data;
+        for (const event of events) {
+          const {
+            startTime,
+            endTime,
+            title,
+            googleMeet,
+            description,
+            spaceId,
+          } = event;
+          const sTime = new Date(startTime),
+            eTime = new Date(endTime);
+          const date = sTime.getDate();
+          const start = convertTime(sTime);
+          const end = convertTime(eTime);
+          if (!tempEventsDictionary[date]) tempEventsDictionary[date] = [];
+          tempEventsDictionary[date].push({
+            start,
+            end,
+            title,
+            googleMeet,
+            description,
+            spaceId,
+          });
+        }
+        setEventsDictionary(tempEventsDictionary);
+      },
+      console.log
+    );
+  }, [month, year]);
+  const [addEventPopup, setAddEventPopup] = useState(false);
+  const [message, setMessage] = useState("");
   return (
-    <div styles="width:60vw; height:90vh">
-      <Button label="Add Call" handleClick={() => setPopUp(true)} />
-      {popUp ? (
-        <Button label="Login with google" handleClick={googleAuth} />
-      ) : (
-        <></>
-      )}
-      <Button
-        label="Create Meet"
-        handleClick={() => {
-          resource_request_with_access_token(
-            "post",
-            "/api/space/calendar/addcall",
-            {
-              googleAccessToken,
-              title,
-              spaceId,
-              description: "This is description",
-              startTime: new Date(startTime).toISOString(),
-              endTime: new Date(endTime).toISOString(),
-              meetAttendees,
-              participants,
-            },
-            console.log,
-            console.log
-          );
-        }}
-      />
-      <Textbox
-        label="start time"
-        type="datetime-local"
-        state={startTime}
-        setState={setStartTime}
-      />
-      <Textbox
-        label="end time"
-        type="datetime-local"
-        state={endTime}
-        setState={setEndTime}
-      />
-      <Textbox label="Title" type="text" state={title} setState={setTitle} />
+    <div className={styles.container}>
+      {message ? <Modal success={message} setSuccess={setMessage} /> : null}
+      {addEventPopup ? (
+        <AddEventPopup setMessage={setMessage} setView={setAddEventPopup} />
+      ) : null}
+      <div className={styles.headerContainer}>
+        <div className={styles.buttonsContainer}>
+          {/* <div className={styles.buttons}>
+            <p>Block Time</p>
+          </div> */}
+          <div
+            className={`${styles.buttons} ${styles.buttonStyle1}`}
+            onClick={() => setAddEventPopup(true)}
+          >
+            <p>Add Event</p>
+          </div>
+        </div>
+      </div>
+      <div className={styles.mainContainer}>
+        {show ? (
+          <DailyView
+            date={date}
+            setShow={setShow}
+            eventsDictionary={eventsDictionary}
+          />
+        ) : null}
+        <MonthlyView
+          setShow={setShow}
+          setDate={setDate}
+          eventsDictionary={eventsDictionary}
+          root={"space"}
+        />
+      </div>
     </div>
   );
 }

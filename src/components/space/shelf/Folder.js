@@ -1,67 +1,50 @@
-import React, { useEffect, useState } from "react";
-import Button from "../../form/Button";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { resource_request_with_access_token } from "../../../utils/Service";
 import styles from "../../../styles/components/space/shelf/Folder.module.css";
-import FileTile from "./Folder/FileTile";
-import UploadFile from "./Folder/UploadFile";
-import OptionsPopup from "./Folder/FileOptionsPopup";
+import { ServiceContext } from "../../../utils/context/serviceContext";
+import UploadFilePopup from "./folder/UploadFilePopup";
+import FileTile from "./folder/FileTile";
+import AddButton from "../../form_components/AddButton";
 
 export default function Folder() {
-	const [files, setFiles] = useState([]);
-	const [popup, setPopup] = useState(false);
-	const [selectedFileId, setSelectedFileId] = useState(false);
-	const [selectedUrl, setSelectedUrl] = useState(false);
-	const [selectedFileName, setSelectedFileName] = useState();
-	const params = useParams();
-	const folderId = params.folderId;
-	useEffect(() => {
-		resource_request_with_access_token(
-			"get",
-			"/api/space/shelf/getFiles",
-			{ folderId },
-			({ data }) => {
-				console.log(data.data);
-				setFiles(data.data);
-			},
-			console.log
-		);
-	}, []);
+  const { folderId } = useParams();
+  const serviceObject = useContext(ServiceContext);
+  const [files, setFiles] = useState([]);
+  const [uploadFilePopup, setUploadFilePopup] = useState(false);
 
-	return (
-		<div className={styles.container}>
-			{popup ? (
-				<UploadFile
-					view={setPopup}
-					setFiles={setFiles}
-				/>
-			) : null}
-			{selectedFileId ? (
-				<OptionsPopup
-					selectedFileName={selectedFileName}
-					setSelectedFileId={setSelectedFileId}
-					url={selectedUrl}
-					fileId={selectedFileId}
-				/>
-			) : null}
-
-			<div className={styles.content}>
-				<Button
-					handleClick={() => setPopup(true)}
-					label="Upload file"
-				/>
-				{files.map((fileObjm, idx) => (
-					<FileTile
-						fileName={fileObjm.fileName}
-						fileId={fileObjm._id}
-						key={idx}
-						url={fileObjm.url}
-						setSelectedFileId={setSelectedFileId}
-						setSelectedUrl={setSelectedUrl}
-						setSelectedFileName={setSelectedFileName}
-					/>
-				))}
-			</div>
-		</div>
-	);
+  useEffect(() => {
+    async function getFiles() {
+      serviceObject.request(
+        "get",
+        "/api/space/shelf/getFiles",
+        {
+          folderId,
+        },
+        ({ data }) => {
+          setFiles(data.data);
+        },
+        console.log
+      );
+    }
+    getFiles();
+  }, []);
+  return (
+    <div className={styles.container}>
+      {uploadFilePopup ? (
+        <UploadFilePopup setView={setUploadFilePopup} setFiles={setFiles} />
+      ) : null}
+      <div className={styles.mainContainer}>
+        {files.map(({ fileName, _id, url }) => (
+          <FileTile
+            fileName={fileName}
+            key={_id}
+            id={_id}
+            setFiles={setFiles}
+            url={url}
+          />
+        ))}
+      </div>
+      <AddButton onClick={() => setUploadFilePopup(true)} />
+    </div>
+  );
 }

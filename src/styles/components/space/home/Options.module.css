@@ -1,0 +1,37 @@
+.container {
+  width: 35vh;
+  height: 5vh;
+  /* border: 1px solid red; */
+  position: fixed;
+  bottom: 6.5vh;
+  right: 18vw;
+  z-index: 100;
+  display: flex;
+  user-select: none;
+  transition: opacity 0.5s linear;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.option {
+  width: 6vh;
+  height: 6vh;
+  border-radius: 3vh;
+  background-color: var(--color30);
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 5px -1px,
+    rgba(0, 0, 0, 0.14) 0px 6px 10px 0px, rgba(0, 0, 0, 0.12) 0px 1px 18px 0px;
+  display: flex;
+  cursor: pointer;
+  margin: auto;
+}
+.option > img {
+  height: 5vh;
+  width: 5vh;
+  display: flex;
+  margin: auto;
+}

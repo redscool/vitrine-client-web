@@ -1,66 +1,58 @@
-import React, { useEffect, useState } from "react";
-import styles from "../../styles/components/space/Shelf.module.css";
-import Button from "../form/Button";
-import { resource_request_with_access_token } from "../../utils/Service";
-import { useSelector } from "react-redux";
-import { authKeySelector } from "../../redux/authReducer";
-import AddFolder from "./shelf/AddFolder";
+import React, { useContext, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+
+import styles from "../../styles/components/space/Shelf.module.css";
+import { foldersSelector, setFolders } from "../../redux/shelfReducer";
 import FolderTile from "./shelf/FolderTile";
-import FolderOptionsPopup from "./shelf/FolderOptionsPopup";
+import { ServiceContext } from "../../utils/context/serviceContext";
+import AddButton from "../form_components/AddButton";
+
 export default function Shelf() {
-  const [popup, setPopup] = useState(false);
-  const [selectedFolderId, setSelectedFolderId] = useState(false);
-  const [folderList, setFolderList] = useState([]);
-  const params = useParams();
-  const spaceId = params.spaceId;
-  const type = useSelector(authKeySelector("type"));
-  useEffect(() => {
-    resource_request_with_access_token(
-      "get",
-      "/api/space/shelf/getFolders",
-      { spaceId },
+  const dispatch = useDispatch();
+  const { spaceId } = useParams();
+  const serviceObject = useContext(ServiceContext);
+
+  async function createFolder() {
+    serviceObject.request(
+      "post",
+      "/api/space/shelf/addFolder",
+      {
+        spaceId,
+        folderName: "New Folder",
+      },
       ({ data }) => {
-        setFolderList(data.data);
+        dispatch(setFolders([...folders, data.folder]));
       },
       console.log
     );
+  }
+  useEffect(() => {
+    async function getFolders() {
+      serviceObject.request(
+        "get",
+        "/api/space/shelf/getFolders",
+        {
+          spaceId,
+        },
+        ({ data }) => {
+          dispatch(setFolders(data.data));
+        },
+        console.log
+      );
+    }
+    getFolders();
   }, []);
-  console.log(folderList);
+
+  const folders = useSelector(foldersSelector);
   return (
     <div className={styles.container}>
-      <div className={styles.title}>
-        <p>Shelf</p>
+      <div className={styles.mainContainer}>
+        {folders.map(({ folderName, _id }) => (
+          <FolderTile folderName={folderName} key={_id} id={_id} />
+        ))}
       </div>
-      {popup ? (
-        <AddFolder view={setPopup} setSpaceList={setFolderList} />
-      ) : null}
-      {selectedFolderId ? (
-        <FolderOptionsPopup
-          folderId={selectedFolderId}
-          setSelectedFolderId={setSelectedFolderId}
-        />
-      ) : null}
-      <div className={styles.content}>
-        {type === "PROVIDER" ? (
-          <Button
-            label={"Add Folder"}
-            handleClick={() => {
-              setPopup(!popup);
-            }}
-          />
-        ) : null}
-        <div className={styles.classList}>
-          {folderList.map((folderObj, idx) => (
-            <FolderTile
-              folderId={folderObj._id}
-              folderName={folderObj.folderName}
-              setSelectedFolderId={setSelectedFolderId}
-              key={idx}
-            />
-          ))}
-        </div>
-      </div>
+      <AddButton onClick={createFolder} />
     </div>
   );
 }

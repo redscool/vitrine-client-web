@@ -22,7 +22,6 @@ export default function VerifyEmail() {
           const value = data[key];
           dispatch(setAuthKey([key, value]));
         }
-
         navigate(`/dashboard/`);
       },
       console.log

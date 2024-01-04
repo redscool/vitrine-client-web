@@ -1,185 +1,347 @@
-import React, { useEffect, useState } from 'react'
-import Button from '../form/Button'
-import Textbox from '../form/Textbox'
-import Select from '../form/Select';
-import { PAGE_TEMPLATES } from '../../constants';
-import { resource_request_with_access_token } from '../../utils/Service';
-import { useNavigate, useParams } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import styles from "../../styles/components/dashboard/Profile.module.css";
+import { getFileURL } from "../../utils/Misc";
+import { ServiceContext } from "../../utils/context/serviceContext";
+import Field from "../dashboard/profile/Field";
+import Modal from "../Modal";
+import UploadImagePopup from "./page/UploadImagePopup";
+import UpdateHeadingPopup from "./page/UpdateHeadingPopup";
+import UpdateHighlightsPopup from "./page/UpdateHighlightsPopup";
+import UpdateDescriptionPopup from "./page/UpdateDescriptionPopup";
+import UpdatePricingPopup from "./page/UpdatePricingModule";
+import { file_server_request } from "../../utils/Service";
+import ConfirmationPopup from "./page/ConfirmationPopup";
 
 export default function Page() {
-  const params = useParams();
-  const navigate = useNavigate();
-  const spaceId = params.spaceId;
-
-  const [template, setTemplate] = useState();
-  const [heading, setHeading] = useState();
-  const [subHeading, setSubHeading] = useState();
-  const [profileImg, setProfileImg] = useState();
-  const [banner, setBanner] = useState();
-  const [gaffar, setGaffar] = useState();
-  const [twitter, setTwitter] = useState();
-  const [email, setEmail] = useState();
+  const [message, setMessage] = useState("");
+  const [displayPictureHovered, setDisplayPictureHovered] = useState(false);
+  const [isCoverPic, setIsCoverPic] = useState(false);
+  const [uploadImagePopUp, setUploadImagePopUp] = useState(false);
+  const [updateTitleBlockPopup, setUpdateTitleBlockPopup] = useState(false);
+  const [updateHighlightsPopup, setUpdateHighlightsPopup] = useState(false);
+  const [updateDescriptionPopup, setUpdateDescriptionPopup] = useState(false);
+  const [updatePricingPopup, setUpdatePricingPopup] = useState(false);
+  const [confirmationPopup, setConfirmationPopup] = useState(false);
+  const serviceObj = useContext(ServiceContext);
+  const { spaceId } = useParams();
+  const [pProfileImg, setPProfileImg] = useState(false);
+  const [fProfileImg, setFProfileImg] = useState(false);
+  const [pBanner, setPBanner] = useState(false);
+  const [fBanner, setFBanner] = useState(false);
+  const [profileImg, setProfileImg] = useState("");
+  const [banner, setBanner] = useState("");
+  const [heading, setHeading] = useState("");
+  const [subHeading, setSubHeading] = useState("");
   const [highlights, setHighlights] = useState([]);
-  const [description, setDescription] = useState();
-
-  const [pageFound, setPageFound] = useState(false);
-
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState("");
+  const [oprice, setOprice] = useState(0);
+  const navigate = useNavigate();
+  const setDetails = (obj) => {
+    setHeading(obj.heading);
+    setSubHeading(obj.subHeading);
+    setHighlights(obj.highlights ? obj.highlights : []);
+    setDescription(obj.description);
+    setPrice(obj.price);
+    setOprice(obj.price);
+    setBanner(obj.banner);
+    setProfileImg(obj.profileImg);
+  };
   useEffect(() => {
-    resource_request_with_access_token(
-      'get',
-      '/api/space/page/get',
+    serviceObj.request(
+      "get",
+      "/api/community/space/page",
       { id: spaceId },
-      (({ data: { pageData } }) => {
-        setTemplate(pageData.template);
-        setHeading(pageData.heading);
-        setSubHeading(pageData.subHeading);
-        setProfileImg(pageData.profileImg);
-        setBanner(pageData.banner);
-        setHighlights(pageData.highlights);
-        setDescription(pageData.description);
-        setTwitter(pageData.socials?.twitter);
-        setGaffar(pageData.socials?.gaffar);
-        setEmail(pageData.socials?.email);
-        setPageFound(true);
-      }),
+      ({ data }) => {
+        const { pageData, space } = data;
+        setDetails({
+          ...pageData,
+          price: Math.min(space.price, 2000),
+        });
+      },
       console.log
-    )
-  }, [])
-
-  const addPage = () => {
-    resource_request_with_access_token(
-      'post',
-      '/api/space/page/create',
+    );
+  }, []);
+  function sendData() {
+    serviceObj.request(
+      "post",
+      "/api/space/page/createOrUpdate",
       {
-        spaceId,
         data: {
-          template,
-          heading,
-          subHeading,
+          id: spaceId,
           profileImg,
           banner,
-          highlights,
-          description,
-          socials: {
-            ...(twitter && { twitter }),
-            ...(gaffar && { gaffar }),
-            ...(email && { email }),
-          },
-        }
-      },
-      console.log,
-      console.log,
-    )
-  }
-
-  const updatePage = () => {
-    resource_request_with_access_token(
-      'post',
-      '/api/space/page/replace',
-      {
-        spaceId,
-        data: {
-          template,
           heading,
           subHeading,
-          profileImg,
-          banner,
           highlights,
           description,
-          socials: {
-            ...(twitter && { twitter }),
-            ...(gaffar && { gaffar }),
-            ...(email && { email }),
-          },
-        }
+          price,
+        },
       },
-      console.log,
-      console.log,
-    )
+      ({ data }) => {
+        setMessage("Page saved successfully.");
+        setFBanner(false);
+        setPBanner(false);
+        setFProfileImg(false);
+        setPProfileImg(false);
+      },
+      console.log
+    );
+    setConfirmationPopup(false);
   }
 
+  function handleSave() {
+    if (fProfileImg) {
+      file_server_request(
+        "post",
+        "/uploadFile",
+        { file: fProfileImg },
+        ({ data: { filename } }) => {
+          setProfileImg(filename);
+        },
+        console.log
+      );
+    }
+    if (fBanner) {
+      file_server_request(
+        "post",
+        "/uploadFile",
+        { file: fBanner },
+        ({ data: { filename } }) => {
+          setBanner(filename);
+          console.log(filename);
+        },
+        console.log
+      );
+    }
+    setConfirmationPopup(true);
+  }
+  const handlePreview = () => {};
+  const handleCancel = () => {
+    if (fBanner) {
+      file_server_request(
+        "post",
+        "/deleteFile",
+        { file: banner },
+        console.log,
+        console.log
+      );
+    }
+    if (fProfileImg) {
+      file_server_request(
+        "post",
+        "/deleteFile",
+        { file: profileImg },
+        console.log,
+        console.log,
+        false
+      );
+    }
+    setConfirmationPopup(false);
+  };
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', width: '50%' }}>
-      <Select
-        options={PAGE_TEMPLATES}
-        label="Template"
-        selectedItem={template}
-        setSelectedItem={setTemplate}
-      />
-      {
-        template ?
-          <>
-            <Textbox
-              label="heading"
-              state={heading}
-              setState={setHeading}
-            />
-            <Textbox
-              label="sub heading"
-              state={subHeading}
-              setState={setSubHeading}
-            />
-            <Textbox
-              label="profile Image"
-              state={profileImg}
-              setState={setProfileImg}
-            />
-            <Textbox
-              label="banner image"
-              state={banner}
-              setState={setBanner}
-            />
-            <h1>Highlights</h1>
-            {
-              highlights.map((point, index) => {
-                return (
-                  <div style={{ display: 'flex', flexDirection: 'row', alignItems: "center" }}>
-                    <p>•</p>
-                    <input
-                      value={point}
-                      onChange={(e) => setHighlights(highlights => {
-                        highlights[index] = e.target.value;
-                        return [...highlights];
-                      })}
-                    />
-                    <button onClick={() => setHighlights(highlights => {
-                      highlights.splice(index, 1);
-                      return [...highlights];
-                    })}>Delete</button>
-                  </div>
-                )
-              })}
-            <Button label={"Add Highlights"} handleClick={() => setHighlights(highlights => [...highlights, ""])} />
-            <h1>Description</h1>
-            <div style={{ minHeight: "100px", border: "1px solid grey" }} contentEditable="true" onInput={e => setDescription(e.currentTarget.textContent)}>
-              {description}
-            </div>
-            <Textbox
-              label="gaffar"
-              state={gaffar}
-              setState={setGaffar}
-              placeholder='https://gaffar.vercel.app/project/<ID_ONLY>'
-            />
-            <Textbox
-              label="twitter"
-              state={twitter}
-              setState={setTwitter}
-              placeholder='https://twitter.com/<ID_ONLY>'
-            />
-            <Textbox
-              label="email"
-              state={email}
-              setState={setEmail}
-            />
-            {
-              pageFound ?
-                <Button label={"Update Page"} handleClick={updatePage} /> :
-                <Button label={"Add Page"} handleClick={addPage} />
-            }
-          </>
-          : null
-      }
-      <Button label={"Visit Page"} handleClick={() => navigate(`/page/${spaceId}`)} /> :
+    <div className={styles.mainContainer}>
+      <Modal success={message} setSuccess={setMessage} />
+      {confirmationPopup ? (
+        <ConfirmationPopup
+          handleCancel={handleCancel}
+          handlePreview={handlePreview}
+          handleSubmit={sendData}
+          priceChanged={price != oprice}
+        />
+      ) : null}
+      {uploadImagePopUp ? (
+        <UploadImagePopup
+          setView={setUploadImagePopUp}
+          isCoverPic={isCoverPic}
+          setMessage={setMessage}
+          setPBanner={setPBanner}
+          setFBanner={setFBanner}
+          setPProfileImg={setPProfileImg}
+          setFProfileImg={setFProfileImg}
+        />
+      ) : null}
+      {updateTitleBlockPopup ? (
+        <UpdateHeadingPopup
+          setView={setUpdateTitleBlockPopup}
+          heading={heading}
+          setHeading={setHeading}
+          subHeading={subHeading}
+          setSubHeading={setSubHeading}
+          setMessage={setMessage}
+        />
+      ) : null}
+      {updateHighlightsPopup ? (
+        <UpdateHighlightsPopup
+          setView={setUpdateHighlightsPopup}
+          highlights={highlights}
+          setHighlights={setHighlights}
+          setMessage={setMessage}
+        />
+      ) : null}
+      {updateDescriptionPopup ? (
+        <UpdateDescriptionPopup
+          setView={setUpdateDescriptionPopup}
+          description={description}
+          setDescription={setDescription}
+          setMessage={setMessage}
+        />
+      ) : null}
+      {updatePricingPopup ? (
+        <UpdatePricingPopup
+          setView={setUpdatePricingPopup}
+          price={price}
+          setPrice={setPrice}
+          setMessage={setMessage}
+        />
+      ) : null}
+      <div className={styles.coverPicture}>
+        <img src={pBanner ? pBanner : getFileURL(banner)} />
+      </div>
+      <div
+        className={styles.profilePicture}
+        onMouseEnter={(e) => {
+          e.preventDefault();
+          setDisplayPictureHovered(true);
+        }}
+        onMouseLeave={(e) => {
+          e.preventDefault();
+          setDisplayPictureHovered(false);
+        }}
+      >
+        <img src={pProfileImg ? pProfileImg : getFileURL(profileImg)} />
+      </div>
+      <div
+        onClick={() => {
+          setIsCoverPic(false);
+          setUploadImagePopUp(true);
+        }}
+        onMouseEnter={(e) => {
+          e.preventDefault();
+          setDisplayPictureHovered(true);
+        }}
+        onMouseLeave={(e) => {
+          e.preventDefault();
+          setDisplayPictureHovered(false);
+        }}
+        className={`${styles.editProfilePictureButton} ${
+          displayPictureHovered ? "" : styles.hide
+        }`}
+      >
+        <img src="/pencil.svg" />
+      </div>
+      <div
+        className={styles.changeCoverPictureButton}
+        onClick={() => {
+          setIsCoverPic(true);
+          setUploadImagePopUp(true);
+        }}
+      >
+        <p>Change Profile Banner</p>
+      </div>
+
+      {/* Title Block */}
+      <div className={`${styles.section} ${styles.headingSection}`}>
+        <div className={styles.label}>
+          <p>Title Block</p>
+        </div>
+        <div
+          className={styles.editButton}
+          onClick={() => setUpdateTitleBlockPopup(true)}
+        >
+          <img src={"/edit_white.svg"} />
+        </div>
+        <Field keyname="Title" value={heading} />
+        <Field keyname="Sub Title" value={subHeading} />
+      </div>
+
+      {/* Highlights Block */}
+      <div className={`${styles.section} ${styles.highlightsSection}`}>
+        <div className={styles.label}>
+          <p>Highlights</p>
+        </div>
+        <div
+          className={styles.editButton}
+          onClick={() => setUpdateHighlightsPopup(true)}
+        >
+          <img src={"/edit_white.svg"} />
+        </div>
+        <div className={styles.highlightsContainer}>
+          {highlights && highlights.length > 0 ? (
+            highlights.map((highlight, i) => (
+              <div className={styles.highlight} key={i}>
+                <div className={styles.bulletPoints}></div>
+                <p>{highlight}</p>
+              </div>
+            ))
+          ) : (
+            <p>Add Highlights</p>
+          )}
+        </div>
+      </div>
+
+      {/* Description Block */}
+      <div className={`${styles.section} ${styles.descriptionSection}`}>
+        <div className={styles.label}>
+          <p>Description</p>
+        </div>
+        <div
+          className={styles.editButton}
+          onClick={() => setUpdateDescriptionPopup(true)}
+        >
+          <img src={"/edit_white.svg"} />
+        </div>
+        {description ? (
+          <div
+            className={`${styles.descriptionContainer} ${styles.aboutMeContainer}`}
+          >
+            <p>{description}</p>
+          </div>
+        ) : (
+          <div className={styles.warning}>
+            <p>Update Description</p>
+          </div>
+        )}
+      </div>
+
+      {/* Pricing Block */}
+      <div className={`${styles.section} ${styles.pricingSection}`}>
+        <div className={styles.label}>
+          <p>Pricing</p>
+        </div>
+        <div
+          className={styles.editButton}
+          onClick={() => setUpdatePricingPopup(true)}
+        >
+          <img src={"/edit_white.svg"} />
+        </div>
+        <Field
+          keyname="Plan Type"
+          value={price === 0 ? "FREE" : "One Time Purchase"}
+        />
+        {price !== 0 ? (
+          <Field
+            keyname="Price"
+            value={`${price ? `₹${price}` : "Price not set"}`}
+          />
+        ) : null}
+      </div>
+
+      <div className={styles.buttonsContainer}>
+        <div
+          className={`${styles.buttons} ${styles.previewButton}`}
+          onClick={handlePreview}
+        >
+          <p>Preview</p>
+        </div>
+        <div
+          className={`${styles.buttons} ${styles.saveButton}`}
+          onClick={handleSave}
+        >
+          <p>Save</p>
+        </div>
+      </div>
     </div>
-  )
+  );
 }
