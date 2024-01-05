@@ -18,6 +18,7 @@
   margin-left: 6.66%;
   font-size: var(--authentication-label-font-size);
   color: var(--label-font-color);
+  font-family: Inter;
 }
 
 .dropdownHeader {
@@ -33,17 +34,20 @@
   margin: auto;
   font-size: 2.4vh;
   margin-left: 6.66%;
+  font-family: Inter;
+  font-weight: 500;
 }
 
 .dropdownHeader > img {
   margin: auto;
   margin-right: 6.66%;
   width: 10%;
+  font-family: Inter;
 }
 
 .dropdownBody {
-  z-index: 100;
-  width: inherit;
+  z-index: 10000;
+  width: 100%;
   border-radius: var(--border-radius);
   display: flex;
   flex-direction: column;
@@ -52,6 +56,10 @@
   background: var(--header-bg-color);
   max-height: 30vh;
   overflow-y: auto;
+}
+
+.margin {
+  margin-top: 6vh;
 }
 
 .dropdownBody::-webkit-scrollbar,
@@ -81,6 +89,7 @@
   font-size: 2.4vh;
   color: var(--para-color);
   margin: auto auto auto 6.67%;
+  font-family: Inter;
 }
 
 .visible {

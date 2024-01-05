@@ -1,27 +1,17 @@
 import CheckBox from "../../form_components/CheckBox";
 import styles from "../../../styles/components/space/home/Poll.module.css";
-export default function Poll() {
+export default function Poll({ poll }) {
   return (
     <div className={styles.container}>
       <div className={styles.title}>
-        <p>
-          Hola amigos! please choose your preferred topic for Sunday’s live
-          stream
-        </p>
+        <p>{poll?.question}</p>
       </div>
       <div className={styles.mainContainer}>
-        <div className={styles.option}>
-          <CheckBox label={"Radio Option"} type="circle" />
-        </div>
-        <div className={styles.option}>
-          <CheckBox label={"Radio Option"} type="circle" />
-        </div>
-        <div className={styles.option}>
-          <CheckBox label={"Radio Option"} type="circle" />
-        </div>
-        <div className={styles.option}>
-          <CheckBox label={"Radio Option"} type="circle" />
-        </div>
+        {poll?.options.map((option, ind) => (
+          <div className={styles.option} key={ind}>
+            <CheckBox label={option} type={poll?.type === 0 ? "circle" : ""} />
+          </div>
+        ))}
       </div>
       <div className={styles.footer}>
         <p>21 Oct | 10 : 32 am</p>

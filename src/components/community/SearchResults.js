@@ -1,6 +1,6 @@
 import React from 'react';
 
-import styles from '../../../styles/components/community/SearchResults.module.css';
+import styles from '../../styles/components/community/SearchResults.module.css';
 
 export default function SearchResults() {
 	return (

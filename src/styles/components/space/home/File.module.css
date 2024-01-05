@@ -42,14 +42,5 @@
 .footer > img{
     height: 4vh;
     margin: auto;
-    margin-left: 0vw;
     cursor: pointer;
-}
-
-.footer > p{
-    margin: auto;
-    font-size: 2vh;
-    color: var(--color21);
-    font-weight: 500;
-    margin-right: 0.5vw;
 }

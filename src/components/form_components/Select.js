@@ -18,14 +18,20 @@ export default function Select({
   };
   return (
     <div className={styles.container}>
-      <div className={styles.label}>
-        <p>{label}</p>
-      </div>
+      {label ? (
+        <div className={styles.label}>
+          <p>{label}</p>
+        </div>
+      ) : null}
       <div className={styles.dropdownHeader} onClick={toggleDropdown}>
         <p>{options[selectedItem]}</p>
         <img src={!isOpen ? "/down.svg" : "/up.svg"} />
       </div>
-      <div className={`${styles.dropdownBody} ${isOpen ? "" : styles.visible}`}>
+      <div
+        className={`${styles.dropdownBody} ${isOpen ? "" : styles.visible} ${
+          label ? "" : styles.margin
+        }`}
+      >
         {items.map((item, idx) => (
           <div
             className={`${styles.dropdownItem} ${

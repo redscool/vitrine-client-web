@@ -1,9 +1,7 @@
-import React from 'react';
-import Navbar from '../components/Community/Navbar';
-
 import styles from '../styles/pages/community.module.css';
-import Searchbar from '../components/Community/Searchbar';
-import SearchResults from '../components/Community/SearchResults';
+import Navbar from '../components/community/Navbar';
+import Searchbar from '../components/community/Searchbar';
+import SearchResults from '../components/community/SearchResults';
 
 export default function Community() {
 	return (

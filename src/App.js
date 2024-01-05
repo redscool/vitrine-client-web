@@ -24,9 +24,9 @@ import { resource_request_with_access_token } from "./utils/Service.js";
 import GoogleIntegrationCallback from "./pages/GoogleIntegrationCallback.js";
 import Community from "./pages/Community.js";
 
-const getServiceObject = (navigate) => {
+const getServiceObject = (navigate, dispatch) => {
   return {
-    request: resource_request_with_access_token(navigate),
+    request: resource_request_with_access_token(navigate, dispatch),
   };
 };
 

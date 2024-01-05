@@ -1,14 +1,23 @@
 import React, { useContext, useRef, useState } from "react";
-import styles from "../../../../styles/components/space/shelf/folder/UploadFilePopup.module.css";
-import { ServiceContext } from "../../../../utils/context/serviceContext";
-import { file_server_request } from "../../../../utils/Service";
+import styles from "../../../styles/components/space/shelf/folder/UploadFilePopup.module.css";
+import { ServiceContext } from "../../../utils/context/serviceContext";
+import { file_server_request } from "../../../utils/Service";
 import { useParams } from "react-router-dom";
+import InputField from "../../form_components/InputField";
+import { STREAM_TYPES } from "../../../constants";
 
-export default function UploadFilePopup({ setView, setFiles }) {
-  const { folderId } = useParams();
+export default function UploadPopup({
+  setView,
+  fileType,
+  streams,
+  setMessage,
+  setStreams,
+}) {
   const [isDragging, setIsDragging] = useState(false);
+  const [title, setTitle] = useState("");
   const [uploadedFile, setUploadedFile] = useState(null);
   const serviceObject = useContext(ServiceContext);
+  const { spaceId } = useParams();
 
   const ref = useRef(null);
   const handleFileDrop = (event) => {
@@ -30,12 +39,11 @@ export default function UploadFilePopup({ setView, setFiles }) {
   const saveFile = () => {
     const file = uploadedFile;
     if (!file) {
-      alert("Please upload a file!!!");
+      setMessage("Please upload a file!!!");
       return;
     }
     const formData = new FormData();
     formData.append("file", file);
-    const fileName = file.name;
     file_server_request(
       "post",
       "/uploadFile",
@@ -44,15 +52,18 @@ export default function UploadFilePopup({ setView, setFiles }) {
         const url = data.filename;
         serviceObject.request(
           "post",
-          "/api/space/shelf/addFile",
+          "/api/space/stream/addPost",
           {
-            folderId,
-            fileName,
-            url,
+            spaceId,
+            type: fileType,
+            file: {
+              url,
+              title,
+            },
           },
           ({ data }) => {
-            setFiles(data.data);
-            setView(false);
+            console.log(data);
+            setStreams([data.post, ...streams]);
           },
           (err) => {
             if (
@@ -67,23 +78,33 @@ export default function UploadFilePopup({ setView, setFiles }) {
       },
       console.log
     );
+    setView(false);
   };
   return (
     <div className={`${styles.mainContainer}`} onClick={() => setView(false)}>
       <div
-        className={styles.container}
+        className={`${styles.container} ${styles.height}`}
         onClick={(e) => {
           e.stopPropagation();
         }}
       >
         <div className={styles.heading}>
           <div className={styles.title}>
-            <p>Select a File</p>
+            <p>
+              Upload a{fileType === STREAM_TYPES.IMAGE ? "n" : ""}{" "}
+              {fileType.toLowerCase()}
+            </p>
           </div>
           <div className={styles.cross} onClick={() => setView(false)}>
             <img src="/cross.svg" />
           </div>
         </div>
+        <InputField
+          label={"Title"}
+          placeholder={"Enter title"}
+          setState={setTitle}
+          state={title}
+        />
         <div
           onDrop={handleFileDrop}
           onDragOver={(e) => e.preventDefault()}
@@ -124,7 +145,7 @@ export default function UploadFilePopup({ setView, setFiles }) {
           )}
         </div>
         <div className={styles.button} onClick={saveFile}>
-          <p>Submit</p>
+          <p>Upload</p>
         </div>
       </div>
     </div>

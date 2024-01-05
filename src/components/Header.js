@@ -3,7 +3,6 @@ import styles from "../styles/components/Header.module.css";
 import { useNavigate } from "react-router-dom";
 export default function Header({ isLogin }) {
   const navigate = useNavigate();
-  console.log(isLogin);
   return (
     <div className={styles.mainContainer}>
       <div
