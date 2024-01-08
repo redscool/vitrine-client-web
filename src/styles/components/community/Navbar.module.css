@@ -1,40 +1,45 @@
 .container {
-	height: 12vh;
-	background-color: rgba(33, 43, 54, 1);
-	width: 100%;
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	padding-left: 2vw;
+  height: 12vh;
+  background-color: var(--color3);
+  width: 100%;
+  display: flex;
 }
 
 .logo {
-	height: 70%;
+  height: 70%;
+  margin: auto 2vw;
+}
+
+.logo > img {
+  height: 100%;
 }
 
 .title {
-	display: flex;
-	flex-direction: column;
-	align-items: start;
-	justify-content: center;
-	margin-left: 2rem;
-	color: rgba(253, 169, 45, 1);
-	gap: 4px;
-	height: 100%;
+  display: flex;
+  flex-direction: column;
+  color: var(--color1);
+  height: 100%;
 }
 
 .baljeetkode {
-	font-family: Inter;
-	font-size: 18px;
-	font-weight: 300;
-	letter-spacing: 0em;
-	text-align: left;
+  font-family: Inter;
+  font-size: 2.4vh;
+  height: 50%;
+  font-weight: 300;
+  display: flex;
+}
+
+.baljeetkode > p {
+  margin: auto 1vw 0 1vw;
 }
 
 .community {
-	font-family: Jua;
-	font-size: 28px;
-	font-weight: 400;
-	letter-spacing: 0em;
-	text-align: left;
+  height: 50%;
+  font-family: Jua;
+  font-size: 3.6vh;
+  font-weight: 700;
+  display: flex;
+}
+.community > p {
+  margin: 0 1vw auto 1vw;
 }

@@ -1,0 +1,65 @@
+.container {
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--color9);
+  display: flex;
+  flex-direction: column;
+}
+
+.titleBar {
+  display: flex;
+  width: fit-content;
+  height: fit-content;
+  margin: 2vh 1vw;
+}
+
+.logo {
+  width: 10vh;
+  margin: 0;
+}
+.title {
+  margin: auto;
+  margin-left: 3vw;
+  font-size: 3.2vh;
+  font-weight: 700;
+  color: var(--color21);
+}
+
+.space {
+  width: 60%;
+  height: fit-content;
+  padding: 2vh 4vw;
+  display: flex;
+  flex-direction: column;
+}
+.warning {
+  margin: auto;
+  margin-left: 0;
+  color: var(--color21);
+  font-weight: 600;
+  font-size: 2.8vh;
+}
+
+.spaceTile {
+  width: fit-content;
+  height: fit-content;
+  padding: 1vh 0.5vw;
+  border: 1px solid var(--color21);
+}
+
+.button {
+  width: fit-content;
+  height: fit-content;
+  background-color: var(--color1);
+  display: flex;
+  margin: 1vh auto 2vh auto;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.button > p {
+  margin: 1vh 1vw;
+  font-size: 2.4vh;
+  font-weight: 700;
+  color: var(--color33);
+}

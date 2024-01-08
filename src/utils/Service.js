@@ -46,7 +46,8 @@ const refresh_access_token = async (navigate, dispatch) => {
     dispatch(setAuthKey(["accessToken", data.data.accessToken]));
     return true;
   } catch (err) {
-    navigate("/login");
+    localStorage.removeItem("refreshToken");
+    navigate(`/login?message=${err?.response?.data?.message}`);
     return false;
   }
 };

@@ -117,7 +117,9 @@ export default function Page() {
     }
     setConfirmationPopup(true);
   }
-  const handlePreview = () => {};
+  const handlePreview = () => {
+    navigate(`/page/${spaceId}`);
+  };
   const handleCancel = () => {
     if (fBanner) {
       file_server_request(

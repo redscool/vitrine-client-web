@@ -10,11 +10,9 @@ import "./App.css";
 import Space from "./pages/Space.js";
 import Auth from "./pages/Auth.js";
 import { authKeySelector } from "./redux/authReducer";
-// import Page from "./pages/Page";
-// import Community from "./pages/Community";
+import Page from "./pages/Page";
 import UserAuthentication from "./pages/UserAuthentication.js";
 import Dashboard from "./pages/Dashboard.js";
-// import Order from "./pages/Order.js";
 import ForgotPassword from "./pages/ForgotPassword.js";
 import ConfirmProfile from "./pages/ConfirmProfile.js";
 import ResetPassword from "./pages/ResetPassword.js";
@@ -23,6 +21,8 @@ import { ServiceContext } from "./utils/context/serviceContext.js";
 import { resource_request_with_access_token } from "./utils/Service.js";
 import GoogleIntegrationCallback from "./pages/GoogleIntegrationCallback.js";
 import Community from "./pages/Community.js";
+import Checkout from "./pages/Checkout.js";
+import PaymentSuccess from "./pages/PaymentSuccess.js";
 
 const getServiceObject = (navigate, dispatch) => {
   return {
@@ -59,9 +59,10 @@ function App() {
         <Route exact path="/dashboard/*" element={<Dashboard />} />
         <Route exact path="/space/:spaceId/*" element={<Space />} />
         <Route exact path="/auth/*" element={<Auth />} />
-        {/* <Route exact path="/page/:spaceId" element={<Page />} /> */}
+        <Route exact path="/page/:spaceId" element={<Page />} />
         <Route exact path="/community" element={<Community />} />
-        {/* <Route exact path="/order" element={<Order />} /> */}
+        <Route exact path="/checkout/:spaceId" element={<Checkout />} />
+        <Route exact path="/confirmpayment" element={<PaymentSuccess />} />
         <Route
           exact
           path="/integration/google/callback"

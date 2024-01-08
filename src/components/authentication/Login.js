@@ -4,14 +4,15 @@ import InputField from "../form_components/InputField";
 import SignupWIthGoogle from "../SignupWIthGoogle";
 import { auth_request } from "../../utils/Service";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { setAuthKey } from "../../redux/authReducer";
 import Modal from "../Modal";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [success, setSuccess] = useState("");
+  const [params, setParams] = useSearchParams();
+  const [success, setSuccess] = useState(params.get("message"));
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const clickLogin = () => {

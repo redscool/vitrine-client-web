@@ -1,0 +1,104 @@
+.container {
+  width: 95%;
+  height: 30vh;
+  background-color: var(--color17);
+  border-radius: 16px;
+  margin: 1vh auto;
+  padding: 1vh 1vw;
+  display: flex;
+  cursor: pointer;
+}
+
+.image {
+  width: 35%;
+  height: 100%;
+  /* border: 1px solid red; */
+}
+
+.details {
+  width: 65%;
+  height: 100%;
+  /* border: 1px solid red; */
+}
+.image > img {
+  height: 100%;
+  width: 100%;
+  border-radius: 16px;
+}
+
+.header {
+  width: 100%;
+  height: 25%;
+  /* border: 1px solid red; */
+  display: flex;
+}
+
+.body {
+  width: 100%;
+  height: 50%;
+  /* border: 1px solid red; */
+  display: flex;
+}
+.footer {
+  width: fit-content;
+  height: 25%;
+  display: flex;
+  margin-left: 1.5vw;
+}
+
+.displayPicture {
+  width: 8%;
+  height: 100%;
+  margin-left: 2vw;
+}
+
+.displayPicture > img {
+  height: 6vh;
+  width: 6vh;
+  border-radius: 3vh;
+}
+
+.heading {
+  width: fit-content;
+  height: 100%;
+  display: flex;
+}
+
+.heading > p {
+  margin: auto;
+  font-size: 3.2vh;
+  font-weight: 500;
+  color: var(--color21);
+}
+
+.body > p {
+  margin: auto;
+  font-size: 2.2vh;
+  font-weight: 500;
+  color: var(--color21);
+  margin-left: 2vw;
+  margin-top: 1vh;
+}
+
+.key,
+.value {
+  width: fit-content;
+  margin: auto 0.5vw;
+  display: flex;
+}
+
+.dot {
+  margin: auto 2vw;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: var(--color21);
+}
+
+.key > p,
+.value > p {
+  margin: auto;
+  font-size: 2.2vh;
+  font-weight: 500;
+  color: var(--color21);
+}

@@ -37,6 +37,7 @@ export default function UploadPopup({
   };
 
   const saveFile = () => {
+    setView(false);
     const file = uploadedFile;
     if (!file) {
       setMessage("Please upload a file!!!");
@@ -78,7 +79,6 @@ export default function UploadPopup({
       },
       console.log
     );
-    setView(false);
   };
   return (
     <div className={`${styles.mainContainer}`} onClick={() => setView(false)}>

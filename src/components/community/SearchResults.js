@@ -1,12 +1,17 @@
-import React from 'react';
+import styles from "../../styles/components/community/SearchResults.module.css";
+import SpaceTile from "./SpaceTile";
 
-import styles from '../../styles/components/community/SearchResults.module.css';
-
-export default function SearchResults() {
-	return (
-		<div className={styles.container}>
-			<div className={styles.title}>Featured</div>
-			<div className={styles.resultList}>spaces</div>
-		</div>
-	);
+export default function SearchResults({ results }) {
+  return (
+    <div className={styles.container}>
+      <div className={styles.title}>
+        <p>Featured</p>
+      </div>
+      <div className={styles.resultList}>
+        {results.map((result, ind) => (
+          <SpaceTile result={result} key={ind} />
+        ))}
+      </div>
+    </div>
+  );
 }
