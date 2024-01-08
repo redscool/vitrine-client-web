@@ -2,12 +2,14 @@ import { useNavigate, useParams } from "react-router-dom";
 import styles from "../styles/pages/Checkout.module.css";
 import { useContext, useEffect, useState } from "react";
 import { ServiceContext } from "../utils/context/serviceContext";
+import Modal from "../components/Modal";
 export default function Checkout() {
   const serviceObj = useContext(ServiceContext);
   const { spaceId } = useParams();
   const [space, setSpace] = useState({});
   const [copied, setCopied] = useState(false);
   const [paymentInitiated, setPaymentInitiated] = useState(false);
+  const [success, setSuccess] = useState("");
   const navigate = useNavigate();
   useEffect(() => {
     serviceObj.request(
@@ -25,6 +27,20 @@ export default function Checkout() {
     );
   }, []);
 
+  const handlePayment = (response) => {
+    serviceObj.request(
+      "post",
+      "/api/monet/order/confirm",
+      { razorpayPaymentId: response.razorpay_payment_id },
+      ({ data }) => {
+        if (data.paymentSuccess) setSuccess("Payment Done");
+        else if (data.refundPayment) setSuccess("Payment Already done");
+        else setSuccess("Something went wrong");
+      },
+      () => setSuccess("something went wrong")
+    );
+  };
+
   const handlePay = async () => {
     if (paymentInitiated) return;
     setPaymentInitiated(true);
@@ -41,8 +57,7 @@ export default function Checkout() {
           description: "Product Purchase",
           image: "http://localhost:3000/logo.svg",
           order_id: data.pgOrderId,
-          callback_url: "http://localhost:5000/api/community/paymentRedirect?success=true",
-          // redirect: true,
+          handler: handlePayment,
           prefill: {
             name: "",
             email: "",
@@ -54,13 +69,13 @@ export default function Checkout() {
         };
         var rzp1 = new window.Razorpay(options);
         rzp1.open();
-        console.log(rzp1);
       },
       console.log
     );
   };
   return (
     <div className={styles.container}>
+      {success ? <Modal success={success} setSuccess={setSuccess} /> : null}
       <div className={styles.titleBar}>
         <img className={styles.logo} src="/logo.svg" />
         <p className={styles.title}>Checkout summary</p>
