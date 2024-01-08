@@ -1,6 +1,6 @@
 {
-    "SERVER": "http://192.168.1.42:5000",
-    "FILE_SERVER": "http://192.168.1.42:5002",
+    "SERVER": "http://localhost:5000",
+    "FILE_SERVER": "http://localhost:5002",
     "GOOGLE_EVENT": {
         "client_id": "611755391410-8cin2sd35dg0o3p04d46a7qn9fpfsjcp.apps.googleusercontent.com",
         "redirect_uri": "http://localhost:3000/auth",
