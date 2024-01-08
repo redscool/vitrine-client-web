@@ -132,6 +132,30 @@ export const resource_request_with_access_token =
       });
   };
 
+
+export const resource_request_webview = async (
+  method, route, body, onSuccess, onError, accessToken
+) => {
+  const token = accessToken
+  const config = {
+    headers: {
+      Authorization: token,
+    },
+  };
+  if (routeUpdateRequired(method)) {
+    route = getUpdatedRoute(route, body);
+    body = config;
+  }
+
+  axios[method](`${SERVER}${route}`, body, config)
+    .then((response) => {
+      onSuccess(response);
+    })
+    .catch((err) => {
+      onError(err);
+    });
+};
+  
 export const file_server_request = async (
   method,
   route,

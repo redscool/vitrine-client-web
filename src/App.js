@@ -23,6 +23,7 @@ import GoogleIntegrationCallback from "./pages/GoogleIntegrationCallback.js";
 import Community from "./pages/Community.js";
 import Checkout from "./pages/Checkout.js";
 import PaymentSuccess from "./pages/PaymentSuccess.js";
+import WebView from "./pages/WebView.js";
 
 const getServiceObject = (navigate, dispatch) => {
   return {
@@ -63,6 +64,7 @@ function App() {
         <Route exact path="/community" element={<Community />} />
         <Route exact path="/checkout/:spaceId" element={<Checkout />} />
         <Route exact path="/confirmpayment" element={<PaymentSuccess />} />
+        <Route exact path="/webview" element={<WebView />} />
         <Route
           exact
           path="/integration/google/callback"

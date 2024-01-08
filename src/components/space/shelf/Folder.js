@@ -2,8 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styles from "../../../styles/components/space/shelf/Folder.module.css";
 import { ServiceContext } from "../../../utils/context/serviceContext";
-import UploadFilePopup from "./folder/UploadFilePopup";
-import FileTile from "./folder/FileTile";
+import UploadFilePopup from "./Folder/UploadFilePopup";
+import FileTile from "./Folder/FileTile";
 import AddButton from "../../form_components/AddButton";
 
 export default function Folder() {
