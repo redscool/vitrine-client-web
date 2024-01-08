@@ -1,5 +1,5 @@
 import Editor from "../components/Editor";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { resource_request_webview } from "../utils/Service";
 import { getVideoURL } from "../utils/Misc";
 import { STREAM_TYPES } from "../constants";
@@ -9,18 +9,22 @@ export default function WebView() {
     const params = new URLSearchParams(search);
     const postId = params.get('postId');
     const accessToken = params.get('accessToken');
+    const height = params.get('height');
+    const width = params.get('width');
 
     const [post, setPost] = useState();
     const [error, setError] = useState();
 
-    resource_request_webview(
-        'get',
-        '/api/space/stream/post',
-        { postId },
-        ({ data }) => setPost(data),
-        () => setError(true),
-        accessToken
-    )
+    useEffect(() => {
+        resource_request_webview(
+            'get',
+            '/api/space/stream/post',
+            { postId },
+            ({ data }) => setPost(data),
+            () => setError(true),
+            accessToken
+        )
+    }, [])
 
     if (error) {
         return (
@@ -47,6 +51,10 @@ export default function WebView() {
                 src={getVideoURL(post.file.url)}
                 autoPlay={false}
                 controls
+                style={{
+                    ...(height && { height }),
+                    ...(width && { width }),
+                }}
             />
         )
     }
