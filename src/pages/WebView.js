@@ -9,6 +9,8 @@ export default function WebView() {
     const params = new URLSearchParams(search);
     const postId = params.get('postId');
     const accessToken = params.get('accessToken');
+    const refreshToken = params.get('refreshToken');
+    const userId = params.get('userId');
     const height = params.get('height');
     const width = params.get('width');
 
@@ -22,7 +24,9 @@ export default function WebView() {
             { postId },
             ({ data }) => setPost(data),
             () => setError(true),
-            accessToken
+            accessToken,
+            refreshToken,
+            userId
         )
     }, [])
 

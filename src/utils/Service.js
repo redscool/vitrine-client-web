@@ -101,17 +101,19 @@ export const resource_request_with_access_token =
   (navigate, dispatch) =>
   async (method, route, body, onSuccess, onError, level = 0) => {
     const token = localStorage.getItem("accessToken");
+    let parsedRoute = route;
+    let parsedBody = body;
     const config = {
       headers: {
         Authorization: token,
       },
     };
     if (routeUpdateRequired(method)) {
-      route = getUpdatedRoute(route, body);
-      body = config;
+      parsedRoute = getUpdatedRoute(route, body);
+      parsedBody = config;
     }
 
-    axios[method](`${SERVER}${route}`, body, config)
+    axios[method](`${SERVER}${parsedRoute}`, parsedBody, config)
       .then((response) => {
         onSuccess(response);
       })
@@ -134,25 +136,48 @@ export const resource_request_with_access_token =
 
 
 export const resource_request_webview = async (
-  method, route, body, onSuccess, onError, accessToken
+  method, route, body, onSuccess, onError, accessToken, refreshToken, userId
 ) => {
-  const token = accessToken
+  const token = accessToken;
+  let parsedRoute = route;
+  let parsedBody = body;
   const config = {
     headers: {
       Authorization: token,
     },
   };
   if (routeUpdateRequired(method)) {
-    route = getUpdatedRoute(route, body);
-    body = config;
+    parsedRoute = getUpdatedRoute(route, body);
+    parsedBody = config;
   }
-
-  axios[method](`${SERVER}${route}`, body, config)
+  axios[method](`${SERVER}${parsedRoute}`, parsedBody, config)
     .then((response) => {
       onSuccess(response);
     })
-    .catch((err) => {
-      onError(err);
+    .catch(async (err) => {
+      if (err?.response?.data?.invalid) {
+        try  {
+          const refreshSuccess = await axios.post(`${SERVER}/api/auth/access/newAccessToken`, {
+            userId,
+            refreshToken,
+          });
+          const newToken = refreshSuccess.data.accessToken;
+          if (!newToken && !refreshToken) onError(err);
+          else {
+            resource_request_webview (
+              method,
+              route,
+              body,
+              onSuccess,
+              onError,
+              newToken,
+            );
+          }
+        } catch (err) {
+          onError(err);
+        }
+      }
+      else onError(err);
     });
 };
   
