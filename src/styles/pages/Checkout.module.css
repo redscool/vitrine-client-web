@@ -25,13 +25,23 @@
   color: var(--color21);
 }
 
+.mainContainer {
+  height: 100%;
+  width: 100%;
+  /* border: 1px solid red; */
+  display: flex;
+  padding: 5vh 3vw;
+}
+
 .space {
   width: 60%;
   height: fit-content;
-  padding: 2vh 4vw;
   display: flex;
   flex-direction: column;
+  /* border: 1px solid yellow; */
+  padding-right: 5vw;
 }
+
 .warning {
   margin: auto;
   margin-left: 0;
@@ -43,8 +53,11 @@
 .spaceTile {
   width: fit-content;
   height: fit-content;
-  padding: 1vh 0.5vw;
-  border: 1px solid var(--color21);
+  margin: 4vh 0;
+  padding: 3vh 1vw;
+  border: 1px solid var(--color18);
+  border-radius: 12px;
+  display: flex;
 }
 
 .button {
@@ -62,4 +75,62 @@
   font-size: 2.4vh;
   font-weight: 700;
   color: var(--color33);
+}
+
+.coverPicture {
+  width: 38%;
+  height: 20vh;
+}
+
+.coverPicture > img {
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+}
+
+.details {
+  width: fit-content;
+  /* border: 1px solid green; */
+  margin-left: 2vw;
+}
+
+.heading {
+  font-size: 2.8vh;
+  font-weight: 500;
+  color: var(--color21);
+}
+
+.subHeading {
+  font-size: 2.4vh;
+  font-weight: 400;
+  color: var(--color16);
+}
+
+.planInfo {
+  font-size: 2.8vh;
+  font-weight: 400;
+  color: var(--color21);
+}
+
+.payment {
+  border-left: 1px solid var(--color18);
+  padding-left: 5vw;
+  padding-bottom: 30vh;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.price {
+  margin: 10vh auto;
+  font-size: 2.8vh;
+  font-weight: 400;
+  color: var(--color21);
+  display: flex;
+}
+.price > p{
+  margin: 0%;
+}
+.color1 {
+  color: var(--color1);
 }
