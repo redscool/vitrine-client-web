@@ -93,7 +93,7 @@ export default function Page() {
               <span className={styles.color1}>₹{space.price}</span> / One Time
             </p>
           </div>
-          <div className={styles.button}>
+          <div className={styles.button} onClick={()=>navigate(`/checkout/${spaceId}`)}>
             <p>Join Now</p>
           </div>
         </div>

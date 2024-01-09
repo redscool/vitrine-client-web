@@ -3,6 +3,7 @@ import styles from "../styles/pages/Checkout.module.css";
 import { useContext, useEffect, useState } from "react";
 import { ServiceContext } from "../utils/context/serviceContext";
 import Modal from "../components/Modal";
+import { getFileURL } from "../utils/Misc";
 export default function Checkout() {
   const serviceObj = useContext(ServiceContext);
   const { spaceId } = useParams();
@@ -33,8 +34,12 @@ export default function Checkout() {
       "/api/monet/order/confirm",
       { razorpayPaymentId: response.razorpay_payment_id },
       ({ data }) => {
-        if (data.paymentSuccess) setSuccess("Payment Done");
-        else if (data.refundPayment) setSuccess("Payment Already done");
+        if (data.paymentSuccess) {
+          setSuccess("Payment Done");
+          setTimeout(() => {
+            navigate(`/space/${spaceId}/`);
+          }, 1000);
+        } else if (data.refundPayment) setSuccess("Payment Already done");
         else setSuccess("Something went wrong");
       },
       () => setSuccess("something went wrong")
@@ -83,12 +88,32 @@ export default function Checkout() {
       <div className={styles.mainContainer}>
         <div className={styles.space}>
           <p className={styles.warning}>You are about to buy :</p>
-          <div className={styles.spaceTile}></div>
+          <div className={styles.spaceTile}>
+            <div className={styles.coverPicture}>
+              <img src={getFileURL(space.banner)} />
+            </div>
+            <div className={styles.details}>
+              <div className={styles.heading}>
+                <p>{space.heading}</p>
+              </div>
+              <div className={styles.subHeading}>
+                <p>{space.subHeading}</p>
+              </div>
+            </div>
+          </div>
           <p className={styles.planInfo}>Plan type: One time</p>
         </div>
         <div className={styles.payment}>
+          <div className={styles.warning}>
+            <p>Payment Details</p>
+          </div>
+          <div className={styles.price}>
+            <p>
+              ₹<span className={styles.color1}>{space.price}</span>
+            </p>
+          </div>
           <div className={styles.button} onClick={handlePay}>
-            <p>Pay</p>
+            <p>Pay Now</p>
           </div>
         </div>
       </div>
