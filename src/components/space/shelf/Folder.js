@@ -5,12 +5,16 @@ import { ServiceContext } from "../../../utils/context/serviceContext";
 import UploadFilePopup from "./folder/UploadFilePopup";
 import FileTile from "./folder/FileTile";
 import AddButton from "../../form_components/AddButton";
+import { useSelector } from "react-redux";
+import { authKeySelector } from "../../../redux/authReducer";
+import { USER_TYPES } from "../../../constants";
 
 export default function Folder() {
   const { folderId } = useParams();
   const serviceObject = useContext(ServiceContext);
   const [files, setFiles] = useState([]);
   const [uploadFilePopup, setUploadFilePopup] = useState(false);
+  const type = useSelector(authKeySelector("type"));
 
   useEffect(() => {
     async function getFiles() {
@@ -44,7 +48,9 @@ export default function Folder() {
           />
         ))}
       </div>
-      <AddButton onClick={() => setUploadFilePopup(true)} />
+      {type === USER_TYPES.PROVIDER ? (
+        <AddButton onClick={() => setUploadFilePopup(true)} />
+      ) : null}
     </div>
   );
 }

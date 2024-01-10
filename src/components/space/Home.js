@@ -9,7 +9,7 @@ import { profileKeySelector } from "../../redux/profileReducer";
 import { useParams } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { ServiceContext } from "../../utils/context/serviceContext";
-import { STREAM_TYPES } from "../../constants";
+import { STREAM_TYPES, USER_TYPES } from "../../constants";
 import AddButton from "../form_components/AddButton";
 import Options from "./home/Options";
 import UploadPopup from "./home/UploadPopup";
@@ -17,6 +17,7 @@ import PollPopup from "./home/PollPopup";
 import Modal from "../Modal";
 import EditorPopup from "./home/EditorPopup";
 import EditorView from "./home/EditorView";
+import { authKeySelector } from "../../redux/authReducer";
 export default function Home() {
   const { spaceId } = useParams();
   const [show, setShow] = useState(false);
@@ -30,6 +31,7 @@ export default function Home() {
     : {};
   const [streams, setStreams] = useState([]);
   const serviceObject = useContext(ServiceContext);
+  const type = useSelector(authKeySelector("type"));
   useEffect(() => {
     serviceObject.request(
       "post",
@@ -81,7 +83,9 @@ export default function Home() {
   return (
     <div className={styles.mainContainer}>
       {message ? <Modal setSuccess={setMessage} success={message} /> : null}
-      <AddButton onClick={() => setShow(!show)} />
+      {type === USER_TYPES.PROVIDER ? (
+        <AddButton onClick={() => setShow(!show)} />
+      ) : null}
       <Options show={show} setShow={setShow} setOption={setOption} />
       {option ? popups[option] : null}
       <div className={styles.profilePicture}>

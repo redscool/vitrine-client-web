@@ -12,6 +12,8 @@ import SpacesNavbar from "../components/space/SpacesNavbar";
 import { ServiceContext } from "../utils/context/serviceContext";
 import { useDispatch } from "react-redux";
 import { setProfileKey } from "../redux/profileReducer";
+import { useSelector } from "react-redux";
+import { authKeySelector } from "../redux/authReducer";
 export default function Dashboard() {
   const links = [
     {
@@ -53,10 +55,11 @@ export default function Dashboard() {
   useEffect(() => {
     setSelected(location.pathname.split("/")[3]);
   }, [location]);
+  const type = useSelector(authKeySelector("type"));
   useEffect(() => {
     serviceObject.request(
       "get",
-      "/api/provider/getAllSpaces",
+      `/api/${type}/getAllSpaces`,
       {},
       ({ data }) => {
         dispatch(setProfileKey(["spaces", data["spaces"]]));

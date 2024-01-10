@@ -12,8 +12,12 @@ import UpdateDescriptionPopup from "./page/UpdateDescriptionPopup";
 import UpdatePricingPopup from "./page/UpdatePricingModule";
 import { file_server_request } from "../../utils/Service";
 import ConfirmationPopup from "./page/ConfirmationPopup";
+import { USER_TYPES } from "../../constants";
+import { useSelector } from "react-redux";
+import { authKeySelector } from "../../redux/authReducer";
 
 export default function Page() {
+  const type = useSelector(authKeySelector("type"));
   const [message, setMessage] = useState("");
   const [displayPictureHovered, setDisplayPictureHovered] = useState(false);
   const [isCoverPic, setIsCoverPic] = useState(false);
@@ -214,34 +218,38 @@ export default function Page() {
       >
         <img src={pProfileImg ? pProfileImg : getFileURL(profileImg)} />
       </div>
-      <div
-        onClick={() => {
-          setIsCoverPic(false);
-          setUploadImagePopUp(true);
-        }}
-        onMouseEnter={(e) => {
-          e.preventDefault();
-          setDisplayPictureHovered(true);
-        }}
-        onMouseLeave={(e) => {
-          e.preventDefault();
-          setDisplayPictureHovered(false);
-        }}
-        className={`${styles.editProfilePictureButton} ${
-          displayPictureHovered ? "" : styles.hide
-        }`}
-      >
-        <img src="/pencil.svg" />
-      </div>
-      <div
-        className={styles.changeCoverPictureButton}
-        onClick={() => {
-          setIsCoverPic(true);
-          setUploadImagePopUp(true);
-        }}
-      >
-        <p>Change Profile Banner</p>
-      </div>
+      {type === USER_TYPES.PROVIDER ? (
+        <div
+          onClick={() => {
+            setIsCoverPic(false);
+            setUploadImagePopUp(true);
+          }}
+          onMouseEnter={(e) => {
+            e.preventDefault();
+            setDisplayPictureHovered(true);
+          }}
+          onMouseLeave={(e) => {
+            e.preventDefault();
+            setDisplayPictureHovered(false);
+          }}
+          className={`${styles.editProfilePictureButton} ${
+            displayPictureHovered ? "" : styles.hide
+          }`}
+        >
+          <img src="/pencil.svg" />
+        </div>
+      ) : null}
+      {type === USER_TYPES.PROVIDER ? (
+        <div
+          className={styles.changeCoverPictureButton}
+          onClick={() => {
+            setIsCoverPic(true);
+            setUploadImagePopUp(true);
+          }}
+        >
+          <p>Change Profile Banner</p>
+        </div>
+      ) : null}
 
       {/* Title Block */}
       <div className={`${styles.section} ${styles.headingSection}`}>
@@ -252,7 +260,9 @@ export default function Page() {
           className={styles.editButton}
           onClick={() => setUpdateTitleBlockPopup(true)}
         >
-          <img src={"/edit_white.svg"} />
+          {type === USER_TYPES.PROVIDER ? (
+            <img src={"/edit_white.svg"} />
+          ) : null}
         </div>
         <Field keyname="Title" value={heading} />
         <Field keyname="Sub Title" value={subHeading} />
@@ -267,7 +277,9 @@ export default function Page() {
           className={styles.editButton}
           onClick={() => setUpdateHighlightsPopup(true)}
         >
-          <img src={"/edit_white.svg"} />
+          {type === USER_TYPES.PROVIDER ? (
+            <img src={"/edit_white.svg"} />
+          ) : null}
         </div>
         <div className={styles.highlightsContainer}>
           {highlights && highlights.length > 0 ? (
@@ -292,7 +304,9 @@ export default function Page() {
           className={styles.editButton}
           onClick={() => setUpdateDescriptionPopup(true)}
         >
-          <img src={"/edit_white.svg"} />
+          {type === USER_TYPES.PROVIDER ? (
+            <img src={"/edit_white.svg"} />
+          ) : null}
         </div>
         {description ? (
           <div
@@ -316,7 +330,9 @@ export default function Page() {
           className={styles.editButton}
           onClick={() => setUpdatePricingPopup(true)}
         >
-          <img src={"/edit_white.svg"} />
+          {type === USER_TYPES.PROVIDER ? (
+            <img src={"/edit_white.svg"} />
+          ) : null}
         </div>
         <Field
           keyname="Plan Type"
@@ -330,20 +346,22 @@ export default function Page() {
         ) : null}
       </div>
 
-      <div className={styles.buttonsContainer}>
-        <div
-          className={`${styles.buttons} ${styles.previewButton}`}
-          onClick={handlePreview}
-        >
-          <p>Preview</p>
+      {type === USER_TYPES.PROVIDER ? (
+        <div className={styles.buttonsContainer}>
+          <div
+            className={`${styles.buttons} ${styles.previewButton}`}
+            onClick={handlePreview}
+          >
+            <p>Preview</p>
+          </div>
+          <div
+            className={`${styles.buttons} ${styles.saveButton}`}
+            onClick={handleSave}
+          >
+            <p>Save</p>
+          </div>
         </div>
-        <div
-          className={`${styles.buttons} ${styles.saveButton}`}
-          onClick={handleSave}
-        >
-          <p>Save</p>
-        </div>
-      </div>
+      ) : null}
     </div>
   );
 }

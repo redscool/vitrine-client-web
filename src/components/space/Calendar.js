@@ -7,9 +7,13 @@ import AddEventPopup from "./calendar/AddEventPopup";
 import Modal from "../Modal";
 import { ServiceContext } from "../../utils/context/serviceContext";
 import { convertTime } from "../../utils/Misc";
+import { USER_TYPES } from "../../constants";
+import { useSelector } from "react-redux";
+import { authKeySelector } from "../../redux/authReducer";
 
 export default function Calendar() {
   const params = useParams();
+  const type = useSelector(authKeySelector("type"));
   const { spaceId } = params;
   const [show, setShow] = useState(false);
   const [date, setDate] = useState("");
@@ -76,12 +80,14 @@ export default function Calendar() {
           {/* <div className={styles.buttons}>
             <p>Block Time</p>
           </div> */}
-          <div
-            className={`${styles.buttons} ${styles.buttonStyle1}`}
-            onClick={() => setAddEventPopup(true)}
-          >
-            <p>Add Event</p>
-          </div>
+          {type === USER_TYPES.PROVIDER ? (
+            <div
+              className={`${styles.buttons} ${styles.buttonStyle1}`}
+              onClick={() => setAddEventPopup(true)}
+            >
+              <p>Add Event</p>
+            </div>
+          ) : null}
         </div>
       </div>
       <div className={styles.mainContainer}>

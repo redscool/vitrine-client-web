@@ -6,10 +6,14 @@ import { ServiceContext } from "../../../utils/context/serviceContext";
 import { useDispatch } from "react-redux";
 import { updateFolder, deleteFolder } from "../../../redux/shelfReducer";
 import RenameFolderPopup from "./folderTile/RenamePopup";
+import { useSelector } from "react-redux";
+import { authKeySelector } from "../../../redux/authReducer";
+import { USER_TYPES } from "../../../constants";
 
 export default function FolderTile({ folderName, id }) {
   const [popup, setPopup] = useState(false);
   const [renamePopup, setRenamePopup] = useState(false);
+  const type = useSelector(authKeySelector("type"));
 
   const { spaceId } = useParams();
   const serviceObject = useContext(ServiceContext);
@@ -47,14 +51,14 @@ export default function FolderTile({ folderName, id }) {
   }
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} onClick={() => navigate(id)}>
       {renamePopup ? (
         <RenameFolderPopup
           setView={setRenamePopup}
           renameHandler={handleRename}
         />
       ) : null}
-      {popup ? (
+      {popup && type === USER_TYPES.PROVIDER ? (
         <div className={styles.popupMainContainer}>
           <div
             className={styles.option}

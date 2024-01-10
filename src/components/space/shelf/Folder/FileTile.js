@@ -5,6 +5,9 @@ import { ServiceContext } from "../../../../utils/context/serviceContext";
 import { useDispatch } from "react-redux";
 import { file_server_request } from "../../../../utils/Service";
 import FileRenamePopup from "./fileTile/FileRenamePopup";
+import { useSelector } from "react-redux";
+import { authKeySelector } from "../../../../redux/authReducer";
+import { USER_TYPES } from "../../../../constants";
 
 export default function FileTile({ fileName, id, setFiles, url }) {
   const [popup, setPopup] = useState(false);
@@ -13,6 +16,7 @@ export default function FileTile({ fileName, id, setFiles, url }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { folderId } = useParams();
+  const type = useSelector(authKeySelector("type"))
 
   async function handleChange() {
     serviceObject.request(
@@ -76,7 +80,7 @@ export default function FileTile({ fileName, id, setFiles, url }) {
           renameHandler={handleRename}
         />
       ) : null}
-      {popup ? (
+      {popup && type === USER_TYPES.PROVIDER? (
         <div className={styles.popupMainContainer}>
           <div
             className={styles.option}

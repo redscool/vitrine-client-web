@@ -7,11 +7,14 @@ import { foldersSelector, setFolders } from "../../redux/shelfReducer";
 import FolderTile from "./shelf/FolderTile";
 import { ServiceContext } from "../../utils/context/serviceContext";
 import AddButton from "../form_components/AddButton";
+import { authKeySelector } from "../../redux/authReducer";
+import { USER_TYPES } from "../../constants";
 
 export default function Shelf() {
   const dispatch = useDispatch();
   const { spaceId } = useParams();
   const serviceObject = useContext(ServiceContext);
+  const type = useSelector(authKeySelector("type"));
 
   async function createFolder() {
     serviceObject.request(
@@ -52,7 +55,9 @@ export default function Shelf() {
           <FolderTile folderName={folderName} key={_id} id={_id} />
         ))}
       </div>
-      <AddButton onClick={createFolder} />
+      {type === USER_TYPES.PROVIDER ? (
+        <AddButton onClick={createFolder} />
+      ) : null}
     </div>
   );
 }
