@@ -4,11 +4,14 @@ import { useContext, useEffect, useState } from "react";
 import { ServiceContext } from "../utils/context/serviceContext";
 import Modal from "../components/Modal";
 import { getFileURL } from "../utils/Misc";
+import { useSelector } from "react-redux";
+import { authKeySelector } from "../redux/authReducer";
+import { USER_TYPES } from "../constants";
 export default function Checkout() {
+  const type = useSelector(authKeySelector("type"));
   const serviceObj = useContext(ServiceContext);
   const { spaceId } = useParams();
   const [space, setSpace] = useState({});
-  const [copied, setCopied] = useState(false);
   const [paymentInitiated, setPaymentInitiated] = useState(false);
   const [success, setSuccess] = useState("");
   const navigate = useNavigate();
@@ -112,7 +115,14 @@ export default function Checkout() {
               ₹<span className={styles.color1}>{space.price}</span>
             </p>
           </div>
-          <div className={styles.button} onClick={handlePay}>
+          <div
+            className={styles.button}
+            onClick={
+              type === USER_TYPES.CONSUMER
+                ? handlePay
+                : () => setSuccess("Make a consumer account to join.")
+            }
+          >
             <p>Pay Now</p>
           </div>
         </div>

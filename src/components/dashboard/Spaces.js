@@ -7,9 +7,11 @@ import AddSpacePopup from "./spaces/AddSpacePopup";
 import { profileKeySelector } from "../../redux/profileReducer";
 import Modal from "../Modal";
 import AddButton from "../form_components/AddButton";
+import { authKeySelector } from "../../redux/authReducer";
+import { USER_TYPES } from "../../constants";
 
 export default function Spaces() {
-  const mode = useSelector(themeSelector);
+  const type = useSelector(authKeySelector("type"));
   const [modal, setModal] = useState(false);
   const [message, setMessage] = useState("");
   const [spaces, setSpaces] = useState([]);
@@ -48,7 +50,9 @@ export default function Spaces() {
         {spaces?.map((space, indx) => {
           return <SpaceTile spaceObj={space} message={0} key={space._id} />;
         })}
-        <AddButton onClick={() => setModal(true)} />
+        {type === USER_TYPES.PROVIDER ? (
+          <AddButton onClick={() => setModal(true)} />
+        ) : null}
       </div>
     </div>
   );

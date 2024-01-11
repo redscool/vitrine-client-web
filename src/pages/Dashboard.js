@@ -10,6 +10,8 @@ import { resource_request_with_access_token } from "../utils/Service";
 import { useDispatch } from "react-redux";
 import { setProfileKey } from "../redux/profileReducer";
 import { ServiceContext } from "../utils/context/serviceContext";
+import { useSelector } from "react-redux";
+import { authKeySelector } from "../redux/authReducer";
 
 export default function Dashboard() {
   const links = [
@@ -42,13 +44,14 @@ export default function Dashboard() {
   const location = useLocation();
   const serviceObject = useContext(ServiceContext);
   const [selected, setSelected] = useState("");
+  const type = useSelector(authKeySelector("type"));
   useEffect(() => {
     setSelected(location.pathname.split("/")[2]);
   }, [location]);
   useEffect(() => {
     serviceObject.request(
       "get",
-      "/api/provider/profile/view",
+      `/api/${type}/profile/view`,
       {},
       ({ data }) => {
         const requiredKeys = [
@@ -71,7 +74,7 @@ export default function Dashboard() {
     );
     serviceObject.request(
       "get",
-      "/api/provider/getAllSpaces",
+      `/api/${type}/getAllSpaces`,
       {},
       ({ data }) => {
         dispatch(setProfileKey(["spaces", data["spaces"]]));

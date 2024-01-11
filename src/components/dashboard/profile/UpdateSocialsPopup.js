@@ -4,6 +4,8 @@ import styles from "../../../styles/components/dashboard/profile/UpdateSocialsPo
 import { ServiceContext } from "../../../utils/context/serviceContext";
 import { useDispatch } from "react-redux";
 import { setProfileKey } from "../../../redux/profileReducer";
+import { useSelector } from "react-redux";
+import { authKeySelector } from "../../../redux/authReducer";
 export default function UpdateSocialsPopup({
   setView,
   oinstagram,
@@ -11,6 +13,7 @@ export default function UpdateSocialsPopup({
   olinkedIn,
   setMessage,
 }) {
+  const type = useSelector(authKeySelector("type"));
   const dispatch = useDispatch();
   const serviceObject = useContext(ServiceContext);
   const [linkedIn, setLinkedIn] = useState(olinkedIn);
@@ -23,7 +26,7 @@ export default function UpdateSocialsPopup({
     }
     serviceObject.request(
       "post",
-      "/api/provider/profile/update",
+      `/api/${type}/profile/update`,
       { linkedIn, instagram, x },
       ({ data }) => {
         setMessage(data.message);

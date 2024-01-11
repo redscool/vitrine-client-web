@@ -7,7 +7,10 @@ import { useDispatch } from "react-redux";
 import { ServiceContext } from "../../../utils/context/serviceContext";
 import { file_server_request } from "../../../utils/Service";
 import { setProfileKey } from "../../../redux/profileReducer";
+import { useSelector } from "react-redux";
+import { authKeySelector } from "../../../redux/authReducer";
 export default function UploadImagePopup({ setView, isCoverPic, setMessage }) {
+  const type = useSelector(authKeySelector("type"));
   const dispatch = useDispatch();
   const serviceObject = useContext(ServiceContext);
   const [rawImage, setRawImage] = useState();
@@ -61,7 +64,7 @@ export default function UploadImagePopup({ setView, isCoverPic, setMessage }) {
             if (isCoverPic) {
               serviceObject.request(
                 "post",
-                "/api/provider/profile/update",
+                `/api/${type.toLowerCase()}/profile/update`,
                 { coverPicture: filename },
                 ({ data }) => {
                   setMessage(data.message);
@@ -72,7 +75,7 @@ export default function UploadImagePopup({ setView, isCoverPic, setMessage }) {
             } else {
               serviceObject.request(
                 "post",
-                "/api/provider/profile/update",
+                `/api/${type.toLowerCase()}/profile/update`,
                 { profilePicture: filename },
                 ({ data }) => {
                   setMessage(data.message);

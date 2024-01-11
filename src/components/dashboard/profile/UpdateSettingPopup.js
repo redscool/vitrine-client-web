@@ -5,12 +5,15 @@ import CheckBox from "../../form_components/CheckBox";
 import { useDispatch } from "react-redux";
 import { ServiceContext } from "../../../utils/context/serviceContext";
 import { setProfileKey } from "../../../redux/profileReducer";
+import { useSelector } from "react-redux";
+import { authKeySelector } from "../../../redux/authReducer";
 export default function UpdateSettingPopup({
   setView,
   setMessage,
   ooffDays,
   oworkingHours,
 }) {
+  const type = useSelector(authKeySelector("type"));
   const options = [
     "Select",
     "12 am",
@@ -65,7 +68,7 @@ export default function UpdateSettingPopup({
     if (saturday) offDays.push("Saturday");
     serviceObject.request(
       "post",
-      "/api/provider/profile/update",
+      `/api/${type}/profile/update`,
       { offDays, workingHours },
       ({ data }) => {
         setMessage(data.message);
