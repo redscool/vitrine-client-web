@@ -4,9 +4,11 @@ import styles from "../../../styles/components/dashboard/profile/UpdateProfilePo
 import { useDispatch } from "react-redux";
 import { setProfileKey } from "../../../redux/profileReducer";
 import { ServiceContext } from "../../../utils/context/serviceContext";
+import { useSelector } from "react-redux";
+import { authKeySelector } from "../../../redux/authReducer";
 export default function UpdateProfilePopup({ setView, setMessage, oname }) {
   const serviceObject = useContext(ServiceContext);
-
+  const type = useSelector(authKeySelector("type"));
   const [name, setName] = useState(oname);
   const profileId = localStorage.getItem("profileId");
   const dispatch = useDispatch();
@@ -19,7 +21,7 @@ export default function UpdateProfilePopup({ setView, setMessage, oname }) {
 
     serviceObject.request(
       "post",
-      "/api/provider/profile/update",
+      `/api/${type}/profile/update`,
       { profileId, name },
       ({ data }) => {
         setMessage(data.message);

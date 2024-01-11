@@ -3,7 +3,10 @@ import styles from "../../../styles/components/dashboard/profile/UpdateBioPopup.
 import { ServiceContext } from "../../../utils/context/serviceContext";
 import { useDispatch } from "react-redux";
 import { setProfileKey } from "../../../redux/profileReducer";
+import { useSelector } from "react-redux";
+import { authKeySelector } from "../../../redux/authReducer";
 export default function UpdateBioPopup({ setView, setMessage, oabout }) {
+  const type = useSelector(authKeySelector("type"));
   const [about, setAbout] = useState(oabout);
   const serviceObject = useContext(ServiceContext);
   const dispatch = useDispatch();
@@ -14,7 +17,7 @@ export default function UpdateBioPopup({ setView, setMessage, oabout }) {
     }
     serviceObject.request(
       "post",
-      "/api/provider/profile/update",
+      `/api/${type}/profile/update`,
       { about },
       ({ data }) => {
         setMessage(data.message);
