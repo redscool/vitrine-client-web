@@ -43,7 +43,7 @@ export default function Home() {
       },
       console.log
     );
-  }, []);
+  }, [spaceId]);
   const popups = [
     null,
     <UploadPopup
