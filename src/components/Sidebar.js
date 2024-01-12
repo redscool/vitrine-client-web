@@ -10,7 +10,10 @@ export default function Sidebar({ selected, links }) {
   return (
     <div className={`${styles.container}`}>
       <div className={`${styles.mainContainer}`}>
-        <div className={`${styles.logo}`}>
+        <div
+          className={`${styles.logo}`}
+          onClick={() => navigate("/dashboard/ ")}
+        >
           <img className={styles.logoImg} src="/logo.svg" />
         </div>
         <div className={`${styles.bottom} ${expand ? styles.expand : ""}`}>
@@ -72,4 +75,3 @@ export default function Sidebar({ selected, links }) {
     </div>
   );
 }
-
