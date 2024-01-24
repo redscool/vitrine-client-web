@@ -6,6 +6,7 @@ import eventsReducer from "./eventsReducer";
 import chatReducer from "./chatReducer";
 import shelfReducer from "./shelfReducer";
 import orderReducer from "./orderReducer.js";
+import notificationReducer from "./notificationReducer.js";
 
 export default configureStore({
 	reducer: {
@@ -16,5 +17,6 @@ export default configureStore({
 		chat: chatReducer,
 		shelf: shelfReducer,
 		order: orderReducer,
+		notifications: notificationReducer
 	},
 });

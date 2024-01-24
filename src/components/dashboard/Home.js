@@ -7,6 +7,11 @@ import { themeSelector, toggleTheme } from "../../redux/settingReducer";
 import { useSelector, useDispatch } from "react-redux";
 import { ServiceContext } from "../../utils/context/serviceContext";
 import { convertTime, getFileURL } from "../../utils/Misc";
+import {
+  notificationsSelector,
+  resetNotifications,
+} from "../../redux/notificationReducer";
+import MessageNotifcation from "./home/MessageNotification";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -14,6 +19,8 @@ export default function Home() {
   const theme = useSelector(themeSelector);
   const [upcomingEvents, setUpcomingEvents] = useState([]);
   const serviceObject = useContext(ServiceContext);
+  const notifications = useSelector(notificationsSelector());
+  console.log(notifications);
   const getUpcomingEvents = async () => {
     await serviceObject.request(
       "get",
@@ -99,7 +106,24 @@ export default function Home() {
             )}
           </div>
         </div>
-        <div className={styles.notificationsContainer}></div>
+        <div className={styles.notificationsContainer}>
+          <div className={styles.nTopContainer}>
+            <div className={styles.nTitle}>
+              <p>Notifications</p>
+            </div>
+            <div
+              className={styles.clearButton}
+              onClick={()=>dispatch(resetNotifications())}
+            >
+              <p>Clear</p>
+            </div>
+          </div>
+          <div className={styles.nContainer}>
+            {notifications?.map((messageObj, i) => (
+              <MessageNotifcation messageObj={messageObj} key={i} />
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
