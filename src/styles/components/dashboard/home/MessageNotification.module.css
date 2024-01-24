@@ -1,0 +1,110 @@
+.container {
+    width: 95%;
+    height: fit-content;
+    background-color: var(--color21);
+    border-radius: 8px;
+    margin: 1vh auto 0 auto;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid var(--color1);
+  }
+  
+  .topContainer {
+    margin: auto;
+    width: 90%;
+    height: 7vh;
+    display: flex;
+  }
+  
+  .profilePic {
+    width: 10%;
+    height: 100%;
+    display: flex;
+  }
+  
+  .profilePic > img {
+    width: 6vh;
+    height: 6vh;
+    border-radius: 3vh;
+    margin: auto;
+  }
+  
+  .details {
+    width: 80%;
+    height: 100%;
+    margin: auto;
+    margin-left: 2vw;
+  }
+  
+  .name {
+    width: 20vw;
+    height: 3vh;
+    display: flex;
+  }
+  
+  .name > p {
+    margin: auto 0;
+    font-size: 2.4vh;
+    width: fit-content;
+    font-weight: 600;
+    color: var(--color9);
+  }
+  
+  .time {
+    margin: auto;
+    margin-left: 0;
+    width: 20vw;
+    height: 3vh;
+    display: flex;
+  }
+  
+  .time > p {
+    margin: auto;
+    margin-left: 0;
+    font-size: 1.92vh;
+    font-weight: 500;
+    color: var(--color16);
+  }
+  
+  .name > img {
+    height: 2.5vh;
+    margin: auto;
+    margin-left: 1vw;
+  }
+  .deleteButton {
+    width: 10%;
+    height: 100%;
+    display: flex;
+  }
+  
+  .deleteButton > img {
+    margin: auto;
+    width: 3vh;
+    height: 3vh;
+  }
+  
+  .bottomContainer {
+    width: 90%;
+    height: fit-content;
+    margin: auto;
+  }
+  
+  .message {
+    width: 80%;
+    height: fit-content;
+    margin: auto;
+    padding-bottom: 1vh;
+    display: flex;
+  }
+  
+  .message > p {
+    margin: auto;
+    margin-left: 2vw;
+    font-size: 1.92vh;
+    font-weight: 400;
+    color: var(--color9);
+  }
+  
+  .hide{
+    display: none;
+  }

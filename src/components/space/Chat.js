@@ -11,7 +11,6 @@ import { useDispatch } from "react-redux";
 import {
   chatSelector,
   initChats,
-  initMembers,
   membersSelector,
   onlineMembersSelector,
 } from "../../redux/chatReducer";
@@ -34,20 +33,6 @@ export default function Chat() {
     emitForcefully(SOCKET_EVENTS.GET_ONLINE_MEMBERS, { spaceId });
     serviceObject.request(
       "get",
-      "/api/space/essential/getMembers",
-      { spaceId },
-      ({ data }) => {
-        const members = data.data;
-        const tempMembersDic = {};
-        for (const member of members) {
-          tempMembersDic[member._id] = member;
-        }
-        dispatch(initMembers({ members: tempMembersDic, spaceId }));
-      },
-      console.log
-    );
-    serviceObject.request(
-      "get",
       "/api/space/essential/getMessages",
       { spaceId },
       ({ data }) => {
@@ -57,6 +42,10 @@ export default function Chat() {
       console.log
     );
   }, []);
+  useEffect(() => {
+    var messagesContainer = document.getElementById("messageContainer");
+    messagesContainer.scrollTop = 1e9;
+  }, [messages]);
   return (
     <div className={styles.mainContainer}>
       <div className={styles.membersContainer}>
@@ -98,7 +87,7 @@ export default function Chat() {
         </div>
       </div>
       <div className={styles.messagingContainer}>
-        <div className={styles.messagesContainer}>
+        <div className={styles.messagesContainer} id="messageContainer">
           {messages?.map((message, i) => (
             <Message messageObj={message} key={i} />
           ))}

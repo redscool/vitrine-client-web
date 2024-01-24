@@ -14,6 +14,7 @@ import { useDispatch } from "react-redux";
 import { setProfileKey } from "../redux/profileReducer";
 import { useSelector } from "react-redux";
 import { authKeySelector } from "../redux/authReducer";
+import { initMembers } from "../redux/chatReducer";
 export default function Dashboard() {
   const links = [
     {
@@ -63,6 +64,24 @@ export default function Dashboard() {
       {},
       ({ data }) => {
         dispatch(setProfileKey(["spaces", data["spaces"]]));
+        for (let space of data["spaces"]) {
+          serviceObject.request(
+            "get",
+            "/api/space/essential/getMembers",
+            { spaceId: space._id },
+            ({ data }) => {
+              const members = data.data;
+              const tempMembersDic = {};
+              for (const member of members) {
+                tempMembersDic[member._id] = member;
+              }
+              dispatch(
+                initMembers({ members: tempMembersDic, spaceId: space._id })
+              );
+            },
+            console.log
+          );
+        }
       },
       console.log
     );
