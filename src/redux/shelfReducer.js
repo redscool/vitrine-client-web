@@ -17,7 +17,6 @@ export const shelfSlice = createSlice({
 			const update = action.payload;
 			state.folders = state.folders.map((folder) => {
 				if (update._id.toString() === folder._id.toString()) {
-					console.log('update', update);
 					return update;
 				}
 				return folder;

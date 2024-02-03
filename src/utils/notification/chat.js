@@ -14,7 +14,6 @@ const listenChatEvents = (dispatch) => {
     const { spaceId } = message;
     dispatch(addMessage({ message, spaceId }));
     const profileId = localStorage.getItem("profileId");
-    console.log(profileId);
     if (profileId != message.sender) {
       notifyMe(message);
       dispatch(addNotification(message));

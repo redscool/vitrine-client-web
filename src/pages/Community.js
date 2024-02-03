@@ -6,7 +6,6 @@ import { useState } from "react";
 
 export default function Community() {
   const [results, setResults] = useState([]);
-  console.log(results);
   return (
     <div className={styles.container}>
       <Navbar />

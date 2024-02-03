@@ -36,7 +36,6 @@ export default function PollPopup({
         },
       },
       ({ data }) => {
-        console.log(data);
         setStreams([data.post, ...streams]);
       },
       (err) => {
@@ -45,7 +44,6 @@ export default function PollPopup({
         ) {
           alert("File already present in the folder");
         }
-        console.log("err", err.response.data);
       }
     );
     setView(false);

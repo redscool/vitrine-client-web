@@ -28,7 +28,7 @@ export default function UpdateProfilePopup({ setView, setMessage, oname }) {
         dispatch(setProfileKey(["name", name]));
         setName("");
       },
-      console.log
+      () => undefined
     );
     setView(false);
   };

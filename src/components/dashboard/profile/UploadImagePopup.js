@@ -60,7 +60,6 @@ export default function UploadImagePopup({ setView, isCoverPic, setMessage }) {
         { file: imageFile },
         ({ data: { filename } }) => {
           if (filename) {
-            console.log(filename);
             if (isCoverPic) {
               serviceObject.request(
                 "post",
@@ -70,7 +69,7 @@ export default function UploadImagePopup({ setView, isCoverPic, setMessage }) {
                   setMessage(data.message);
                   dispatch(setProfileKey(["coverPicture", filename]));
                 },
-                console.log
+                () => undefined
               );
             } else {
               serviceObject.request(
@@ -81,12 +80,12 @@ export default function UploadImagePopup({ setView, isCoverPic, setMessage }) {
                   setMessage(data.message);
                   dispatch(setProfileKey(["profilePicture", filename]));
                 },
-                console.log
+                () => undefined
               );
             }
           }
         },
-        console.log
+        () => undefined
       );
     } else setMessage("Please upload a picture");
     setView(false);

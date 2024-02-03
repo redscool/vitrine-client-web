@@ -19,7 +19,6 @@ export default function ForgotPassword() {
         setSuccess(data.message);
       },
       ({ response }) => {
-        console.log(response.data);
         setSuccess(response.data.message);
       }
     );

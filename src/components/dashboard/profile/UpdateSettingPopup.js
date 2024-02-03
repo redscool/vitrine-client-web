@@ -75,7 +75,7 @@ export default function UpdateSettingPopup({
         dispatch(setProfileKey(["workingHours", workingHours]));
         dispatch(setProfileKey(["offDays", offDays]));
       },
-      console.log
+      () => undefined
     );
     setView(false);
   };

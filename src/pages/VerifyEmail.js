@@ -12,7 +12,6 @@ export default function VerifyEmail() {
   const { token } = params;
 
   useEffect(() => {
-    console.log(token);
     auth_request(
       "post",
       "/api/auth/user/verify",
@@ -24,7 +23,7 @@ export default function VerifyEmail() {
         }
         navigate(`/dashboard/`);
       },
-      console.log
+      () => undefined
     );
   }, []);
   return <></>;

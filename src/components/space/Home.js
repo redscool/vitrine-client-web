@@ -38,10 +38,9 @@ export default function Home() {
       "/api/space/stream/getPosts",
       { spaceId },
       ({ data }) => {
-        console.log(data);
         setStreams(data.posts);
       },
-      console.log
+      () => undefined
     );
   }, [spaceId]);
   const popups = [

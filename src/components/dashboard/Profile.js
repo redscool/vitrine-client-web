@@ -50,7 +50,6 @@ export default function Profile() {
         setMessage(data.message);
       },
       ({ response }) => {
-        console.log(response.data);
         setMessage(response.data.message);
       }
     );

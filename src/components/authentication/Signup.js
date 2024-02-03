@@ -46,7 +46,6 @@ export default function Signup() {
       return;
     }
     let userType = type === 2 ? "CONSUMER" : "PROVIDER";
-    console.log(userType);
     const body = { email, password, type: userType };
     auth_request(
       "post",
@@ -54,9 +53,8 @@ export default function Signup() {
       body,
       (res) => {
         setSuccess(res.data.message);
-        console.log(res.data);
       },
-      console.log
+      () => undefined
     );
   };
   return (

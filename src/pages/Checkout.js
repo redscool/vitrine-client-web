@@ -27,7 +27,7 @@ export default function Checkout() {
           ...space,
         });
       },
-      console.log
+      () => undefined
     );
   }, []);
 
@@ -78,7 +78,7 @@ export default function Checkout() {
         var rzp1 = new window.Razorpay(options);
         rzp1.open();
       },
-      console.log
+      () => undefined
     );
   };
   return (

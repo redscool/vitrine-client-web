@@ -128,9 +128,6 @@ const EditorComponent = (props) => {
       };
 
   const handleChangeFunc = (delta, oldDelta, source) => {
-    console.log(delta);
-    console.log(oldDelta);
-    console.log(source);
     const editorObject = reactQuill?.current?.editor;
     if (!editorObject) return;
     const editorContent = editorObject.editor.delta;

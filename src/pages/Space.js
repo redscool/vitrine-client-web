@@ -79,11 +79,11 @@ export default function Dashboard() {
                 initMembers({ members: tempMembersDic, spaceId: space._id })
               );
             },
-            console.log
+            () => undefined
           );
         }
       },
-      console.log
+      () => undefined
     );
   }, []);
   return (

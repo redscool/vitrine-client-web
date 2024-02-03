@@ -27,7 +27,7 @@ export default function Shelf() {
       ({ data }) => {
         dispatch(setFolders([...folders, data.folder]));
       },
-      console.log
+      () => undefined
     );
   }
   useEffect(() => {
@@ -41,7 +41,7 @@ export default function Shelf() {
         ({ data }) => {
           dispatch(setFolders(data.data));
         },
-        console.log
+        () => undefined
       );
     }
     getFolders();

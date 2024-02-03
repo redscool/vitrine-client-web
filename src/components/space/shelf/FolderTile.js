@@ -29,10 +29,9 @@ export default function FolderTile({ folderName, id }) {
         folderName: name,
       },
       ({ data }) => {
-        console.log("data", data);
         dispatch(updateFolder(data.folder));
       },
-      console.log
+      () => undefined
     );
   }
 
@@ -46,7 +45,7 @@ export default function FolderTile({ folderName, id }) {
       () => {
         dispatch(deleteFolder(id));
       },
-      console.log
+      () => undefined
     );
   }
 

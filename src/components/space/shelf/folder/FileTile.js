@@ -28,7 +28,7 @@ export default function FileTile({ fileName, id, setFiles, url }) {
       ({ data }) => {
         setFiles(data.data);
       },
-      console.log
+      () => undefined
     );
   }
 
@@ -41,10 +41,9 @@ export default function FileTile({ fileName, id, setFiles, url }) {
         fileName: name,
       },
       ({ data }) => {
-        console.log("data", data);
         handleChange();
       },
-      console.log
+      () => undefined
     );
   }
 
@@ -54,7 +53,6 @@ export default function FileTile({ fileName, id, setFiles, url }) {
       "/deleteFile",
       { file: url },
       ({ data }) => {
-        console.log(data);
         serviceObject.request(
           "post",
           "/api/space/shelf/deleteFile",
@@ -64,10 +62,10 @@ export default function FileTile({ fileName, id, setFiles, url }) {
           () => {
             handleChange();
           },
-          console.log
+          () => undefined
         );
       },
-      console.log,
+      () => undefined,
       false
     );
   }

@@ -25,7 +25,6 @@ export default function EditorPopup({
         editor: editorContent,
       },
       ({ data }) => {
-        console.log(data);
         setStreams([data.post, ...streams]);
       },
       (err) => {
@@ -34,7 +33,7 @@ export default function EditorPopup({
         ) {
           alert("File already present in the folder");
         }
-        console.log("err", err.response.data);
+        () => undefined("err", err.response.data);
       }
     );
     setView(false);

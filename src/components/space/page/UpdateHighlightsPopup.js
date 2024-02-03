@@ -11,7 +11,6 @@ export default function UpdateHighlightsPopup({
     const temp = [...tHighlights];
     temp.push("");
     setTHighlights(temp);
-    console.log(tHighlights);
   };
   const removeRow = (ind) => {
     const temp = [...tHighlights];

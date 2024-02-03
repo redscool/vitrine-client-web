@@ -64,7 +64,7 @@ export default function Calendar() {
         }
         setEventsDictionary(tempEventsDictionary);
       },
-      console.log
+      () => undefined
     );
   }, [month, year]);
   const [addEventPopup, setAddEventPopup] = useState(false);

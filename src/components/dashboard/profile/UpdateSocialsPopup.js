@@ -34,7 +34,7 @@ export default function UpdateSocialsPopup({
         dispatch(setProfileKey(["linkedIn", linkedIn]));
         dispatch(setProfileKey(["x", x]));
       },
-      console.log
+      () => undefined
     );
     setView(false);
   };

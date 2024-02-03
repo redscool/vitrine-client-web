@@ -56,7 +56,6 @@ export default function AddEventPopup({ setView, setMessage }) {
         endTime: new Date(endTime).toISOString(),
       },
       (response) => {
-        console.log("response", response);
         let { data, status } = response;
 
         if (status == 204) {
@@ -72,7 +71,7 @@ export default function AddEventPopup({ setView, setMessage }) {
           dispatch(setEventsKey(response.data.events));
         }
       },
-      console.log
+      () => undefined
     );
     setView(false);
   };

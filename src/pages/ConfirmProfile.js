@@ -20,7 +20,6 @@ export default function ConfirmProfile() {
       return;
     }
     let type = selected === "Consumer" ? "CONSUMER" : "PROVIDER";
-    console.log(type);
     const body = { verifyProfileToken, type };
     auth_request(
       "post",
@@ -31,10 +30,9 @@ export default function ConfirmProfile() {
           const value = data[key];
           dispatch(setAuthKey([key, value]));
         }
-        console.log(data);
         navigate("/dashboard");
       },
-      console.log
+      () => undefined
     );
   };
   return (

@@ -23,7 +23,7 @@ export default function UpdateBioPopup({ setView, setMessage, oabout }) {
         setMessage(data.message);
         dispatch(setProfileKey(["about", about]));
       },
-      console.log
+      () => undefined
     );
     setView(false);
   };
