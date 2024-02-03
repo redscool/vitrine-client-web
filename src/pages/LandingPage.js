@@ -10,7 +10,7 @@ export default function LandingPage() {
         justifyContent: 'center',
         cursor: 'pointer',
       }}
-      onClick={() => navigate("/signup")}
+      onClick={() => navigate("/login")}
     >
       <h1>
         Vitrine
