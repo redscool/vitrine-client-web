@@ -63,7 +63,6 @@ export default function UploadPopup({
             },
           },
           ({ data }) => {
-            console.log(data);
             setStreams([data.post, ...streams]);
           },
           (err) => {
@@ -73,11 +72,10 @@ export default function UploadPopup({
             ) {
               alert("File already present in the folder");
             }
-            console.log("err", err.response.data);
           }
         );
       },
-      console.log
+      () => undefined
     );
   };
   return (

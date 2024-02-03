@@ -22,10 +22,9 @@ export default function Page() {
           ...space,
         });
       },
-      console.log
+      () => undefined
     );
   }, []);
-  console.log(space);
   return (
     <div className={styles.mainContainer}>
       <div className={styles.coverPicture}>

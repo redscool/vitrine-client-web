@@ -12,7 +12,6 @@ export const settingSlice = createSlice({
     toggleTheme: (state) => {
       const newTheme = state.theme === "light" ? "dark" : "light";
       state.theme = newTheme;
-      console.log(newTheme);
       localStorage.setItem("theme", newTheme);
       document.getElementById("root").className = {
         light: "light-theme",

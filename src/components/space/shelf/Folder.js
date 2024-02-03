@@ -27,7 +27,7 @@ export default function Folder() {
         ({ data }) => {
           setFiles(data.data);
         },
-        console.log
+        () => undefined
       );
     }
     getFiles();

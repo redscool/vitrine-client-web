@@ -10,7 +10,7 @@ export default function Searchbar({ setResults }) {
       "/api/community/space/search",
       { query },
       ({ data }) => setResults(data),
-      console.log
+      () => undefined
     );
   };
 

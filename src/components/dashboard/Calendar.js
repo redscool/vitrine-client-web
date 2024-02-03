@@ -48,7 +48,7 @@ export default function Calendar() {
         }
         setEventsDictionary(tempEventsDictionary);
       },
-      console.log
+      () => undefined
     );
   }, [month, year]);
   return (

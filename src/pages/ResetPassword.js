@@ -29,7 +29,6 @@ export default function ResetPassword() {
       ({ data }) => {
         setSuccess(data.message);
         localStorage.removeItem("accessToken");
-        console.log(data);
       },
       ({ response }) => {
         setSuccess(response.data.message);

@@ -64,7 +64,7 @@ export default function Page() {
           price: Math.min(space.price, 2000),
         });
       },
-      console.log
+      () => undefined
     );
   }, []);
   function sendData() {
@@ -90,7 +90,7 @@ export default function Page() {
         setFProfileImg(false);
         setPProfileImg(false);
       },
-      console.log
+      () => undefined
     );
     setConfirmationPopup(false);
   }
@@ -104,7 +104,7 @@ export default function Page() {
         ({ data: { filename } }) => {
           setProfileImg(filename);
         },
-        console.log
+        () => undefined
       );
     }
     if (fBanner) {
@@ -114,9 +114,8 @@ export default function Page() {
         { file: fBanner },
         ({ data: { filename } }) => {
           setBanner(filename);
-          console.log(filename);
         },
-        console.log
+        () => undefined
       );
     }
     setConfirmationPopup(true);
@@ -130,8 +129,8 @@ export default function Page() {
         "post",
         "/deleteFile",
         { file: banner },
-        console.log,
-        console.log
+        () => undefined,
+        () => undefined
       );
     }
     if (fProfileImg) {
@@ -139,8 +138,8 @@ export default function Page() {
         "post",
         "/deleteFile",
         { file: profileImg },
-        console.log,
-        console.log,
+        () => undefined,
+        () => undefined,
         false
       );
     }

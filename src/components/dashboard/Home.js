@@ -20,7 +20,6 @@ export default function Home() {
   const [upcomingEvents, setUpcomingEvents] = useState([]);
   const serviceObject = useContext(ServiceContext);
   const notifications = useSelector(notificationsSelector());
-  console.log(notifications);
   const getUpcomingEvents = async () => {
     await serviceObject.request(
       "get",
@@ -46,7 +45,7 @@ export default function Home() {
         }
         setUpcomingEvents(tempEvents);
       },
-      console.log
+      () => undefined
     );
   };
   useEffect(() => {
@@ -62,10 +61,9 @@ export default function Home() {
           { spaceId },
           ({ data }) => {
             const { space } = data;
-            console.log(space);
             setBannerImage(getFileURL(space.coverPicture));
           },
-          console.log
+          () => undefined
         );
       }
     }

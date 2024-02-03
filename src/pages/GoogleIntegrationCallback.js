@@ -8,9 +8,8 @@ export default function GoogleIntegrationCallback() {
   useEffect(() => {
     async function Hello() {
         const {code} = queryString.parse(window.location.search);
-        await serviceObject.request('post', '/api/integration/google/updateGoogleRefreshToken', {code},(response) => {
-            console.log("response", response);
-        }, console.log)
+      await serviceObject.request('post', '/api/integration/google/updateGoogleRefreshToken', { code }, (response) => {
+      },() => undefined)
         window.close()
     }
     Hello()

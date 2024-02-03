@@ -53,11 +53,10 @@ export default function UploadImage({ setView, addImage }) {
         { file: imageFile },
         ({ data: { filename } }) => {
           if (filename) {
-            console.log(filename);
             addImage(filename);
           }
         },
-        console.log
+        () => undefined
       );
     }
     setView(false);

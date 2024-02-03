@@ -37,7 +37,7 @@ export default function AddSpacePopup({
         setSpaces(spacesArray);
         dispatch(setProfileKey(["spaces", spacesArray]));
       },
-      console.log
+      () => undefined
     );
     setView(false);
   };

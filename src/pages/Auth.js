@@ -23,7 +23,7 @@ async function getAccessToken(code, dispatch, navigate) {
       dispatch(setGoogleAuth(googleAuth));
       navigate(redirectUrl);
     },
-    console.log
+    () => undefined
   );
 }
 
@@ -68,7 +68,7 @@ async function login(code, dispatch, navigate) {
 
       navigate(redirectUrl);
     },
-    console.log
+    () => undefined
   );
 }
 
@@ -81,7 +81,6 @@ export default function Auth() {
     const action = localStorage.getItem(LOCALSTORAGE_KEYS.googleAuthAction);
 
     if (urlParams.error) {
-      console.log(`An error occurred: ${urlParams.error}`);
       arr[1]("Error");
     } else if (action === GOOGLE_AUTH_ACTION.auth) {
       getAccessToken(urlParams.code, dispatch, navigate);

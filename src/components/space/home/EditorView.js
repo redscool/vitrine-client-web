@@ -1,7 +1,6 @@
 import styles from "../../../styles/components/space/home/Editor.module.css";
 import Editor from "../../Editor";
 export default function EditorView({editor}) {
-  console.log(editor);
   return (
     <div className={styles.container}>
       <div className={styles.title}>

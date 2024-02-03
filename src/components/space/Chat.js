@@ -39,7 +39,7 @@ export default function Chat() {
         const messages = data.data;
         dispatch(initChats({ messages, spaceId }));
       },
-      console.log
+      () => undefined
     );
   }, []);
   useEffect(() => {

@@ -61,11 +61,10 @@ export default function UploadFilePopup({ setView, setFiles }) {
             ) {
               alert("File already present in the folder");
             }
-            console.log("err", err.response.data);
           }
         );
       },
-      console.log
+      () => undefined
     );
   };
   return (
