@@ -3,9 +3,8 @@ import listenChatEvents from "./notification/chat";
 import { SOCKET_EVENTS } from "../constants";
 import { auth_request } from "./Service";
 import { setAuthKey } from "../redux/authReducer";
-
-const URL = "http://localhost:5000";
-const SOCKET_TOKEN = "SOCKET_TOKEN";
+import config from '../config.json';
+const { SERVER } = config;
 
 let socket;
 
@@ -16,7 +15,7 @@ const listenAllEvents = (dispatch) => {
 export const initConnection = (dispatch, props) => {
   disconnect();
   const { accessToken } = props;
-  socket = io(URL, {
+  socket = io(SERVER, {
     auth: {
       accessToken,
     },
