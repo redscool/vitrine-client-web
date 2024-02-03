@@ -2,7 +2,6 @@ import store from "../redux/store";
 import { getFileURL } from "./Misc";
 export const notifyMe = (messageObj) => {
   if (!("Notification" in window)) {
-    alert("This browser does not support desktop notification");
   } else if (Notification.permission === "granted") {
     const { message, spaceId, sender } = messageObj;
     const members = store.getState().chat.members[spaceId];
@@ -20,6 +19,5 @@ export const notifyMe = (messageObj) => {
       }
     });
   } else {
-    alert("Allow Notification");
   }
 };
