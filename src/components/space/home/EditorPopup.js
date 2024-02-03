@@ -33,7 +33,6 @@ export default function EditorPopup({
         ) {
           alert("File already present in the folder");
         }
-        () => undefined("err", err.response.data);
       }
     );
     setView(false);
