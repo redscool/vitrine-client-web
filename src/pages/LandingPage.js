@@ -13,7 +13,7 @@ export default function LandingPage() {
       onClick={() => navigate("/signup")}
     >
       <h1>
-        LandingPage
+        Vitrine
       </h1>
     </div>
   );
